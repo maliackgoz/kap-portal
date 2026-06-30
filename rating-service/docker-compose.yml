@@ -1,0 +1,12 @@
+services:
+  rating-mcp:
+    build: .
+    container_name: rating-mcp
+    ports:
+      - "8787:8787"
+    environment:
+      RATING_MCP_DATA_DIR: /app/data
+      RATING_MCP_USER_AGENT: "RatingMCP/0.1 (+local financial analysis team)"
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped

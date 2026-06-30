@@ -1,0 +1,10 @@
+__pycache__
+.pytest_cache
+.ruff_cache
+*.pyc
+*.log
+.env
+data/raw
+data/pdfs
+data/exports
+data/imports

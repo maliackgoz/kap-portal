@@ -1,0 +1,16 @@
+node_modules
+backend/dist
+frontend/dist
+dist
+build
+backend/data/*.db-shm
+backend/data/*.db-wal
+rating-service/.venv
+rating-service/**/__pycache__
+rating-service/*.egg-info
+rating-service/data/raw
+rating-service/data/pdfs
+rating-service/data/imports
+.superpowers
+.env
+*.log

@@ -1,0 +1,86 @@
+rating_sources:
+  turkrating:
+    name: TurkRating
+    enabled: true
+    priority: 1
+    urls:
+      - https://turkrating.com/reel-sektor-rl-81570.html
+      - https://turkrating.com/banka-rl-45079.html
+      - https://turkrating.com/banka-disi-finans-kuruluslari-rl-08941.html
+      - https://turkrating.com/borclanma-araclari-rl-52940.html
+      - https://turkrating.com/kamu-kuruluslari-rl-39236.html
+  jcr:
+    name: JCR Eurasia
+    enabled: true
+    priority: 2
+    urls:
+      - https://www.jcrer.com.tr/tr/derecelendirme/raporlar/kredi-derecelendirme
+  saha:
+    name: SAHA Rating
+    enabled: true
+    priority: 3
+    urls:
+      - https://saharating.com/rating/kredi-derecelendirme-ratingler/
+  kobirate:
+    name: KobiRate
+    enabled: true
+    priority: 4
+    urls:
+      - https://www.kobirate.com.tr/Kredi-Derecelendirme-Raporlari/
+  fitch:
+    name: Fitch
+    enabled: false
+    priority: 5
+    urls: []
+    manual_import_glob: "fitch*.csv"
+  spglobal:
+    name: S&P Global Ratings
+    enabled: false
+    priority: 6
+    urls: []
+    manual_import_glob: "spglobal*.csv"
+
+news_sources:
+  aa:
+    name: Anadolu Ajansı
+    enabled: true
+    rss:
+      - https://www.aa.com.tr/tr/rss/default?cat=ekonomi
+      - https://www.aa.com.tr/tr/teyithatti/rss/news?cat=ekonomi
+    pages:
+      - https://www.aa.com.tr/tr/ekonomi
+  borsagundem:
+    name: BorsaGündem
+    enabled: false
+    rss:
+      - https://www.borsagundem.com/rss
+    pages:
+      - https://www.borsagundem.com/haberler
+  bloomberg:
+    name: BloombergHT
+    enabled: true
+    rss:
+      - https://www.bloomberght.com/rss
+    pages:
+      - https://www.bloomberght.com/tumhaberler
+    manual_import_glob: "bloomberg*.csv"
+  trthaber:
+    name: TRT Haber
+    enabled: true
+    rss:
+      - https://www.trthaber.com/ekonomi_articles.rss
+  sabah:
+    name: Sabah
+    enabled: true
+    rss:
+      - https://www.sabah.com.tr/rss/ekonomi.xml
+  ahaber:
+    name: A Haber
+    enabled: true
+    rss:
+      - https://www.ahaber.com.tr/rss/ekonomi.xml
+  yenisafak:
+    name: Yeni Şafak
+    enabled: true
+    rss:
+      - https://www.yenisafak.com/rss?xml=ekonomi

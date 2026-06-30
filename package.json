@@ -1,0 +1,25 @@
+{
+  "name": "kap-portal",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "build": "npm run build -w backend && npm run build -w frontend",
+    "dev": "concurrently \"npm run dev -w backend\" \"npm run dev -w frontend\" \"npm run rating:dev\"",
+    "dev:portal": "concurrently \"npm run dev -w backend\" \"npm run dev -w frontend\"",
+    "mcp": "npm run mcp -w backend",
+    "rating:dev": "cd rating-service && python -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8787",
+    "rating:install": "cd rating-service && python -m pip install -e .[dev]",
+    "rating:test": "cd rating-service && python -m pytest",
+    "start:all": "npm run start:all -w backend",
+    "start:mcp": "npm run start:mcp -w backend",
+    "start:mcp:http": "npm run start:mcp:http -w backend",
+    "seed": "npm run seed -w backend",
+    "test": "npm run test -w backend && npm run rating:test && npm run lint -w frontend && npm run build"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.3"
+  }
+}

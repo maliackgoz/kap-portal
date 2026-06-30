@@ -1,0 +1,34 @@
+companies:
+  - name: A1 Capital Yatırım Menkul Değerler
+    aliases:
+      - A1 Capital
+      - A1 Capital Yatırım
+      - A1 Capital Yatırım Menkul Değerler A.Ş.
+  - name: Gelecek Varlık Yönetim
+    aliases:
+      - Gelecek Varlık
+      - Gelecek Varlık Yönetim A.Ş.
+  - name: Dünya Varlık Yönetim
+    aliases:
+      - Dünya Varlık
+      - Dünya Varlık Yönetim A.Ş.
+  - name: Birikim Varlık Yönetim
+    aliases:
+      - Birikim Varlık
+      - Birikim Varlık Yönetim A.Ş.
+  - name: Doğru Varlık Yönetim
+    aliases:
+      - Doğru Varlık
+      - Doğru Varlık Yönetim A.Ş.
+  - name: Adil Varlık Yönetim
+    aliases:
+      - Adil Varlık
+      - Adil Varlık Yönetim A.Ş.
+  - name: Ortak Varlık Yönetim
+    aliases:
+      - Ortak Varlık
+      - Ortak Varlık Yönetim A.Ş.
+  - name: Q Faktoring
+    aliases:
+      - Q Finans Faktoring
+      - Q Finans Faktoring A.Ş.

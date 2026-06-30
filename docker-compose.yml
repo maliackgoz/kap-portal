@@ -1,0 +1,31 @@
+services:
+  kapportal-mcp:
+    image: memobaba44/kapportal-mcp:latest
+    build: .
+    ports:
+      - "8060:8060"
+      - "8063:8063"
+      - "8064:8064"
+    environment:
+      - PORT=8063
+      - MCP_PORT=8060
+      - MCP_PATH=/mcp
+      - MCP_ALLOWED_HOSTS=localhost,127.0.0.1,::1,0.0.0.0,172.30.146.31,192.168.1.147
+      - KAP_PORTAL_URL=http://127.0.0.1:8063
+      - KAP_PORTAL_USERNAME=admin
+      - KAP_PORTAL_PASSWORD=kap2024
+      - KAP_CONCURRENCY=1
+      - KAP_REQUEST_TIMEOUT_MS=30000
+      - KAP_REQUEST_DELAY_MS=3000
+      - KAP_MAX_RETRY=3
+      - KAP_RETRY_BASE_DELAY_MS=5000
+      - KAP_ERROR_COOLDOWN_THRESHOLD=3
+      - KAP_ERROR_COOLDOWN_MS=60000
+      - RATING_SERVICE_PORT=8064
+      - RATING_SERVICE_URL=http://127.0.0.1:8064
+      - RATING_MCP_DATA_DIR=/app/rating-service/data
+      - RATING_MCP_GLOBAL_PROVIDER_TIMEOUT_SECONDS=12
+      - RATING_MCP_GLOBAL_PROVIDER_RATE_LIMIT_SECONDS=1
+      - RATING_MCP_GLOBAL_PROVIDER_MAX_COMPANIES=80
+    volumes:
+      - ./rating-service/data:/app/rating-service/data

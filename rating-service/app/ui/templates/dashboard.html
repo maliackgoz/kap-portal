@@ -1,0 +1,235 @@
+{% macro source_button(source) -%}
+  <button
+    type="button"
+    data-source="{{ source.key }}"
+    data-source-label="{{ source.name }}"
+    class="source-button source-{{ source.type }} status-{{ source.status_class }}"
+    title="{{ source.name }} kaynağını güncelle"
+  >
+    <span class="source-title">{{ source.name }}</span>
+    <span class="status-pill">Durum: {{ source.display_status }}</span>
+    <span class="source-metrics">
+      <span class="source-metric">
+        <span class="metric-label">Kayıt</span>
+        <strong>{{ source.record_count }}</strong>
+      </span>
+      {% if source.type == "rating" %}
+        <span class="source-metric">
+          <span class="metric-label">Rapor</span>
+          <strong>{{ source.report_count }}</strong>
+        </span>
+      {% endif %}
+    </span>
+    <span class="source-updated">
+      <span class="metric-label">Son güncelleme</span>
+      <strong>{{ source.last_refresh[:16].replace("T", " ") if source.last_refresh else "Henüz yenilenmedi" }}</strong>
+    </span>
+  </button>
+{%- endmacro %}
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Rating MCP</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <h1>Rating MCP</h1>
+      </div>
+      <nav>
+        <a href="/api/export/latest.csv">CSV</a>
+        <a href="/api/export/latest.md">MD</a>
+        <a href="/docs">API</a>
+        <a href="/mcp">MCP</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="stats" aria-label="Veri durumu">
+        <article>
+          <span>Rating kaydı</span>
+          <strong>{{ stats.rating_total }}</strong>
+        </article>
+        <article>
+          <span>Haber kaydı</span>
+          <strong>{{ stats.news_total }}</strong>
+        </article>
+        <article>
+          <span>Son yenileme</span>
+          <strong>{{ stats.last_refresh }}</strong>
+        </article>
+        <article>
+          <span>MCP endpoint</span>
+          <strong>{{ stats.mcp_url }}</strong>
+        </article>
+      </section>
+
+      <section class="source-panel" aria-label="Kaynak yenileme">
+        <div class="section-head compact">
+          <h2>Kaynaklar</h2>
+          <span id="refresh-status" role="status"></span>
+        </div>
+
+        <div class="source-actions" aria-label="Toplu yenileme">
+          <button type="button" data-source="news" data-source-label="Tüm haber kaynakları" class="quick-refresh news-refresh">
+            Haberleri güncelle
+          </button>
+          <span>Haber butonu BloombergHT, TRT Haber, Sabah, A Haber, Yeni Şafak ve Anadolu Ajansı kaynaklarını tek seferde dener.</span>
+        </div>
+
+        <div class="source-block">
+          <div class="source-group-head">
+            <h3>Rating kaynakları</h3>
+            <span>Her kutuya basınca ilgili kurum yenilenir.</span>
+          </div>
+          <div class="source-grid">
+            {% for source in sources if source.type == "rating" %}
+              {{ source_button(source) }}
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="source-block">
+          <div class="source-group-head">
+            <h3>Haber kaynakları</h3>
+            <span>Şirket haberleri ve risk anahtar kelimeleri için kullanılır.</span>
+          </div>
+          <div class="source-grid">
+            {% for source in sources if source.type == "news" %}
+              {{ source_button(source) }}
+            {% endfor %}
+          </div>
+        </div>
+      </section>
+
+      {% if api_key_enabled %}
+        <section class="notice">API key aktif. REST ve MCP isteklerinde Authorization bearer token gerekir.</section>
+      {% endif %}
+
+      <section class="filters">
+        <label class="field">
+          <span>Şirket</span>
+          <input id="company-filter" type="search" placeholder="..." />
+        </label>
+        <label class="field">
+          <span>Sektör</span>
+          <input id="sector-filter" type="search" placeholder="..." />
+        </label>
+        <label class="field">
+          <span>Kurum</span>
+          <input id="agency-filter" type="search" placeholder="..." />
+        </label>
+        <label class="checkbox">
+          <input id="latest-filter" type="checkbox" checked />
+          Son kayıt
+        </label>
+        <button id="apply-filters" type="button">Filtrele</button>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <h2>Son Ratingler</h2>
+          <span id="rating-count">{{ ratings|length }} kayıt</span>
+        </div>
+        <div class="table-wrap">
+          <table class="ratings-table">
+            <colgroup>
+              <col class="col-company" />
+              <col class="col-agency" />
+              <col class="col-date" />
+              <col class="col-rating" />
+              <col class="col-rating" />
+              <col class="col-outlook" />
+              <col class="col-sector" />
+              <col class="col-action" />
+              <col class="col-source" />
+            </colgroup>
+            <thead>
+              <tr>
+                <th>Şirket</th>
+                <th>Kurum</th>
+                <th>Tarih</th>
+                <th>UVD</th>
+                <th>KVD</th>
+                <th>Görünüm</th>
+                <th>Sektör</th>
+                <th>Aksiyon</th>
+                <th>Kaynak</th>
+              </tr>
+            </thead>
+            <tbody id="ratings-body">
+              {% if ratings %}
+                {% for row in ratings %}
+                  <tr>
+                    <td>{{ row.company }}</td>
+                    <td>{{ row.agency }}</td>
+                    <td>{{ row.rating_date or "" }}</td>
+                    <td>{{ row.long_term_rating or "" }}</td>
+                    <td>{{ row.short_term_rating or "" }}</td>
+                    <td>{{ row.outlook or "" }}</td>
+                    <td>{{ row.sector or "" }}</td>
+                    <td>{{ row.action or "" }}</td>
+                    <td>
+                      {% if row.report_url %}
+                        <a href="{{ row.report_url }}" target="_blank" rel="noreferrer">Rapor</a>
+                      {% elif row.source_url %}
+                        <a href="{{ row.source_url }}" target="_blank" rel="noreferrer">Liste</a>
+                      {% endif %}
+                    </td>
+                  </tr>
+                {% endfor %}
+              {% else %}
+                <tr class="empty-row">
+                  <td colspan="9">Henüz rating kaydı yok.</td>
+                </tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <h2>Son Haberler</h2>
+          <span>{{ news|length }} kayıt</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Kaynak</th>
+                <th>Başlık</th>
+                <th>Tarih</th>
+                <th>Risk</th>
+                <th>Etiketler</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if news %}
+                {% for row in news %}
+                  <tr>
+                    <td>{{ row.source }}</td>
+                    <td><a href="{{ row.url }}" target="_blank" rel="noreferrer">{{ row.title }}</a></td>
+                    <td>{{ row.published_at or "Tarih yok" }}</td>
+                    <td>{{ row.risk_level or "" }}</td>
+                    <td>{{ row.matched_keywords|join(", ") }}</td>
+                  </tr>
+                {% endfor %}
+              {% else %}
+                <tr class="empty-row">
+                  <td colspan="5">Henüz haber kaydı yok.</td>
+                </tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </main>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>
