@@ -1,31 +1,83 @@
 services:
   kapportal-mcp:
-    image: memobaba44/kapportal-mcp:latest
-    build: .
+    image: ${KAP_PORTAL_IMAGE:-memobaba44/kapportal-mcp:latest}
+    build:
+      context: .
+      args:
+        APP_VERSION: ${APP_VERSION:-local}
+    container_name: kapportal-mcp
+    restart: unless-stopped
+    init: true
+    dns:
+      - "${PRIMARY_DNS:-1.1.1.1}"
+      - "${SECONDARY_DNS:-8.8.8.8}"
     ports:
-      - "8060:8060"
-      - "8063:8063"
-      - "8064:8064"
+      - "${BIND_ADDRESS:-0.0.0.0}:8060:8060"
+      - "${BIND_ADDRESS:-0.0.0.0}:8063:8063"
+      - "${BIND_ADDRESS:-0.0.0.0}:8064:8064"
     environment:
       - PORT=8063
       - MCP_PORT=8060
       - MCP_PATH=/mcp
-      - MCP_ALLOWED_HOSTS=localhost,127.0.0.1,::1,0.0.0.0,172.30.146.31,192.168.1.147
+      - NODE_ENV=production
+      - APP_VERSION=${APP_VERSION:-local}
+      - ADMIN_USER=${ADMIN_USER:-admin}
+      - ADMIN_PASS=${ADMIN_PASS:?ADMIN_PASS must be set in .env}
+      - JWT_SECRET=${JWT_SECRET:?JWT_SECRET must be set in .env}
+      - JWT_EXPIRES_IN=${JWT_EXPIRES_IN:-8h}
+      - LOGIN_MAX_ATTEMPTS=${LOGIN_MAX_ATTEMPTS:-8}
+      - LOGIN_WINDOW_MS=${LOGIN_WINDOW_MS:-900000}
+      - PORTAL_ALLOWED_ORIGINS=${PORTAL_ALLOWED_ORIGINS:-}
+      - TRUST_PROXY=${TRUST_PROXY:-}
+      - MCP_ALLOWED_HOSTS=${MCP_ALLOWED_HOSTS:?MCP_ALLOWED_HOSTS must be set in .env}
+      - MCP_ALLOWED_ORIGINS=${MCP_ALLOWED_ORIGINS:-}
+      - MCP_API_KEY=${MCP_API_KEY:-}
       - KAP_PORTAL_URL=http://127.0.0.1:8063
-      - KAP_PORTAL_USERNAME=admin
-      - KAP_PORTAL_PASSWORD=kap2024
+      - KAP_DB_PATH=/app/backend/data/kap.db
       - KAP_CONCURRENCY=1
-      - KAP_REQUEST_TIMEOUT_MS=30000
+      - KAP_REQUEST_TIMEOUT_MS=20000
+      - KAP_TOTAL_TIMEOUT_MS=75000
       - KAP_REQUEST_DELAY_MS=3000
-      - KAP_MAX_RETRY=3
-      - KAP_RETRY_BASE_DELAY_MS=5000
+      - KAP_MAX_RETRY=2
+      - KAP_RETRY_BASE_DELAY_MS=2500
       - KAP_ERROR_COOLDOWN_THRESHOLD=3
-      - KAP_ERROR_COOLDOWN_MS=60000
+      - KAP_ERROR_COOLDOWN_MS=30000
       - RATING_SERVICE_PORT=8064
       - RATING_SERVICE_URL=http://127.0.0.1:8064
+      - RATING_SERVICE_API_KEY=${RATING_MCP_API_KEY:-}
       - RATING_MCP_DATA_DIR=/app/rating-service/data
+      - RATING_MCP_API_KEY=${RATING_MCP_API_KEY:-}
       - RATING_MCP_GLOBAL_PROVIDER_TIMEOUT_SECONDS=12
       - RATING_MCP_GLOBAL_PROVIDER_RATE_LIMIT_SECONDS=1
       - RATING_MCP_GLOBAL_PROVIDER_MAX_COMPANIES=80
     volumes:
-      - ./rating-service/data:/app/rating-service/data
+      - kapportal_backend_data:/app/backend/data
+      - kapportal_rating_data:/app/rating-service/data
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - >-
+          curl -fsS http://127.0.0.1:8063/api/ready
+          && curl -fsS http://127.0.0.1:8060/health
+          && curl -fsS http://127.0.0.1:8064/health
+          || exit 1
+      interval: 30s
+      timeout: 8s
+      start_period: 45s
+      retries: 3
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+    stop_grace_period: 30s
+
+volumes:
+  kapportal_backend_data:
+    name: kapportal_backend_data
+  kapportal_rating_data:
+    name: kapportal_rating_data

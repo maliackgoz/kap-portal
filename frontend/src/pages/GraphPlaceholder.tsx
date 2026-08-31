@@ -5,7 +5,7 @@ import { api, type Company, type GraphData, type GraphEdge, type GraphNode, type
 import { Network } from 'vis-network';
 import type { Color, IdType } from 'vis-network';
 import { DataSet } from 'vis-data';
-import { RefreshCw, Search, Building2, Users, User, GitBranch, ZoomIn, ZoomOut, Maximize, Minimize, SlidersHorizontal, ShieldCheck, Newspaper, Check, Route, X, ArrowRightLeft, CornerDownRight, Star, Plus } from 'lucide-react';
+import { RefreshCw, Search, Building2, Users, User, GitBranch, ZoomIn, ZoomOut, Maximize, Minimize, SlidersHorizontal, ShieldCheck, Newspaper, Check, Route, X, ArrowRightLeft, CornerDownRight, Star, Plus, ChevronDown } from 'lucide-react';
 import { useMemberCompanies } from '../hooks/useMemberCompanies';
 
 type CompanyOption = Pick<Company, 'id' | 'name' | 'status'>;
@@ -65,9 +65,9 @@ function normalizeCompanyLabel(value: string) {
 
 function edgeTypeLabel(type: GraphEdge['type']) {
   const labels: Record<GraphEdge['type'], string> = {
-    OWNS_DIRECTLY: 'Dogrudan ortak',
-    OWNS_INDIRECTLY: 'Dolayli ortak',
-    HAS_SUBSIDIARY: 'Bagli ortaklik',
+    OWNS_DIRECTLY: 'Doğrudan ortak',
+    OWNS_INDIRECTLY: 'Dolaylı ortak',
+    HAS_SUBSIDIARY: 'Bağlı ortaklık',
   };
   return labels[type] || type;
 }
@@ -82,7 +82,7 @@ function edgeDetail(edge: GraphEdge) {
 }
 
 function nodeTypeLabel(type: GraphNode['type']) {
-  if (type === 'company') return 'Sirket';
+  if (type === 'company') return 'Şirket';
   if (type === 'shareholder') return 'Ortak';
   return 'Kisi';
 }
@@ -272,7 +272,8 @@ export default function GraphPage() {
   const [selectedMemberIds, setSelectedMemberIds] = useState<number[]>([]);
   const [memberAddQuery, setMemberAddQuery] = useState('');
   const [memberAddOpen, setMemberAddOpen] = useState(false);
-  const { memberIds, members, addMember, removeMember } = useMemberCompanies(allCompanies);
+  const [memberPanelOpen, setMemberPanelOpen] = useState(false);
+  const { memberIds, members, error: memberError, addMember, removeMember } = useMemberCompanies(allCompanies);
 
   // Raw data (unfiltered)
   const rawDataRef = useRef<GraphData | null>(null);
@@ -552,7 +553,7 @@ export default function GraphPage() {
     }
 
     renderGraph(nodes, edges);
-    setGraphInfo(`${nodes.length} dugum, ${edges.length} kenar (filtrelenmis)`);
+    setGraphInfo(`${nodes.length} düğüm, ${edges.length} kenar (filtrelenmiş)`);
   }
 
   // Load and render graph
@@ -779,11 +780,11 @@ export default function GraphPage() {
 
   async function handleRefreshSelectedFromKap() {
     if (!selectedCompanyId) {
-      setGraphInfo('Once grafi yenilenecek sirketi sec.');
+      setGraphInfo('Önce grafiği yenilenecek şirketi seçin.');
       return;
     }
     setKapRefreshing(true);
-    setGraphInfo('KAP verisi cekiliyor ve graf yeniden isleniyor...');
+    setGraphInfo('KAP verisi çekiliyor ve grafik yeniden işleniyor...');
     try {
       await api.scrapeCompany(selectedCompanyId);
       await api.rebuildGraph();
@@ -795,7 +796,7 @@ export default function GraphPage() {
       setCompanies(latestCompanies.filter(c => c.status === 'done'));
       setStats(statsData);
       await loadGraph(selectedCompanyId);
-      setGraphInfo('KAP verisi guncellendi, grafik yeniden olusturuldu.');
+      setGraphInfo('KAP verisi güncellendi, grafik yeniden oluşturuldu.');
     } catch (err) {
       setGraphInfo('KAP yenileme hatasi: ' + errorMessage(err, 'Veri guncellenemedi'));
     } finally {
@@ -874,7 +875,7 @@ export default function GraphPage() {
       setSearch('');
       setShowDropdown(false);
       setSearchParams({});
-      setGraphInfo(`${label}: ${uniqueIds.length} sirket, ${graphData.nodes.length} dugum, ${graphData.edges.length} kenar`);
+      setGraphInfo(`${label}: ${uniqueIds.length} şirket, ${graphData.nodes.length} düğüm, ${graphData.edges.length} kenar`);
     } catch (err) {
       setGraphInfo('Hata: ' + errorMessage(err, `${label} yuklenemedi`));
     } finally {
@@ -886,23 +887,23 @@ export default function GraphPage() {
     const doneIds = new Set(graphMemberCompanies.map(company => company.id));
     await loadCompanyGroup(
       selectedMemberIds.filter(id => doneIds.has(id)),
-      'Secili uyeler',
-      'Graf icin secili uye yok'
+      'Seçili üyeler',
+      'Grafik için seçili üye yok'
     );
   }
 
   async function handleLoadAllMembers() {
     await loadCompanyGroup(
       graphMemberCompanies.map(company => company.id),
-      'Uye portfoyu',
-      'Islenmis uye sirket yok'
+      'Üye portföyü',
+      'İşlenmiş üye şirket yok'
     );
   }
 
   async function handleFindPath() {
     if (!pathFrom || !pathTo) return;
     if (pathFrom === pathTo) {
-      setPathMessage('Baslangic ve hedef ayni olamaz');
+      setPathMessage('Başlangıç ve hedef aynı olamaz');
       setPathResult(null);
       return;
     }
@@ -926,16 +927,16 @@ export default function GraphPage() {
         rawDataRef.current = { nodes, edges };
         renderGraph(nodes, edges);
         setPathResult({ nodes, edges: result.edges, message });
-        setGraphInfo(`Yol: ${nodes.length} dugum, ${edges.length} kenar`);
+        setGraphInfo(`Yol: ${nodes.length} düğüm, ${edges.length} kenar`);
         window.setTimeout(() => {
           networkRef.current?.selectNodes(result.path, true);
           networkRef.current?.fit({ animation: true });
         }, 0);
       } else {
-        setPathMessage('Baglanti bulunamadi');
+        setPathMessage('Bağlantı bulunamadı');
       }
     } catch (err) {
-      setPathMessage('Hata: ' + errorMessage(err, 'Yol bulunamadi'));
+      setPathMessage('Hata: ' + errorMessage(err, 'Yol bulunamadı'));
     } finally {
       setLoading(false);
     }
@@ -997,7 +998,7 @@ export default function GraphPage() {
   const processedMemberIds = new Set(graphMemberCompanies.map(company => company.id));
   const selectedProcessedMemberCount = selectedMemberIds.filter(id => processedMemberIds.has(id)).length;
   const canUseSelectedForPath = selectedNodeCompany && allCompanies.some(company => company.id === selectedNodeCompany.id);
-  const pathStatusColor = pathMessage.includes('bulunamadi') || pathMessage.includes('Hata') || pathMessage.includes('ayni')
+  const pathStatusColor = pathMessage.includes('bulunamadı') || pathMessage.includes('Hata') || pathMessage.includes('aynı')
     ? 'var(--red)'
     : 'var(--green)';
 
@@ -1008,7 +1009,7 @@ export default function GraphPage() {
         display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12, flexWrap: 'wrap',
       }}>
         <h1 style={{ fontSize: 24, fontWeight: 800, letterSpacing: 0, margin: 0, marginRight: 16 }}>
-          Ortaklik Grafi
+          Ortaklık Grafiği
         </h1>
 
         {/* Dropdown */}
@@ -1030,7 +1031,7 @@ export default function GraphPage() {
             backgroundRepeat: 'no-repeat', backgroundPosition: 'right 10px center',
           }}
         >
-          <option value="">-- Sirket sec --</option>
+          <option value="">Şirket seçin</option>
           {searchableCompanies.map(c => (
             <option key={c.id} value={c.id}>{c.name}</option>
           ))}
@@ -1046,7 +1047,7 @@ export default function GraphPage() {
             <Search size={14} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
             <input
               type="text"
-              placeholder={memberMode ? 'Uyeler icinde sirket adi aratiniz' : 'Sirket adi aratiniz'}
+              placeholder={memberMode ? 'Üyeler içinde şirket arayın' : 'Şirket adıyla arayın'}
               value={search}
               onFocus={() => {
                 if (filteredCompanies.length > 0) setShowDropdown(true);
@@ -1114,7 +1115,7 @@ export default function GraphPage() {
         <button
           onClick={() => void handleRefreshSelectedFromKap()}
           disabled={!selectedCompanyId || kapRefreshing}
-          title="Secili sirketi KAP'tan tekrar cek ve ortaklik grafini yeniden isle"
+          title="Seçili şirketin KAP verisini yenileyip ortaklık grafiğini yeniden oluştur"
           style={{
             display: 'flex', alignItems: 'center', gap: 6,
             padding: '8px 14px', borderRadius: 'var(--radius)',
@@ -1125,7 +1126,7 @@ export default function GraphPage() {
           }}
         >
           <RefreshCw size={14} style={{ animation: kapRefreshing ? 'spin 1s linear infinite' : 'none' }} />
-          {kapRefreshing ? 'KAP isleniyor...' : 'KAPtan Yeniden Isle'}
+          {kapRefreshing ? 'KAP işleniyor...' : "KAP'tan Yeniden İşle"}
         </button>
 
         {/* Rebuild button */}
@@ -1141,7 +1142,7 @@ export default function GraphPage() {
           }}
         >
           <RefreshCw size={14} style={{ animation: rebuilding ? 'spin 1s linear infinite' : 'none' }} />
-          {rebuilding ? 'Yeniden olusturuluyor...' : 'Yeniden Olustur'}
+          {rebuilding ? 'Yeniden oluşturuluyor...' : 'Yeniden Oluştur'}
         </button>
       </div>
 
@@ -1154,12 +1155,12 @@ export default function GraphPage() {
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'var(--text-muted)' }}>
             <GitBranch size={13} />
-            <span>Toplam: <strong style={{ color: 'var(--text)', fontFamily: 'var(--font-mono)' }}>{stats.totalNodes.toLocaleString('tr-TR')}</strong> dugum, <strong style={{ color: 'var(--text)', fontFamily: 'var(--font-mono)' }}>{stats.totalEdges.toLocaleString('tr-TR')}</strong> kenar</span>
+            <span>Toplam: <strong style={{ color: 'var(--text)', fontFamily: 'var(--font-mono)' }}>{stats.totalNodes.toLocaleString('tr-TR')}</strong> düğüm, <strong style={{ color: 'var(--text)', fontFamily: 'var(--font-mono)' }}>{stats.totalEdges.toLocaleString('tr-TR')}</strong> kenar</span>
           </div>
           <div style={{ width: 1, background: 'var(--border)' }} />
           <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
             <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#0033A0' }} />
-            <span style={{ color: 'var(--text-muted)' }}>Sirket: <strong style={{ fontFamily: 'var(--font-mono)', color: 'var(--text)' }}>{stats.companyNodes.toLocaleString('tr-TR')}</strong></span>
+            <span style={{ color: 'var(--text-muted)' }}>Şirket: <strong style={{ fontFamily: 'var(--font-mono)', color: 'var(--text)' }}>{stats.companyNodes.toLocaleString('tr-TR')}</strong></span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
             <div style={{ width: 8, height: 8, borderRadius: 2, background: '#f59e0b', transform: 'rotate(45deg)' }} />
@@ -1187,12 +1188,22 @@ export default function GraphPage() {
           padding: '12px 14px', borderBottom: '1px solid var(--border)',
           display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap',
         }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, color: 'var(--accent)', fontSize: 13, fontWeight: 850 }}>
-            <Star size={15} /> Uye Ortaklik Baglantilari
+          <button
+            type="button"
+            onClick={() => setMemberPanelOpen(value => !value)}
+            aria-expanded={memberPanelOpen}
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: 8, border: 'none',
+              background: 'transparent', color: 'var(--accent)', fontSize: 13,
+              fontWeight: 850, cursor: 'pointer', padding: 0,
+            }}
+          >
+            <Star size={15} /> Üye Ortaklık Bağlantıları
             <span style={{ color: 'var(--text-muted)', fontFamily: 'var(--font-mono)', fontSize: 11 }}>
-              {members.length.toLocaleString('tr-TR')} uye
+              {members.length.toLocaleString('tr-TR')} üye
             </span>
-          </div>
+            <ChevronDown size={14} style={{ transform: memberPanelOpen ? 'rotate(180deg)' : undefined, transition: 'transform 0.15s ease' }} />
+          </button>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
             <button
               type="button"
@@ -1205,7 +1216,7 @@ export default function GraphPage() {
                 cursor: 'pointer', fontSize: 12, fontWeight: 850,
               }}
             >
-              Sadece uyeler
+              Sadece üyeler
             </button>
             {selectedRootCompany && (
               <button
@@ -1220,12 +1231,13 @@ export default function GraphPage() {
                 }}
               >
                 {selectedRootIsMember ? <X size={13} /> : <Plus size={13} />}
-                {selectedRootIsMember ? 'Aktifi Cikar' : 'Aktifi Uyeye Ekle'}
+                {selectedRootIsMember ? 'Aktifi Çıkar' : 'Aktifi Üyelere Ekle'}
               </button>
             )}
           </div>
         </div>
 
+        {memberPanelOpen && (
         <div style={{ padding: 14, display: 'grid', gap: 12 }}>
           <div style={{
             display: 'grid', gridTemplateColumns: 'minmax(240px, 1fr) auto', gap: 8, alignItems: 'end',
@@ -1233,7 +1245,7 @@ export default function GraphPage() {
           }}>
             <div style={{ position: 'relative' }}>
               <label style={{ display: 'block', color: 'var(--text-muted)', fontSize: 10, fontWeight: 850, textTransform: 'uppercase', letterSpacing: 0, marginBottom: 6 }}>
-                Uyeye sirket ekle
+                Üye şirket ekle
               </label>
               <div style={{ position: 'relative' }}>
                 <Search size={14} style={{ position: 'absolute', left: 11, top: 10, color: 'var(--text-muted)' }} />
@@ -1251,7 +1263,7 @@ export default function GraphPage() {
                       addManualMember(memberAddOptions[0]);
                     }
                   }}
-                  placeholder="Sirket adi ara..."
+                  placeholder="Şirket adıyla arayın"
                   style={{
                     width: '100%', height: 34, padding: '0 11px 0 34px',
                     borderRadius: 8, border: '1px solid var(--border)', background: 'var(--bg-surface)',
@@ -1280,7 +1292,7 @@ export default function GraphPage() {
                     >
                       <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{option.name}</span>
                       <span style={{ color: option.status === 'done' ? 'var(--green)' : 'var(--amber)', fontSize: 10, fontWeight: 850 }}>
-                        {option.status === 'done' ? 'Graf hazir' : 'Islenecek'}
+                        {option.status === 'done' ? 'Graf hazır' : 'İşlenecek'}
                       </span>
                     </button>
                   ))}
@@ -1299,9 +1311,15 @@ export default function GraphPage() {
                 cursor: memberAddOptions.length ? 'pointer' : 'not-allowed', fontSize: 12, fontWeight: 850,
               }}
             >
-              <Plus size={13} /> Uyeye Ekle
+              <Plus size={13} /> Üyelere Ekle
             </button>
           </div>
+
+          {memberError && (
+            <div style={{ padding: '9px 11px', borderRadius: 8, background: 'var(--red-bg)', color: 'var(--red)', fontSize: 12, fontWeight: 700 }}>
+              {memberError}
+            </div>
+          )}
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(190px, 1fr))', gap: 8 }}>
             {members.length === 0 ? (
@@ -1309,7 +1327,7 @@ export default function GraphPage() {
                 padding: '12px 13px', borderRadius: 8, border: '1px dashed var(--border)',
                 background: 'var(--bg-surface-2)', color: 'var(--text-muted)', fontSize: 12,
               }}>
-                Uye listesi bos. Sirket secip "Aktifi Uyeye Ekle" ile kaydedebilirsin.
+                Henüz üye şirket eklenmedi. Arama alanından şirket seçerek portföyü oluşturun.
               </div>
             ) : members.map(member => {
               const selected = selectedMemberSet.has(member.id);
@@ -1350,14 +1368,14 @@ export default function GraphPage() {
                       background: processed ? 'var(--green-bg)' : 'var(--amber-bg)',
                       borderRadius: 6, padding: '3px 7px', fontSize: 10, fontWeight: 850,
                     }}>
-                      {processed ? 'Graf hazir' : 'Veri bekliyor'}
+                      {processed ? 'Graf hazır' : 'KAP verisi bekliyor'}
                     </span>
                     <div style={{ display: 'flex', gap: 4 }}>
                       <button
                         type="button"
                         onClick={() => handleCompanySelect(member)}
                         disabled={!processed}
-                        title="Bu uyenin grafini ac"
+                        title="Bu üyenin grafiğini aç"
                         style={{
                           height: 26, padding: '0 8px', borderRadius: 6, border: '1px solid var(--border)',
                           background: 'var(--bg-surface)', color: 'var(--text-dim)', cursor: processed ? 'pointer' : 'not-allowed',
@@ -1369,7 +1387,7 @@ export default function GraphPage() {
                       <button
                         type="button"
                         onClick={() => removeMember(member.id)}
-                        title="Uyeden cikar"
+                        title="Üyelerden çıkar"
                         style={{
                           width: 26, height: 26, borderRadius: 6, border: '1px solid var(--border)',
                           background: 'var(--bg-surface)', color: 'var(--text-muted)', cursor: 'pointer',
@@ -1388,8 +1406,8 @@ export default function GraphPage() {
           {members.length > 0 && (
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, flexWrap: 'wrap' }}>
               <div style={{ color: 'var(--text-muted)', fontSize: 12 }}>
-                Secili: <strong style={{ color: 'var(--text)', fontFamily: 'var(--font-mono)' }}>{selectedMemberIds.length}</strong>
-                {' '} / graf hazir: <strong style={{ color: 'var(--text)', fontFamily: 'var(--font-mono)' }}>{selectedProcessedMemberCount}</strong>
+                Seçili: <strong style={{ color: 'var(--text)', fontFamily: 'var(--font-mono)' }}>{selectedMemberIds.length}</strong>
+                {' '} / graf hazır: <strong style={{ color: 'var(--text)', fontFamily: 'var(--font-mono)' }}>{selectedProcessedMemberCount}</strong>
               </div>
               <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                 <button
@@ -1402,7 +1420,7 @@ export default function GraphPage() {
                     opacity: selectedProcessedMemberCount === 0 ? 0.45 : 1, fontSize: 12, fontWeight: 850,
                   }}
                 >
-                  Secilenleri Goster
+                  Seçilenleri Göster
                 </button>
                 <button
                   type="button"
@@ -1414,7 +1432,7 @@ export default function GraphPage() {
                     opacity: graphMemberCompanies.length === 0 ? 0.45 : 1, fontSize: 12, fontWeight: 850,
                   }}
                 >
-                  Tum Uyeleri Goster
+                  Tüm Üyeleri Göster
                 </button>
                 <button
                   type="button"
@@ -1426,12 +1444,13 @@ export default function GraphPage() {
                     opacity: selectedMemberIds.length === 0 ? 0.45 : 1, fontSize: 12, fontWeight: 850,
                   }}
                 >
-                  Secimi Temizle
+                  Seçimi Temizle
                 </button>
               </div>
             </div>
           )}
         </div>
+        )}
       </section>
 
       {/* Filters */}
@@ -1479,14 +1498,14 @@ export default function GraphPage() {
             gap: 16,
             padding: 14,
           }}>
-            <FilterGroup title="Dugum Tipi">
-              <CheckChip label="Sirket" checked={showCompanies} color="#0033A0" onClick={() => setShowCompanies(!showCompanies)} />
+            <FilterGroup title="Düğüm Tipi">
+              <CheckChip label="Şirket" checked={showCompanies} color="#0033A0" onClick={() => setShowCompanies(!showCompanies)} />
               <CheckChip label="Ortak" checked={showShareholders} color="#f59e0b" onClick={() => setShowShareholders(!showShareholders)} />
               <CheckChip label="Kisi" checked={showPersons} color="#22c55e" onClick={() => setShowPersons(!showPersons)} />
             </FilterGroup>
 
-            <FilterGroup title="Baglanti Tipi">
-              <CheckChip label="Dogrudan" checked={showDirect} color="#0033A0" onClick={() => setShowDirect(!showDirect)} />
+            <FilterGroup title="Bağlantı Tipi">
+              <CheckChip label="Doğrudan" checked={showDirect} color="#0033A0" onClick={() => setShowDirect(!showDirect)} />
               <CheckChip label="Dolayli" checked={showIndirect} color="#8b5cf6" onClick={() => setShowIndirect(!showIndirect)} />
               <CheckChip label="Bagli Ort." checked={showSubsidiary} color="#f59e0b" onClick={() => setShowSubsidiary(!showSubsidiary)} />
             </FilterGroup>
@@ -1514,8 +1533,8 @@ export default function GraphPage() {
               ))}
             </FilterGroup>
 
-            <FilterGroup title="Gorunum">
-              {([['fixed', 'Sabit'], ['sermaye', 'Sermaye'], ['connection', 'Baglanti']] as const).map(([mode, label]) => (
+            <FilterGroup title="Görünüm">
+              {([['fixed', 'Sabit'], ['sermaye', 'Sermaye'], ['connection', 'Bağlantı']] as const).map(([mode, label]) => (
                 <SegmentChip key={mode} label={label} active={nodeSizeMode === mode} onClick={() => setNodeSizeMode(mode)} />
               ))}
               {([['fixed', 'Kalinlik sabit'], ['proportional', 'Orana gore']] as const).map(([mode, label]) => (
@@ -1533,7 +1552,7 @@ export default function GraphPage() {
                   color: 'var(--text)', outline: 'none', fontFamily: 'inherit',
                 }}
               >
-                <option value="">Tum sektorler</option>
+                <option value="">Tüm sektörler</option>
                 {sectors.map(sector => <option key={sector} value={sector}>{sector}</option>)}
               </select>
               <CheckChip label="Yalnizlari gizle" checked={hideOrphans} color="#64748b" onClick={() => setHideOrphans(!hideOrphans)} />
@@ -1583,11 +1602,11 @@ export default function GraphPage() {
           <div style={{ padding: 14, display: 'grid', gap: 12 }}>
             <div className="graph-path-grid" style={{ display: 'flex', alignItems: 'end', gap: 10, flexWrap: 'wrap' }}>
               <PathCompanyInput
-                label="Baslangic"
+                label="Başlangıç"
                 query={pathFromQuery}
                 selected={Boolean(pathFrom)}
                 options={pathFromOptions}
-                placeholder="Sirket adi yaz"
+                placeholder="Başlangıç şirketini arayın"
                 onQueryChange={value => {
                   setPathFromQuery(value);
                   setPathFrom('');
@@ -1601,7 +1620,7 @@ export default function GraphPage() {
                 type="button"
                 onClick={handleSwapPath}
                 disabled={!pathFrom && !pathTo}
-                title="Baslangic ve hedefi degistir"
+                title="Başlangıç ve hedefi değiştir"
                 style={{
                   width: 38, height: 38, display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
                   borderRadius: 8, border: '1px solid var(--border)', background: 'var(--bg-surface-2)',
@@ -1616,7 +1635,7 @@ export default function GraphPage() {
                 query={pathToQuery}
                 selected={Boolean(pathTo)}
                 options={pathToOptions}
-                placeholder="Hedef sirket adi yaz"
+                placeholder="Hedef şirketi arayın"
                 onQueryChange={value => {
                   setPathToQuery(value);
                   setPathTo('');
@@ -1644,20 +1663,20 @@ export default function GraphPage() {
               {selectedRootCompany && (
                 <>
                   <button type="button" onClick={() => selectPathCompany('from', selectedRootCompany)} style={{ height: 30, padding: '0 10px', borderRadius: 7, border: '1px solid var(--border)', background: 'var(--bg-surface-2)', color: 'var(--text-dim)', cursor: 'pointer', fontSize: 12, fontWeight: 800, fontFamily: 'inherit' }}>
-                    Aktif sirket baslangic
+                    Aktif şirket başlangıç
                   </button>
                   <button type="button" onClick={() => selectPathCompany('to', selectedRootCompany)} style={{ height: 30, padding: '0 10px', borderRadius: 7, border: '1px solid var(--border)', background: 'var(--bg-surface-2)', color: 'var(--text-dim)', cursor: 'pointer', fontSize: 12, fontWeight: 800, fontFamily: 'inherit' }}>
-                    Aktif sirket hedef
+                    Aktif şirket hedef
                   </button>
                 </>
               )}
               {canUseSelectedForPath && selectedNodeCompany && (
                 <>
                   <button type="button" onClick={() => selectPathCompany('from', selectedNodeCompany)} style={{ height: 30, padding: '0 10px', borderRadius: 7, border: '1px solid var(--border)', background: 'var(--green-bg)', color: 'var(--green)', cursor: 'pointer', fontSize: 12, fontWeight: 850, fontFamily: 'inherit' }}>
-                    Secili dugum baslangic
+                    Seçili düğüm başlangıç
                   </button>
                   <button type="button" onClick={() => selectPathCompany('to', selectedNodeCompany)} style={{ height: 30, padding: '0 10px', borderRadius: 7, border: '1px solid var(--border)', background: 'var(--green-bg)', color: 'var(--green)', cursor: 'pointer', fontSize: 12, fontWeight: 850, fontFamily: 'inherit' }}>
-                    Secili dugum hedef
+                    Seçili düğüm hedef
                   </button>
                 </>
               )}
@@ -1673,7 +1692,7 @@ export default function GraphPage() {
                     <Route size={14} /> {pathResult.message}
                   </div>
                   <span style={{ color: 'var(--text-muted)', fontSize: 11, fontFamily: 'var(--font-mono)' }}>
-                    {pathResult.nodes.length} dugum / {pathResult.edges.length} baglanti
+                    {pathResult.nodes.length} düğüm / {pathResult.edges.length} bağlantı
                   </span>
                 </div>
                 <div style={{ display: 'grid', gap: 7 }}>
@@ -1751,7 +1770,7 @@ export default function GraphPage() {
                 <GitBranch size={28} />
               </div>
               <p style={{ fontSize: 14, maxWidth: 400, textAlign: 'center', lineHeight: 1.6, margin: 0 }}>
-                Yukaridaki arama cubuguna sirket adi yazin veya "Tam Graf" butonuna tiklayin.
+                Yukarıdaki arama alanından bir şirket seçin veya "Tam Graf" düğmesini kullanın.
               </p>
             </div>
           )}
@@ -1806,7 +1825,7 @@ export default function GraphPage() {
               </div>
               <div>
                 <div style={{ fontSize: 10, color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 700, letterSpacing: 0 }}>
-                  {selectedNode.type === 'company' ? 'Sirket' : selectedNode.type === 'shareholder' ? 'Ortak/Holding' : 'Kisi'}
+                  {selectedNode.type === 'company' ? 'Şirket' : selectedNode.type === 'shareholder' ? 'Ortak/Holding' : 'Kişi'}
                 </div>
               </div>
             </div>
@@ -1834,13 +1853,13 @@ export default function GraphPage() {
               )}
               {selectedNode.connectionCount !== undefined && (
                 <div style={{ padding: '8px 10px', borderRadius: 8, background: 'var(--bg-surface-2)', border: '1px solid var(--border)' }}>
-                  <div style={{ fontSize: 10, color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase' }}>Baglanti</div>
+                  <div style={{ fontSize: 10, color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase' }}>Bağlantı</div>
                   <div style={{ fontSize: 12, color: 'var(--text-dim)', marginTop: 3, fontFamily: 'var(--font-mono)', fontWeight: 800 }}>{selectedNode.connectionCount.toLocaleString('tr-TR')} kenar</div>
                 </div>
               )}
               {selectedNodeCompany && selectedNode.type !== 'company' && (
                 <div style={{ padding: '8px 10px', borderRadius: 8, background: 'var(--green-bg)', color: 'var(--green)', fontSize: 12, fontWeight: 800 }}>
-                  KAP sirket kaydiyla eslesti
+                  KAP şirket kaydıyla eşleşti
                 </div>
               )}
             </div>
@@ -1857,7 +1876,7 @@ export default function GraphPage() {
                   }}
                 >
                   <Building2 size={13} />
-                  Sirket Detayina Git
+                  Şirket Detayına Git
                 </button>
                 <button
                   onClick={() => navigate(`/ratings?company=${encodeURIComponent(selectedNodeCompany.name)}`)}
@@ -1869,7 +1888,7 @@ export default function GraphPage() {
                   }}
                 >
                   <ShieldCheck size={13} />
-                  Rating Kayitlari
+                  Rating Kayıtları
                 </button>
                 <button
                   onClick={() => navigate(`/news?q=${encodeURIComponent(selectedNodeCompany.name)}`)}
@@ -1899,7 +1918,7 @@ export default function GraphPage() {
                     }}
                   >
                     <GitBranch size={13} />
-                    Bu Sirketin Grafini Goster
+                    Bu Şirketin Grafiğini Göster
                   </button>
                 )}
               </div>

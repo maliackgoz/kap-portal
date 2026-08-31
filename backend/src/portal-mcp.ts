@@ -135,7 +135,6 @@ export class PortalClient {
   private readonly password: string;
   private token: string | null = null;
   private loginPromise: Promise<string> | null = null;
-  private graphCache: { data: GraphData; createdAt: number } | null = null;
 
   constructor(options: PortalClientOptions) {
     this.baseUrl = options.baseUrl.replace(/\/+$/, '');
@@ -194,17 +193,7 @@ export class PortalClient {
   }
 
   async getFullGraph(): Promise<GraphData> {
-    const now = Date.now();
-    if (this.graphCache && now - this.graphCache.createdAt < 60_000) {
-      return this.graphCache.data;
-    }
-    const data = await this.request<GraphData>('/api/graph/data');
-    this.graphCache = { data, createdAt: now };
-    return data;
-  }
-
-  invalidateGraphCache() {
-    this.graphCache = null;
+    return this.request<GraphData>('/api/graph/data');
   }
 }
 
@@ -337,7 +326,7 @@ async function getCompanyRatings(client: PortalClient, input: {
   }));
 
   return {
-    summary: `${response.summary} KVD kisa vadeli derecelendirme notudur; MCP cevabinda kvd ve short_term_rating alanlari ayni degeri tasir.`,
+    summary: `${response.summary} KVD kısa vadeli derecelendirme notudur; MCP cevabında kvd ve short_term_rating alanları aynı değeri taşır.`,
     company: input.company,
     agency: input.agency,
     includeHistory: Boolean(input.includeHistory),
@@ -728,7 +717,10 @@ export function createPortalMcpServer(client: PortalClient) {
     },
     async ({ companyId, query, depth, edgeTypes, minRatioPct, maxNodes, maxEdges }) => {
       const company = await resolveCompany(client, { companyId, query });
-      const subgraph = await client.request<GraphData>(`/api/graph/data?company_id=${company.id}&depth=${depth}`);
+      const [subgraph, relationshipSummary] = await Promise.all([
+        client.request<GraphData>(`/api/graph/data?company_id=${company.id}&depth=${depth}`),
+        client.request<Record<string, unknown>>(`/api/graph/company/${company.id}/summary`),
+      ]);
       const filtered = filterGraph(subgraph, {
         rootNodeId: `company_${company.id}`,
         edgeTypes,
@@ -736,7 +728,13 @@ export function createPortalMcpServer(client: PortalClient) {
         maxNodes,
         maxEdges,
       });
-      return jsonResult({ company: withKapUrl(company), depth, filters: { edgeTypes, minRatioPct }, ...filtered });
+      return jsonResult({
+        company: withKapUrl(company),
+        depth,
+        filters: { edgeTypes, minRatioPct },
+        relationshipSummary,
+        ...filtered,
+      });
     },
   );
 
@@ -806,7 +804,6 @@ export function createPortalMcpServer(client: PortalClient) {
     },
     async () => {
       const result = await client.request<Record<string, unknown>>('/api/graph/rebuild', { method: 'POST' });
-      client.invalidateGraphCache();
       return jsonResult(result);
     },
   );
@@ -827,7 +824,7 @@ export function createPortalMcpServer(client: PortalClient) {
       if (!confirm) {
         return jsonResult({
           status: 'confirmation_required',
-          message: 'Call again with confirm=true to start KAP processing on the remote portal.',
+          message: 'KAP işlemini başlatmak için aracı confirm=true ile tekrar çağırın.',
           scope,
         });
       }
@@ -843,7 +840,7 @@ export function createPortalMcpServer(client: PortalClient) {
 
       return jsonResult({
         ...result,
-        note: 'Processing runs asynchronously. Use kap_status to follow running/current/total state and kap_rebuild_relationship_graph after it finishes if graph data changed.',
+        note: 'İşlem arka planda çalışır. İlerlemeyi kap_status ile izleyin; başarılı KAP yazımlarından sonra ortaklık ağı otomatik güncellenir.',
       });
     },
   );
@@ -864,12 +861,11 @@ export function createPortalMcpServer(client: PortalClient) {
       if (!confirm) {
         return jsonResult({
           status: 'confirmation_required',
-          message: 'Call again with confirm=true to make the remote portal refresh KAP data for this company.',
+          message: 'Şirketin KAP verisini yenilemek için aracı confirm=true ile tekrar çağırın.',
         });
       }
       const company = await resolveCompany(client, { companyId, query });
       const result = await client.request<Record<string, unknown>>(`/api/companies/${company.id}/scrape`, { method: 'POST' });
-      client.invalidateGraphCache();
       return jsonResult({ company: withKapUrl(company), ...result });
     },
   );

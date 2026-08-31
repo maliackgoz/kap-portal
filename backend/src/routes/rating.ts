@@ -2,7 +2,8 @@ import { Router, type Request, type Response } from 'express';
 
 const router = Router();
 
-const RATING_SERVICE_URL = process.env.RATING_SERVICE_URL || 'http://127.0.0.1:8064';
+const RATING_SERVICE_URL = process.env.RATING_SERVICE_URL
+  || (process.env.NODE_ENV === 'production' ? 'http://127.0.0.1:8064' : 'http://127.0.0.1:8787');
 const RATING_SERVICE_API_KEY = process.env.RATING_SERVICE_API_KEY;
 
 function queryString(req: Request) {
@@ -40,7 +41,7 @@ async function proxyRating(req: Request, res: Response, upstreamPath: string) {
   } catch (error) {
     const detail = error instanceof Error ? error.message : 'Bilinmeyen hata';
     res.status(503).json({
-      error: 'Rating servisine ulasilamadi',
+      error: 'Rating servisine ulaşılamadı',
       detail,
       serviceUrl: RATING_SERVICE_URL,
     });

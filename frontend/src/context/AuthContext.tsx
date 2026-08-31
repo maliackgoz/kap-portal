@@ -17,7 +17,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUsername(data.username);
       setAuthenticated(true);
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Giris yapilamadi';
+      const message = err instanceof Error ? err.message : 'Giriş yapılamadı';
       setError(message);
       throw err;
     }

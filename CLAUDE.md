@@ -49,24 +49,28 @@ cd backend && npx tsx src/seed.ts
 
 ### Docker
 ```bash
-docker compose up --build
-# http://localhost:3001
+docker compose up -d --build
+# Portal: http://localhost:8063
+# MCP: http://localhost:8060/mcp
+# Rating: http://localhost:8064
 ```
 
 ### Login
-- Kullanici: `admin`
-- Sifre: `kap2024` (ADMIN_PASS env ile degistirilebilir)
+- Kullanıcı: `.env` içindeki `ADMIN_USER`
+- Şifre: `.env` içindeki `ADMIN_PASS`
 
 ## Mimari
 
 ```
 backend/src/
-  index.ts          — Express app, CORS, static serve, auth middleware
+  config.ts         — Ortam, kimlik doğrulama ve güvenlik ayarları
+  security.ts       — Güvenlik başlıkları ve origin denetimi
+  index.ts          — Express app, statik sunum ve auth middleware
   db.ts             — SQLite baglantisi, migration (companies, shareholders, processing_log)
-  auth.ts           — JWT login + middleware (hardcoded admin/kap2024)
+  auth.ts           — JWT login, deneme sınırı ve auth middleware
   seed.ts           — companies.json → SQLite
   services/
-    scraper.ts      — fetchCompanyPage() + parseRSCPayload() (curl + regex)
+    scraper.ts      — Süre aşımı/tekrar denemeli KAP fetch ve RSC parser
     processor.ts    — Batch isleme, SSE broadcast, startProcessing/stopProcessing
     graph-builder.ts — buildGraph(), getSubgraph(), findPath(), getClusters(), getSectors()
   routes/

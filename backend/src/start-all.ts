@@ -64,6 +64,6 @@ start('kap-mcp', process.execPath, [path.join(__dirname, 'mcp-http.js')], {
   MCP_PORT: mcpPort,
   MCP_PATH: mcpPath,
   KAP_PORTAL_URL: portalUrl,
-  KAP_PORTAL_USERNAME: process.env.KAP_PORTAL_USERNAME || 'admin',
-  KAP_PORTAL_PASSWORD: process.env.KAP_PORTAL_PASSWORD || 'kap2024',
+  KAP_PORTAL_USERNAME: process.env.KAP_PORTAL_USERNAME || process.env.ADMIN_USER || 'admin',
+  KAP_PORTAL_PASSWORD: process.env.KAP_PORTAL_PASSWORD || process.env.ADMIN_PASS || '',
 });

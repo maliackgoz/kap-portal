@@ -8,6 +8,7 @@ import {
   findPath,
   getClusters,
   getGraph,
+  getRelationshipSummary,
   getSectors,
   getStats,
   getSubgraph,
@@ -17,6 +18,7 @@ import {
   type GraphNode,
 } from './services/graph-builder.js';
 import { scrapeCompany } from './services/scraper.js';
+import { replaceCompanyData } from './services/company-data.js';
 
 type Company = {
   id: number;
@@ -419,6 +421,7 @@ export function createKapMcpServer() {
   ({ companyId, query, depth, edgeTypes, minRatioPct, maxNodes, maxEdges }) => {
     const company = resolveCompany({ companyId, query });
     const subgraph = getSubgraph(company.id, depth);
+    const relationshipSummary = getRelationshipSummary(company.id);
     const filtered = filterGraph(subgraph, {
       rootNodeId: `company_${company.id}`,
       edgeTypes,
@@ -431,6 +434,7 @@ export function createKapMcpServer() {
       company,
       depth,
       filters: { edgeTypes, minRatioPct },
+      relationshipSummary,
       ...filtered,
     });
   },
@@ -538,33 +542,18 @@ export function createKapMcpServer() {
       return jsonResult({ company, status: 'no_data', message: 'Genel bilgiler yok' });
     }
 
-    const upsertStmt = db.prepare(
-      `INSERT INTO shareholders (company_id, item_key, value, fetched_at)
-       VALUES (?, ?, ?, datetime('now'))
-       ON CONFLICT(company_id, item_key) DO UPDATE SET value = excluded.value, fetched_at = excluded.fetched_at`,
-    );
-
-    const insertMany = db.transaction((items: Array<[number, string, string]>) => {
-      for (const [cid, key, value] of items) upsertStmt.run(cid, key, value);
-    });
-
-    const items = Object.entries(result.data).map(
-      ([key, value]): [number, string, string] => [company.id, key, JSON.stringify(value)],
-    );
-    insertMany(items);
+    const writeResult = replaceCompanyData(company.id, result.data);
 
     db.prepare("UPDATE companies SET status = 'done', last_processed_at = datetime('now') WHERE id = ?").run(company.id);
     db.prepare("INSERT INTO processing_log (company_id, action, message) VALUES (?, 'process_company', ?)").run(
       company.id,
-      `${items.length} veri noktasi`,
+      `${writeResult.keysWritten} veri noktası`,
     );
-    invalidateCache();
 
     return jsonResult({
       company,
       status: 'ok',
-      keysWritten: items.length,
-      keys: items.map(([, key]) => key),
+      ...writeResult,
     });
   },
   );

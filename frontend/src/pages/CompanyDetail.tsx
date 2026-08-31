@@ -1,58 +1,97 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { api, type Company } from '../api';
-import { RefreshCw, Search, ChevronDown, Clock, CheckCircle, XCircle, AlertTriangle, Filter, GitBranch, ShieldCheck, Newspaper, Users, Star, Plus, X } from 'lucide-react';
+import { RefreshCw, Search, ChevronDown, Clock, CheckCircle, XCircle, AlertTriangle, Filter, GitBranch, ShieldCheck, Newspaper, Users, Star, Plus, X, ExternalLink } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { useMemberCompanies } from '../hooks/useMemberCompanies';
 
 const SECTION_LABELS: Record<string, string> = {
-  acc1: 'Iletisim Bilgileri',
-  acc2: 'Faaliyet Alani & Denetim',
-  acc3: 'Pazar, Endeks & SPK',
-  acc4: 'Tescil & Vergi',
-  acc5: 'Sermaye & Ortaklik',
-  acc6: 'Yonetim',
-  acc7: 'Bagli Ortakliklar',
+  acc1: 'İletişim Bilgileri',
+  acc2: 'Faaliyet Alanı ve Denetim',
+  acc3: 'Pazar, Endeks ve SPK',
+  acc4: 'Tescil ve Vergi',
+  acc5: 'Sermaye ve Ortaklık',
+  acc6: 'Yönetim',
+  acc7: 'Bağlı Ortaklıklar',
+  acc8: 'SPK Bilgileri',
+  acc9: 'Denetim Bilgileri',
+  acc10: 'Diğer Hususlar',
 };
 
 const KEY_LABELS: Record<string, string> = {
-  kpy41_acc5_odenmis_sermaye: 'Odenmis Sermaye',
-  kpy41_acc5_kayitli_sermaye_tavani: 'Kayitli Sermaye Tavani',
-  kpy41_acc5_sermayede_dogrudan: '%5+ Dogrudan Pay Sahipleri',
-  kpy41_acc5_fiili_dolasimdaki_pay: 'Fiili Dolasimdaki Paylar',
+  kpy41_acc5_odenmis_sermaye: 'Ödenmiş Sermaye',
+  kpy41_acc5_kayitli_sermaye_tavani: 'Kayıtlı Sermaye Tavanı',
+  kpy41_acc5_sermayede_dogrudan: '%5+ Doğrudan Pay Sahipleri',
+  kpy41_acc5_fiili_dolasimdaki_pay: 'Fiili Dolaşımdaki Paylar',
   kpy41_acc5_sermayeyi_temsil_eden: 'Sermayeyi Temsil Eden Paylar',
-  kpy41_acc5_son_durum_sermayeye: 'Dolayli Pay Sahipleri',
-  kpy41_acc5_ortaklik_yapisi: 'Ortaklik Yapisi',
-  kpy41_acc5_odenmis_sermaye_2: 'Odenmis Sermaye',
-  kpy41_acc5_kayitli_sermaye_tavani_2: 'Kayitli Sermaye Tavani',
+  kpy41_acc5_son_durum_sermayeye: 'Dolaylı Pay Sahipleri',
+  kpy41_acc5_ortaklik_yapisi: 'Ortaklık Yapısı',
+  kpy41_acc5_odenmis_sermaye_2: 'Ödenmiş Sermaye',
+  kpy41_acc5_kayitli_sermaye_tavani_2: 'Kayıtlı Sermaye Tavanı',
   kpy41_acc5_sermayeyi_temsil_eden_2: 'Sermayeyi Temsil Eden Paylar',
   kpy41_acc1_merkez_adresi: 'Merkez Adresi',
-  kpy41_acc1_int_addres: 'Internet Adresi',
+  kpy41_acc1_int_addres: 'İnternet Adresi',
   kpy41_acc1_ilet_email: 'E-Posta',
   kpy41_acc1_ilet_adres_tel_fax: 'Adres / Tel / Faks',
-  kpy41_acc1_yatirimci_iliskileri: 'Yatirimci Iliskileri',
+  kpy41_acc1_yatirimci_iliskileri: 'Yatırımcı İlişkileri',
   kpy41_acc2_faaliyet_konu: 'Faaliyet Konusu',
-  kpy41_acc2_bdk: 'Bagimsiz Denetim Kurulusu',
-  kpy41_acc2_sektor: 'Sektor',
-  kpy41_acc2_sure: 'Sirket Suresi',
-  kpy41_acc3_sermaye_arac_pazar: 'Islem Gordugu Pazar',
+  kpy41_acc2_bdk: 'Bağımsız Denetim Kuruluşu',
+  kpy41_acc2_sektor: 'Sektör',
+  kpy41_acc2_sure: 'Şirket Süresi',
+  kpy41_acc3_sermaye_arac_pazar: 'İşlem Gördüğü Pazar',
   kpy41_acc3_endeksler: 'Endeksler',
-  kpy41_acc6_yonetim_kurulu_uyeleri: 'Yonetim Kurulu Uyeleri',
-  kpy41_acc7_bagli_ortakliklar: 'Bagli Ortakliklar',
+  kpy41_acc4_tescil_tarihi: 'Tescil Tarihi',
+  kpy41_acc4_ticaret_sicil_numarasi: 'Ticaret Sicil Numarası',
+  kpy41_acc4_vergi_dairesi: 'Vergi Dairesi',
+  kpy41_acc4_vergi_no: 'Vergi Numarası',
+  kpy41_acc6_sorumlu_ortaklar: 'Sorumlu Ortaklar',
+  kpy41_acc6_yonetim_kurulu_uyeleri: 'Yönetim Kurulu Üyeleri',
+  kpy41_acc6_yonetim_kurulu_uyeleri_2: 'Yönetim Kurulu Üyeleri',
+  kpy41_acc7_bagli_ortakliklar: 'Bağlı Ortaklıklar',
+  kpy41_acc8_spk_liste_giris: 'SPK Liste Giriş Tarihi',
+  kpy41_acc9_son_durum_denetledigi_kap: 'KAP Kapsamında Denetlenen Şirketler',
+  kpy41_acc10_diger_hususlar: 'Diğer Hususlar',
 };
 
 function getSection(key: string): string {
-  const m = key.match(/acc(\d)/);
+  const m = key.match(/acc(\d+)/);
   return m ? `acc${m[1]}` : 'other';
 }
 
+const COLUMN_LABELS: Record<string, string> = {
+  shareholder: 'Ortak',
+  shareholderName: 'Ortak',
+  shareInCapital: 'Sermayedeki Pay',
+  capitalShare: 'Sermayedeki Pay',
+  ratioInCapital: 'Sermaye Oranı',
+  capitalRatio: 'Sermaye Oranı',
+  votingRightRatio: 'Oy Hakkı Oranı',
+  votingRightsRatio: 'Oy Hakkı Oranı',
+  title: 'Unvan',
+  name: 'Ad',
+  surname: 'Soyad',
+  task: 'Görev',
+  position: 'Görev',
+  profession: 'Meslek',
+  company: 'Şirket',
+  sector: 'Sektör',
+  country: 'Ülke',
+  address: 'Adres',
+  phone: 'Telefon',
+  fax: 'Faks',
+  email: 'E-Posta',
+  webAddress: 'İnternet Adresi',
+  startDate: 'Başlangıç Tarihi',
+  endDate: 'Bitiş Tarihi',
+};
+
 function StatusBadge({ status }: { status: string }) {
   const map: Record<string, { color: string; bg: string; icon: LucideIcon; label: string }> = {
-    done: { color: 'var(--green)', bg: 'var(--green-bg)', icon: CheckCircle, label: 'Islendi' },
+    done: { color: 'var(--green)', bg: 'var(--green-bg)', icon: CheckCircle, label: 'İşlendi' },
     error: { color: 'var(--red)', bg: 'var(--red-bg)', icon: XCircle, label: 'Hata' },
     pending: { color: 'var(--amber)', bg: 'var(--amber-bg)', icon: Clock, label: 'Bekliyor' },
     no_data: { color: 'var(--text-muted)', bg: 'var(--bg-surface-2)', icon: AlertTriangle, label: 'Veri Yok' },
-    processing: { color: 'var(--blue)', bg: 'var(--blue-bg)', icon: RefreshCw, label: 'Isleniyor' },
+    processing: { color: 'var(--blue)', bg: 'var(--blue-bg)', icon: RefreshCw, label: 'İşleniyor' },
   };
   const s = map[status] || map.pending;
   const Icon = s.icon;
@@ -100,15 +139,6 @@ function cleanValue(value: unknown): string {
   return cleaned || '-';
 }
 
-function cleanStructuredValue(value: unknown): unknown {
-  if (typeof value === 'string') return cleanValue(value);
-  if (Array.isArray(value)) return value.map(cleanStructuredValue);
-  if (isRecord(value)) {
-    return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, cleanStructuredValue(item)]));
-  }
-  return value;
-}
-
 function firstValue(data: Record<string, unknown>, keys: string[]) {
   for (const key of keys) {
     if (data[key] !== undefined && data[key] !== null && data[key] !== '') return data[key];
@@ -118,7 +148,7 @@ function firstValue(data: Record<string, unknown>, keys: string[]) {
 
 function compactValue(value: unknown): string {
   if (value === null || value === undefined || value === '') return '-';
-  if (Array.isArray(value)) return `${value.length.toLocaleString('tr-TR')} kayit`;
+  if (Array.isArray(value)) return `${value.length.toLocaleString('tr-TR')} kayıt`;
   const text = cleanValue(value);
   return text.length > 72 ? `${text.slice(0, 72)}...` : text;
 }
@@ -168,7 +198,7 @@ function topOwnerText(value: unknown) {
     if (isTotalOwner(record)) return false;
     return !isOtherOwner(record);
   });
-  if (!records.length) return `${value.length.toLocaleString('tr-TR')} kayit`;
+  if (!records.length) return `${value.length.toLocaleString('tr-TR')} kayıt`;
   const sorted = [...records].sort((a, b) => parsePct(b.ratioInCapital || b.votingRightRatio) - parsePct(a.ratioInCapital || a.votingRightRatio));
   const top = sorted[0];
   const name = compactValue(ownerName(top));
@@ -251,7 +281,7 @@ function DataTable({ data }: { data: Record<string, unknown>[] }) {
           <tr style={{ background: 'var(--bg-surface-2)' }}>
             {keys.map(k => (
               <th key={k} style={{ textAlign: 'left', padding: '8px 12px', fontWeight: 600, color: 'var(--text-muted)', fontSize: 11, textTransform: 'uppercase', whiteSpace: 'nowrap' }}>
-                {k.replace(/([A-Z])/g, ' $1').replace(/^./, s => s.toUpperCase())}
+                {COLUMN_LABELS[k] || fieldLabel(k)}
               </th>
             ))}
           </tr>
@@ -272,6 +302,64 @@ function DataTable({ data }: { data: Record<string, unknown>[] }) {
   );
 }
 
+function fieldLabel(key: string) {
+  return KEY_LABELS[key]
+    || key
+      .replace(/^kpy\d+_acc\d+_/, '')
+      .replace(/[_-]+/g, ' ')
+      .replace(/([a-z])([A-Z])/g, '$1 $2')
+      .replace(/\b\w/g, letter => letter.toLocaleUpperCase('tr-TR'));
+}
+
+function StructuredValue({ value, depth = 0 }: { value: unknown; depth?: number }) {
+  if (Array.isArray(value)) {
+    const records = value.filter(isRecord);
+    if (records.length === value.length) return <DataTable data={records} />;
+    return (
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+        {value.map((item, index) => (
+          <span key={index} style={{
+            padding: '5px 8px', borderRadius: 6, background: 'var(--bg-surface-2)',
+            border: '1px solid var(--border)', color: 'var(--text-dim)', fontSize: 12,
+          }}>
+            {cleanValue(item)}
+          </span>
+        ))}
+      </div>
+    );
+  }
+
+  if (isRecord(value)) {
+    if (typeof value.text === 'string') {
+      return <span style={{ color: 'var(--blue)', fontWeight: 700 }}>{cleanValue(value)}</span>;
+    }
+    const entries = Object.entries(value).filter(([key]) => !key.startsWith('disable') && !key.startsWith('hide'));
+    if (!entries.length) return <span style={{ color: 'var(--text-muted)' }}>-</span>;
+    return (
+      <div style={{
+        borderTop: depth ? '1px solid var(--border)' : undefined,
+        display: 'grid',
+      }}>
+        {entries.map(([key, item]) => (
+          <div key={key} style={{
+            display: 'grid', gridTemplateColumns: 'minmax(150px, 0.35fr) minmax(0, 1fr)',
+            gap: 14, padding: '9px 0', borderBottom: '1px solid var(--border)',
+          }}>
+            <div style={{ color: 'var(--text-muted)', fontSize: 11, fontWeight: 750 }}>
+              {fieldLabel(key)}
+            </div>
+            <div style={{ color: 'var(--text)', fontSize: 13, minWidth: 0 }}>
+              <StructuredValue value={item} depth={depth + 1} />
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  return <span style={{ color: 'var(--blue)', fontWeight: 700 }}>{cleanValue(value)}</span>;
+}
+
 export default function CompanyDetail() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -287,7 +375,9 @@ export default function CompanyDetail() {
   const [membersOnly, setMembersOnly] = useState(false);
   const [memberAddQuery, setMemberAddQuery] = useState('');
   const [memberAddOpen, setMemberAddOpen] = useState(false);
-  const { memberIds, members, addMember, removeMember } = useMemberCompanies(companies);
+  const [memberPanelOpen, setMemberPanelOpen] = useState(false);
+  const [scrapeNotice, setScrapeNotice] = useState<{ tone: 'success' | 'warning' | 'error'; message: string } | null>(null);
+  const { memberIds, members, error: memberError, addMember, removeMember } = useMemberCompanies(companies);
 
   // Load company list once
   useEffect(() => {
@@ -316,7 +406,7 @@ export default function CompanyDetail() {
       .catch(err => {
         setCompany(null);
         setData(null);
-        setLoadError(err instanceof Error ? err.message : 'Sirket verisi alinamadi');
+        setLoadError(err instanceof Error ? err.message : 'Şirket verisi alınamadı');
       })
       .finally(() => setLoading(false));
   }, [selectedId]);
@@ -337,15 +427,27 @@ export default function CompanyDetail() {
   const handleScrape = async () => {
     if (!selectedId) return;
     setScraping(true);
+    setScrapeNotice(null);
     try {
-      await api.scrapeCompany(selectedId);
-      // Reload data
+      const result = await api.scrapeCompany(selectedId);
       const [c, d] = await Promise.all([api.getCompany(selectedId), api.getCompanyData(selectedId)]);
       setCompany(c);
       setData(d);
+      setCompanies(current => current.map(item => item.id === c.id ? { ...item, ...c } : item));
+      if (result.status === 'no_data') {
+        setScrapeNotice({
+          tone: 'warning',
+          message: 'KAP bu şirket için yeni profil verisi döndürmedi. Mevcut kayıtlar korunuyor.',
+        });
+      } else {
+        setScrapeNotice({
+          tone: 'success',
+          message: `${(result.keys || Object.keys(d).length).toLocaleString('tr-TR')} KAP alanı, şirket profili ve ortaklık ağı güncellendi.`,
+        });
+      }
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Veri guncellenemedi';
-      alert('Hata: ' + message);
+      const message = err instanceof Error ? err.message : 'Veri güncellenemedi';
+      setScrapeNotice({ tone: 'error', message });
     } finally {
       setScraping(false);
     }
@@ -376,7 +478,7 @@ export default function CompanyDetail() {
     for (const [key, val] of Object.entries(data)) {
       const sec = getSection(key);
       if (!grouped[sec]) grouped[sec] = [];
-      grouped[sec].push({ key, label: KEY_LABELS[key] || key, value: val });
+      grouped[sec].push({ key, label: fieldLabel(key), value: val });
     }
     return grouped;
   }, [data]);
@@ -393,13 +495,13 @@ export default function CompanyDetail() {
     const market = firstValue(data, ['kpy41_acc3_sermaye_arac_pazar']);
 
     return [
-      { label: 'Odenmis Sermaye', value: amountText(paidCapital), tone: 'var(--blue)' },
-      { label: 'Kayitli Sermaye Tavani', value: amountText(registeredCapital), tone: 'var(--accent)' },
-      { label: 'Fiili Dolasim', value: publicFloatText(publicFloat), tone: 'var(--green)' },
-      { label: 'En Buyuk Ortak', value: topOwnerText(directOwners), tone: 'var(--amber)' },
-      { label: 'Dogrudan Ortak', value: ownerCountText(directOwners), tone: 'var(--amber)' },
-      { label: 'Bagli Ortaklik', value: arrayCount(subsidiaries, 'kayit'), tone: 'var(--blue)' },
-      { label: 'Sektor / Pazar', value: [compactValue(sector), compactValue(market)].filter(item => item !== '-').join(' / ') || '-', tone: 'var(--text-dim)' },
+      { label: 'Ödenmiş Sermaye', value: amountText(paidCapital), tone: 'var(--blue)' },
+      { label: 'Kayıtlı Sermaye Tavanı', value: amountText(registeredCapital), tone: 'var(--accent)' },
+      { label: 'Fiili Dolaşım', value: publicFloatText(publicFloat), tone: 'var(--green)' },
+      { label: 'En Büyük Ortak', value: topOwnerText(directOwners), tone: 'var(--amber)' },
+      { label: 'Doğrudan Ortak', value: ownerCountText(directOwners), tone: 'var(--amber)' },
+      { label: 'Bağlı Ortaklık', value: arrayCount(subsidiaries, 'kayıt'), tone: 'var(--blue)' },
+      { label: 'Sektör / Pazar', value: [compactValue(sector), compactValue(market)].filter(item => item !== '-').join(' / ') || '-', tone: 'var(--text-dim)' },
     ].filter(item => item.value && item.value !== '-');
   }, [data]);
 
@@ -419,8 +521,8 @@ export default function CompanyDetail() {
   return (
     <div>
       <div style={{ marginBottom: 22 }}>
-        <h1 style={{ fontSize: 24, fontWeight: 800, letterSpacing: 0, marginBottom: 6 }}>Sirket Detay</h1>
-        <div style={{ fontSize: 13, color: 'var(--text-muted)' }}>KAP profil alanlari, sermaye bilgileri ve ortaklik verilerini sirket bazinda incele.</div>
+        <h1 style={{ fontSize: 24, fontWeight: 800, letterSpacing: 0, marginBottom: 6 }}>Şirket Detayı</h1>
+        <div style={{ fontSize: 13, color: 'var(--text-muted)' }}>KAP profil alanlarını, sermaye bilgilerini ve ortaklık verilerini şirket bazında inceleyin.</div>
       </div>
 
       {/* Company Selector */}
@@ -432,7 +534,7 @@ export default function CompanyDetail() {
           {/* Dropdown */}
           <div style={{ width: 320, flex: '0 1 320px' }}>
             <label style={{ display: 'block', fontSize: 12, fontWeight: 700, color: 'var(--text-dim)', marginBottom: 6, textTransform: 'uppercase', letterSpacing: 0 }}>
-              Sirket Sec (Dropdown)
+              Şirket Seç
             </label>
             <div style={{ position: 'relative' }}>
               <ChevronDown size={14} style={{ position: 'absolute', right: 12, top: 11, color: 'var(--text-muted)', pointerEvents: 'none' }} />
@@ -449,7 +551,7 @@ export default function CompanyDetail() {
                   appearance: 'none', cursor: 'pointer',
                 }}
               >
-                <option value="">-- Sirket secin --</option>
+                <option value="">Şirket seçin</option>
                 {selectorCompanies.map(c => (
                   <option key={c.id} value={c.id}>{c.name}</option>
                 ))}
@@ -472,21 +574,50 @@ export default function CompanyDetail() {
             }}
           >
             <RefreshCw size={14} style={scraping ? { animation: 'spin 1s linear infinite' } : {}} />
-            {scraping ? 'Cekiliyor...' : 'Veri Guncelle'}
+            {scraping ? 'KAP verisi çekiliyor...' : 'KAP Verisini Yenile'}
           </button>
         </div>
 
+        {scrapeNotice && (
+          <div style={{
+            marginTop: 12, padding: '10px 12px', borderRadius: 8,
+            color: scrapeNotice.tone === 'success' ? 'var(--green)' : scrapeNotice.tone === 'warning' ? 'var(--amber)' : 'var(--red)',
+            background: scrapeNotice.tone === 'success' ? 'var(--green-bg)' : scrapeNotice.tone === 'warning' ? 'var(--amber-bg)' : 'var(--red-bg)',
+            fontSize: 12, fontWeight: 700,
+          }}>
+            {scrapeNotice.message}
+          </div>
+        )}
+
+        <button
+          type="button"
+          onClick={() => setMemberPanelOpen(value => !value)}
+          aria-expanded={memberPanelOpen}
+          style={{
+            width: '100%', marginTop: 16, padding: '12px 0 0', border: 'none',
+            borderTop: '1px solid var(--border)', background: 'transparent',
+            color: 'var(--accent)', display: 'flex', alignItems: 'center',
+            justifyContent: 'space-between', gap: 12, cursor: 'pointer',
+          }}
+        >
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: 13, fontWeight: 850 }}>
+            <Star size={15} /> Üye Portföyü
+            <span style={{ color: 'var(--text-muted)', fontFamily: 'var(--font-mono)', fontSize: 11 }}>
+              {members.length.toLocaleString('tr-TR')} şirket
+            </span>
+          </span>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 7, color: 'var(--text-muted)', fontSize: 11, fontWeight: 700 }}>
+            {memberPanelOpen ? 'Kapat' : 'Yönet'}
+            <ChevronDown size={15} style={{ transform: memberPanelOpen ? 'rotate(180deg)' : undefined, transition: 'transform 0.15s ease' }} />
+          </span>
+        </button>
+
         <div style={{
-          marginTop: 16, paddingTop: 16, borderTop: '1px solid var(--border)',
-          display: 'grid', gap: 12,
+          marginTop: memberPanelOpen ? 14 : 0,
+          display: memberPanelOpen ? 'grid' : 'none', gap: 12,
         }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, flexWrap: 'wrap' }}>
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, color: 'var(--accent)', fontSize: 13, fontWeight: 850 }}>
-              <Star size={15} /> Uye Sirketler
-              <span style={{ color: 'var(--text-muted)', fontFamily: 'var(--font-mono)', fontSize: 11 }}>
-                {members.length.toLocaleString('tr-TR')}
-              </span>
-            </div>
+            <div style={{ color: 'var(--text-muted)', fontSize: 12 }}>Kayıtlı üyeleri filtreleyin veya seçili şirketi portföye ekleyin.</div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
               <button
                 type="button"
@@ -499,7 +630,7 @@ export default function CompanyDetail() {
                   cursor: 'pointer', fontSize: 12, fontWeight: 850,
                 }}
               >
-                Sadece uyeler
+                Sadece üyeler
               </button>
               {selectedId && (
                 <button
@@ -514,7 +645,7 @@ export default function CompanyDetail() {
                   }}
                 >
                   {selectedIsMember ? <X size={13} /> : <Plus size={13} />}
-                  {selectedIsMember ? 'Uyeden Cikar' : 'Uyeye Ekle'}
+                  {selectedIsMember ? 'Üyelerden Çıkar' : 'Üyelere Ekle'}
                 </button>
               )}
             </div>
@@ -526,7 +657,7 @@ export default function CompanyDetail() {
           }}>
             <div style={{ position: 'relative' }}>
               <label style={{ display: 'block', color: 'var(--text-muted)', fontSize: 10, fontWeight: 850, textTransform: 'uppercase', letterSpacing: 0, marginBottom: 6 }}>
-                Uyeye sirket ekle
+                Üye şirket ekle
               </label>
               <div style={{ position: 'relative' }}>
                 <Search size={14} style={{ position: 'absolute', left: 11, top: 10, color: 'var(--text-muted)' }} />
@@ -544,7 +675,7 @@ export default function CompanyDetail() {
                       addManualMember(memberAddOptions[0]);
                     }
                   }}
-                  placeholder="Sirket adi ara..."
+                  placeholder="Şirket adıyla arayın"
                   style={{
                     width: '100%', height: 34, padding: '0 11px 0 34px',
                     borderRadius: 8, border: '1px solid var(--border)', background: 'var(--bg-surface)',
@@ -590,9 +721,15 @@ export default function CompanyDetail() {
                 cursor: memberAddOptions.length ? 'pointer' : 'not-allowed', fontSize: 12, fontWeight: 850,
               }}
             >
-              <Plus size={13} /> Uyeye Ekle
+              <Plus size={13} /> Üyelere Ekle
             </button>
           </div>
+
+          {memberError && (
+            <div style={{ padding: '9px 11px', borderRadius: 8, background: 'var(--red-bg)', color: 'var(--red)', fontSize: 12, fontWeight: 700 }}>
+              {memberError}
+            </div>
+          )}
 
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
             {members.length === 0 ? (
@@ -600,7 +737,7 @@ export default function CompanyDetail() {
                 padding: '9px 11px', borderRadius: 8, border: '1px dashed var(--border)',
                 background: 'var(--bg-surface-2)', color: 'var(--text-muted)', fontSize: 12,
               }}>
-                Uye listesi bos. Sirket secip "Uyeye Ekle" ile kaydedebilirsin.
+                Henüz üye şirket eklenmedi. Yukarıdaki aramadan şirket seçerek portföyü oluşturun.
               </div>
             ) : members.map(member => (
               <div
@@ -627,7 +764,7 @@ export default function CompanyDetail() {
                 <button
                   type="button"
                   onClick={() => removeMember(member.id)}
-                  title="Uyeden cikar"
+                  title="Üyelerden çıkar"
                   style={{
                     width: 30, border: 'none', borderLeft: '1px solid var(--border)',
                     background: 'transparent', color: 'var(--text-muted)', cursor: 'pointer',
@@ -643,7 +780,7 @@ export default function CompanyDetail() {
       </div>
 
       {/* Company Info */}
-      {loading && <div style={{ color: 'var(--text-muted)', padding: 20 }}>Yukleniyor...</div>}
+      {loading && <div style={{ color: 'var(--text-muted)', padding: 20 }}>Şirket verileri yükleniyor...</div>}
 
       {company && !loading && (
         <>
@@ -661,16 +798,25 @@ export default function CompanyDetail() {
               </div>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+              <a
+                href={`https://www.kap.org.tr/tr/sirket-bilgileri/genel/${company.slug}`}
+                target="_blank"
+                rel="noreferrer"
+                title="Şirketin KAP sayfasını aç"
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '8px 10px', borderRadius: 8, border: '1px solid var(--border)', background: 'var(--bg-surface-2)', color: 'var(--text-dim)', textDecoration: 'none', fontWeight: 700, fontSize: 12 }}
+              >
+                <ExternalLink size={14} /> KAP
+              </a>
               <button
                 onClick={() => navigate(`/graph?company_id=${company.id}`)}
-                title="Ortaklik grafini ac"
+                title="Ortaklık grafiğini aç"
                 style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '8px 10px', borderRadius: 8, border: '1px solid var(--border)', background: 'var(--bg-surface-2)', color: 'var(--text-dim)', cursor: 'pointer', fontWeight: 700, fontSize: 12 }}
               >
                 <GitBranch size={14} /> Graf
               </button>
               <button
                 onClick={() => navigate(`/ratings?company=${encodeURIComponent(company.name)}`)}
-                title="Rating kayitlarini ac"
+                title="Rating kayıtlarını aç"
                 style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '8px 10px', borderRadius: 8, border: '1px solid var(--border)', background: 'var(--blue-bg)', color: 'var(--blue)', cursor: 'pointer', fontWeight: 700, fontSize: 12 }}
               >
                 <ShieldCheck size={14} /> Rating
@@ -727,7 +873,7 @@ export default function CompanyDetail() {
                 display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap',
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, fontWeight: 800, color: 'var(--accent)' }}>
-                  <Users size={15} /> Dogrudan Ortaklar
+                  <Users size={15} /> Doğrudan Ortaklar
                 </div>
                 <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10 }}>
                   <span style={{ fontSize: 12, color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
@@ -749,7 +895,7 @@ export default function CompanyDetail() {
                     <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
                       <thead>
                         <tr style={{ background: 'var(--bg-surface-2)' }}>
-                          {['Ortak', 'Sermayedeki Pay', 'Sermaye Orani', 'Oy Hakki'].map(label => (
+                          {['Ortak', 'Sermayedeki Pay', 'Sermaye Oranı', 'Oy Hakkı'].map(label => (
                             <th key={label} style={{ textAlign: 'left', padding: '9px 16px', fontWeight: 800, color: 'var(--text-muted)', fontSize: 11, textTransform: 'uppercase', whiteSpace: 'nowrap' }}>
                               {label}
                             </th>
@@ -781,10 +927,10 @@ export default function CompanyDetail() {
                       padding: '10px 16px', borderTop: '1px solid var(--border)', background: 'var(--bg-surface-2)',
                       display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap', fontSize: 12, color: 'var(--text-muted)',
                     }}>
-                      <span style={{ fontWeight: 800, color: 'var(--text-dim)' }}>Diger paylar</span>
+                      <span style={{ fontWeight: 800, color: 'var(--text-dim)' }}>Diğer paylar</span>
                       <span style={{ fontFamily: 'var(--font-mono)' }}>Pay: {otherDirectOwner.share}</span>
                       <span style={{ fontFamily: 'var(--font-mono)' }}>Sermaye: {otherDirectOwner.capitalRatio}</span>
-                      <span style={{ fontFamily: 'var(--font-mono)' }}>Oy hakki: {otherDirectOwner.votingRatio}</span>
+                      <span style={{ fontFamily: 'var(--font-mono)' }}>Oy hakkı: {otherDirectOwner.votingRatio}</span>
                     </div>
                   )}
                 </>
@@ -804,7 +950,7 @@ export default function CompanyDetail() {
                   fontSize: 12, fontWeight: 600, cursor: 'pointer', fontFamily: 'var(--font-sans)',
                 }}
               >
-                Tumu
+                Tümü
               </button>
               {sectionKeys.map(sec => (
                 <button key={sec} onClick={() => setActiveFilter(sec)}
@@ -867,21 +1013,7 @@ export default function CompanyDetail() {
                           <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--text-dim)', marginBottom: 8, textTransform: 'uppercase', letterSpacing: 0 }}>
                             {item.label}
                           </div>
-                          {Array.isArray(item.value) ? (
-                            <DataTable data={item.value.filter(isRecord)} />
-                          ) : isRecord(item.value) && typeof item.value.text === 'string' ? (
-                            <div style={{ fontSize: 15, fontWeight: 600, fontFamily: 'var(--font-mono)', color: 'var(--blue)' }}>
-                              {cleanValue(item.value)}
-                            </div>
-                          ) : typeof item.value === 'object' && item.value !== null ? (
-                            <pre style={{ fontSize: 12, fontFamily: 'var(--font-mono)', color: 'var(--text-dim)', background: 'var(--bg-surface-2)', padding: 12, borderRadius: 6, overflow: 'auto' }}>
-                              {JSON.stringify(cleanStructuredValue(item.value), null, 2)}
-                            </pre>
-                          ) : (
-                            <div style={{ fontSize: 15, fontWeight: 600, fontFamily: 'var(--font-mono)', color: 'var(--blue)' }}>
-                              {cleanValue(item.value)}
-                            </div>
-                          )}
+                          <StructuredValue value={item.value} />
                         </div>
                       ))}
                     </div>
@@ -895,7 +1027,7 @@ export default function CompanyDetail() {
               borderRadius: 'var(--radius)', padding: 40, textAlign: 'center',
               color: 'var(--text-muted)', fontSize: 14,
             }}>
-              Bu sirket icin henuz veri yok. "Veri Guncelle" butonuna basin.
+              Bu şirket için henüz KAP verisi yok. "KAP Verisini Yenile" düğmesini kullanın.
             </div>
           ) : null}
         </>
@@ -916,7 +1048,7 @@ export default function CompanyDetail() {
           borderRadius: 'var(--radius)', padding: 60, textAlign: 'center',
           color: 'var(--text-muted)', fontSize: 14,
         }}>
-          Yukaridaki arama kutusundan bir sirket secin.
+          Yukarıdaki seçim alanından bir şirket seçin.
         </div>
       )}
 

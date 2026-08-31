@@ -7,19 +7,46 @@ import companiesRouter from './routes/companies.js';
 import graphRouter from './routes/graph.js';
 import ratingRouter from './routes/rating.js';
 import membersRouter from './routes/members.js';
+import { config } from './config.js';
+import { cors, securityHeaders } from './security.js';
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const startedAt = new Date().toISOString();
 
-app.use(express.json());
-
-// CORS
-app.use((_req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', '*');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  if (_req.method === 'OPTIONS') { res.sendStatus(204); return; }
+app.disable('x-powered-by');
+if (config.trustProxy) app.set('trust proxy', config.trustProxy);
+app.use(securityHeaders);
+app.use(cors);
+app.use(express.json({ limit: '1mb', strict: true }));
+app.use('/api', (_req, res, next) => {
+  res.setHeader('Cache-Control', 'no-store');
   next();
+});
+
+app.get('/api/health', (_req, res) => {
+  res.json({
+    ok: true,
+    service: 'finansal-portal',
+    version: config.appVersion,
+    startedAt,
+  });
+});
+
+app.get('/api/ready', (_req, res) => {
+  try {
+    const result = db.pragma('quick_check', { simple: true });
+    const companyCount = (db.prepare('SELECT COUNT(*) AS count FROM companies').get() as { count: number }).count;
+    if (result !== 'ok' || companyCount === 0) {
+      res.status(503).json({ ok: false, database: result, companyCount });
+      return;
+    }
+    res.json({ ok: true, database: 'ok', companyCount });
+  } catch (error) {
+    res.status(503).json({
+      ok: false,
+      error: error instanceof Error ? error.message : 'Hazırlık kontrolü başarısız',
+    });
+  }
 });
 
 // Public routes
@@ -28,11 +55,15 @@ app.use('/api/auth', authRouter);
 // SSE endpoint — EventSource can't send headers, so check token via query param
 import { addSSEClient } from './services/processor.js';
 import jwt from 'jsonwebtoken';
-const SECRET = process.env.JWT_SECRET || 'kap-portal-secret-2024';
 app.get('/api/processing/events', (req, res) => {
   const token = req.query.token as string;
   if (!token) { res.status(401).json({ error: 'Token gerekli' }); return; }
-  try { jwt.verify(token, SECRET); } catch { res.status(401).json({ error: 'Gecersiz token' }); return; }
+  try {
+    jwt.verify(token, config.jwtSecret, { issuer: 'finansal-portal' });
+  } catch {
+    res.status(401).json({ error: 'Geçersiz token' });
+    return;
+  }
   addSSEClient(res);
 });
 
@@ -58,6 +89,27 @@ if (fs.existsSync(publicDir)) {
   });
 }
 
+app.use('/api', (_req, res) => {
+  res.status(404).json({ error: 'API endpoint bulunamadı' });
+});
+
+app.use((
+  error: unknown,
+  _req: express.Request,
+  res: express.Response,
+  _next: express.NextFunction,
+) => {
+  if (error instanceof SyntaxError && 'status' in error && error.status === 400) {
+    res.status(400).json({ error: 'Geçersiz JSON gövdesi' });
+    return;
+  }
+
+  console.error('Beklenmeyen API hatasi:', error);
+  if (!res.headersSent) {
+    res.status(500).json({ error: 'Beklenmeyen bir sunucu hatası oluştu' });
+  }
+});
+
 async function start() {
   // Auto-seed if companies table is empty
   let count = (db.prepare('SELECT COUNT(*) as c FROM companies').get() as any).c;
@@ -65,16 +117,16 @@ async function start() {
     console.log('Veritabani bos, seed yapiliyor...');
     await import('./seed.js');
     count = (db.prepare('SELECT COUNT(*) as c FROM companies').get() as any).c;
-    console.log('Seed tamamlandi');
+    console.log('Seed tamamlandı');
   }
 
-  app.listen(PORT, () => {
-    console.log(`\nFinansal Portal: http://localhost:${PORT}`);
-    console.log(`Sirket sayisi: ${count}`);
+  app.listen(config.port, '0.0.0.0', () => {
+    console.log(`\nFinansal Portal: http://localhost:${config.port}`);
+    console.log(`Şirket sayısı: ${count}`);
   });
 }
 
 start().catch(error => {
-  console.error('KAP Portal baslatilamadi:', error);
+  console.error('KAP Portal başlatılamadı:', error);
   process.exit(1);
 });

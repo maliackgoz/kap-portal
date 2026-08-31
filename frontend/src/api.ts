@@ -5,6 +5,13 @@ export interface LoginResponse {
   username: string;
 }
 
+export interface HealthResponse {
+  ok: boolean;
+  service: string;
+  version: string;
+  startedAt: string;
+}
+
 export interface Company {
   id: number;
   name: string;
@@ -66,6 +73,21 @@ export interface GraphStats {
   companyNodes: number;
   shareholderNodes: number;
   personNodes: number;
+}
+
+export interface GraphRelationship {
+  node: GraphNode;
+  edge: GraphEdge;
+}
+
+export interface GraphRelationshipSummary {
+  root: GraphNode | null;
+  directOwners: GraphRelationship[];
+  indirectOwners: GraphRelationship[];
+  subsidiaries: GraphRelationship[];
+  relatedCompanyCount: number;
+  organizationCount: number;
+  personCount: number;
 }
 
 export interface GraphPath {
@@ -182,7 +204,12 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   const token = getToken();
   if (token) headers['Authorization'] = `Bearer ${token}`;
 
-  const res = await fetch(`${BASE}${path}`, { ...options, headers });
+  let res: Response;
+  try {
+    res = await fetch(`${BASE}${path}`, { ...options, headers });
+  } catch {
+    throw new Error('Sunucuya ulaşılamıyor. Ağ bağlantısını ve portal servisini kontrol edin.');
+  }
 
   if (res.status === 401) {
     clearToken();
@@ -201,6 +228,7 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
 export const api = {
   login: (username: string, password: string) =>
     request<LoginResponse>('/auth/login', { method: 'POST', body: JSON.stringify({ username, password }) }),
+  getHealth: () => request<HealthResponse>('/health'),
 
   getStats: () => request<DashboardStats>('/dashboard/stats'),
   getActivity: () => request<ActivityLog[]>('/dashboard/activity'),
@@ -211,7 +239,12 @@ export const api = {
   },
   getCompany: (id: number) => request<Company>(`/companies/${id}`),
   getCompanyData: (id: number) => request<Record<string, unknown>>(`/companies/${id}/data`),
-  scrapeCompany: (id: number) => request<{ status: string; message?: string; keys?: number }>(`/companies/${id}/scrape`, { method: 'POST' }),
+  scrapeCompany: (id: number) => request<{
+    status: 'ok' | 'no_data';
+    message?: string;
+    keys?: number;
+    graphInvalidated?: boolean;
+  }>(`/companies/${id}/scrape`, { method: 'POST' }),
   getAllCompanies: () => request<Company[]>('/companies/all/list'),
 
   getMembers: () => request<{ members: Company[] }>('/members'),
@@ -239,6 +272,8 @@ export const api = {
     return request<GraphData>(`/graph/data${qs ? '?' + qs : ''}`);
   },
   getGraphStats: () => request<GraphStats>('/graph/stats'),
+  getGraphRelationshipSummary: (companyId: number) =>
+    request<GraphRelationshipSummary>(`/graph/company/${companyId}/summary`),
   rebuildGraph: () => request<{ message: string; nodes: number; edges: number }>('/graph/rebuild', { method: 'POST' }),
   getGraphPath: (fromId: string, toId: string) =>
     request<GraphPath>(`/graph/path?from=${encodeURIComponent(fromId)}&to=${encodeURIComponent(toId)}`),

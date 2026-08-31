@@ -5,7 +5,6 @@ export type MemberCompany = Pick<Company, 'id' | 'name' | 'status'>;
 
 const STORAGE_KEY = 'kap_member_company_ids';
 const CHANGE_EVENT = 'kap-member-companies-changed';
-const DEFAULT_MEMBER_KEYWORDS = ['VAKIF', 'VAKIFBANK', 'ZIRAAT', 'HALK', 'HALKBANK'];
 
 function storage() {
   if (typeof window === 'undefined') return null;
@@ -18,16 +17,6 @@ function storage() {
 
 function cleanIds(ids: number[]) {
   return Array.from(new Set(ids.filter(id => Number.isFinite(id) && id > 0)));
-}
-
-function normalize(value: string) {
-  return value
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toUpperCase()
-    .replace(/[^A-Z0-9]+/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
 }
 
 export function readMemberCompanyIds() {
@@ -48,20 +37,6 @@ export function writeMemberCompanyIds(ids: number[]) {
   return cleaned;
 }
 
-export function suggestDefaultMemberIds(companies: MemberCompany[]) {
-  return companies
-    .filter(company => {
-      const name = normalize(company.name);
-      return DEFAULT_MEMBER_KEYWORDS.some(keyword => name.includes(normalize(keyword)));
-    })
-    .map(company => company.id);
-}
-
-function sameIds(a: number[], b: number[]) {
-  if (a.length !== b.length) return false;
-  return a.every((id, index) => id === b[index]);
-}
-
 function notifyMemberCompaniesChanged() {
   if (typeof window === 'undefined') return;
   window.dispatchEvent(new Event(CHANGE_EVENT));
@@ -69,6 +44,8 @@ function notifyMemberCompaniesChanged() {
 
 export function useMemberCompanies<T extends MemberCompany>(companies: T[]) {
   const [memberIds, setMemberIdsState] = useState<number[]>(() => readMemberCompanyIds());
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const sync = () => setMemberIdsState(readMemberCompanyIds());
@@ -86,17 +63,17 @@ export function useMemberCompanies<T extends MemberCompany>(companies: T[]) {
     api.getMembers()
       .then(({ members: serverMembers }) => {
         const serverIds = cleanIds(serverMembers.map(member => member.id));
-        const localIds = readMemberCompanyIds();
-        const merged = cleanIds([...serverIds, ...localIds]);
         if (cancelled) return;
-
-        writeMemberCompanyIds(merged);
-        setMemberIdsState(merged);
-        if (!sameIds(serverIds, merged)) {
-          void api.setMembers(merged).catch(error => console.warn('Uye listesi sunucuya yazilamadi', error));
-        }
+        writeMemberCompanyIds(serverIds);
+        setMemberIdsState(serverIds);
+        setError(null);
       })
-      .catch(error => console.warn('Uye listesi sunucudan alinamadi', error));
+      .catch(fetchError => {
+        if (!cancelled) setError(fetchError instanceof Error ? fetchError.message : 'Üye listesi alınamadı');
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
 
     return () => { cancelled = true; };
   }, []);
@@ -106,40 +83,63 @@ export function useMemberCompanies<T extends MemberCompany>(companies: T[]) {
     return memberIds.map(id => byId.get(id)).filter((company): company is T => Boolean(company));
   }, [companies, memberIds]);
 
-  const setMemberIds = useCallback((ids: number[]) => {
+  const applyMemberIds = useCallback((ids: number[]) => {
     const next = writeMemberCompanyIds(ids);
     setMemberIdsState(next);
-    void api.setMembers(next).catch(error => console.warn('Uye listesi sunucuya yazilamadi', error));
     notifyMemberCompaniesChanged();
     return next;
   }, []);
 
+  const setMemberIds = useCallback((ids: number[]) => {
+    const previous = readMemberCompanyIds();
+    const next = applyMemberIds(ids);
+    setError(null);
+    void api.setMembers(next)
+      .then(({ members: serverMembers }) => applyMemberIds(serverMembers.map(member => member.id)))
+      .catch(saveError => {
+        applyMemberIds(previous);
+        setError(saveError instanceof Error ? saveError.message : 'Üye listesi kaydedilemedi');
+      });
+    return next;
+  }, [applyMemberIds]);
+
   const addMember = useCallback((id: number) => {
-    setMemberIds([...readMemberCompanyIds(), id]);
-  }, [setMemberIds]);
+    const previous = readMemberCompanyIds();
+    applyMemberIds([...previous, id]);
+    setError(null);
+    void api.addMember(id)
+      .then(({ members: serverMembers }) => applyMemberIds(serverMembers.map(member => member.id)))
+      .catch(saveError => {
+        applyMemberIds(previous);
+        setError(saveError instanceof Error ? saveError.message : 'Üye eklenemedi');
+      });
+  }, [applyMemberIds]);
 
   const removeMember = useCallback((id: number) => {
-    setMemberIds(readMemberCompanyIds().filter(memberId => memberId !== id));
-  }, [setMemberIds]);
+    const previous = readMemberCompanyIds();
+    applyMemberIds(previous.filter(memberId => memberId !== id));
+    setError(null);
+    void api.removeMember(id)
+      .then(({ members: serverMembers }) => applyMemberIds(serverMembers.map(member => member.id)))
+      .catch(saveError => {
+        applyMemberIds(previous);
+        setError(saveError instanceof Error ? saveError.message : 'Üye çıkarılamadı');
+      });
+  }, [applyMemberIds]);
 
   const toggleMember = useCallback((id: number) => {
     const current = readMemberCompanyIds();
     setMemberIds(current.includes(id) ? current.filter(memberId => memberId !== id) : [...current, id]);
   }, [setMemberIds]);
 
-  const seedDefaultMembers = useCallback(() => {
-    const suggested = suggestDefaultMemberIds(companies);
-    setMemberIds([...readMemberCompanyIds(), ...suggested]);
-    return suggested.length;
-  }, [companies, setMemberIds]);
-
   return {
     memberIds,
     members,
+    loading,
+    error,
     addMember,
     removeMember,
     toggleMember,
     setMemberIds,
-    seedDefaultMembers,
   };
 }

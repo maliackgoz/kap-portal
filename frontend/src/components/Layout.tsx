@@ -1,18 +1,36 @@
+import { useEffect, useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { useAuth } from '../context/useAuth';
 import { LayoutDashboard, Database, GitBranch, Building2, LogOut, ShieldCheck, Newspaper } from 'lucide-react';
+import { api } from '../api';
 
 const navItems = [
-  { to: '/', icon: LayoutDashboard, label: 'Dashboard' },
-  { to: '/company', icon: Building2, label: 'Sirket Detay' },
+  { to: '/', icon: LayoutDashboard, label: 'Ana Panel' },
+  { to: '/company', icon: Building2, label: 'Şirket Detayı' },
   { to: '/ratings', icon: ShieldCheck, label: 'Kredi Rating' },
   { to: '/news', icon: Newspaper, label: 'Haberler' },
-  { to: '/processing', icon: Database, label: 'Veri Isle' },
-  { to: '/graph', icon: GitBranch, label: 'Graph' },
+  { to: '/processing', icon: Database, label: 'Veri İşleme' },
+  { to: '/graph', icon: GitBranch, label: 'Ortaklık Ağı' },
 ];
 
 export default function Layout() {
   const { username, logout } = useAuth();
+  const [online, setOnline] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    let active = true;
+    const check = () => {
+      api.getHealth()
+        .then(() => { if (active) setOnline(true); })
+        .catch(() => { if (active) setOnline(false); });
+    };
+    check();
+    const timer = window.setInterval(check, 60_000);
+    return () => {
+      active = false;
+      window.clearInterval(timer);
+    };
+  }, []);
 
   const navStyle = (isActive: boolean): React.CSSProperties => ({
     display: 'flex', alignItems: 'center', gap: 10, padding: '10px 12px',
@@ -47,12 +65,16 @@ export default function Layout() {
 
         {/* Bottom */}
         <div className="app-sidebar-bottom" style={{ padding: '16px', borderTop: '1px solid var(--border)' }}>
+          <div className="service-state" title={online === false ? 'Portal servisine ulaşılamıyor' : 'Portal servisi çalışıyor'}>
+            <span className={`service-state__dot ${online === false ? 'is-offline' : online ? 'is-online' : ''}`} />
+            {online === false ? 'Bağlantı yok' : online ? 'Sistem aktif' : 'Kontrol ediliyor'}
+          </div>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10 }}>
             <div>
               <div style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 2 }}>Oturum</div>
               <span style={{ fontSize: 12, color: 'var(--text)', fontFamily: 'var(--font-mono)', fontWeight: 700 }}>{username}</span>
             </div>
-            <button onClick={logout} title="Cikis" style={{
+            <button onClick={logout} title="Çıkış" aria-label="Oturumu kapat" style={{
               background: 'var(--bg-surface-2)', border: '1px solid var(--border)',
               borderRadius: 8, padding: '8px', cursor: 'pointer', color: 'var(--text-dim)',
               display: 'flex', alignItems: 'center',

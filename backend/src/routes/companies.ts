@@ -1,8 +1,11 @@
 import { Router } from 'express';
 import db from '../db.js';
 import { KapScrapeError, scrapeCompany, type KapFetchDetails } from '../services/scraper.js';
+import { getState } from '../services/processor.js';
+import { replaceCompanyData } from '../services/company-data.js';
 
 const router = Router();
+const activeScrapes = new Set<number>();
 const COMPANY_SELECT = `
   SELECT c.id, c.name, c.slug, c.oid, c.ticker, c.status, c.last_processed_at,
          (
@@ -70,8 +73,8 @@ function errorDetails(error: unknown): Partial<KapFetchDetails> & { errorMessage
 }
 
 router.get('/', (req, res) => {
-  const page = parseInt(req.query.page as string) || 1;
-  const limit = parseInt(req.query.limit as string) || 50;
+  const page = Math.max(1, parseInt(req.query.page as string) || 1);
+  const limit = Math.min(200, Math.max(1, parseInt(req.query.limit as string) || 50));
   const status = req.query.status as string;
   const search = req.query.search as string;
   const offset = (page - 1) * limit;
@@ -79,7 +82,7 @@ router.get('/', (req, res) => {
   let where = '1=1';
   const params: any[] = [];
 
-  if (status) {
+  if (status && ['pending', 'processing', 'done', 'error', 'no_data'].includes(status)) {
     where += ' AND status = ?';
     params.push(status);
   }
@@ -119,6 +122,12 @@ router.get('/all/list', (_req, res) => {
 });
 
 router.get('/:id/data', (req, res) => {
+  const company = db.prepare('SELECT 1 FROM companies WHERE id = ?').get(req.params.id);
+  if (!company) {
+    res.status(404).json({ error: 'Şirket bulunamadı' });
+    return;
+  }
+
   const rows = db.prepare(
     `SELECT item_key, value, fetched_at FROM shareholders WHERE company_id = ? ORDER BY item_key`
   ).all(req.params.id);
@@ -136,15 +145,24 @@ router.get('/:id', (req, res) => {
   const company = db.prepare(
     `SELECT id, name, slug, oid, ticker, status, last_processed_at, created_at FROM companies WHERE id = ?`
   ).get(req.params.id);
-  if (!company) { res.status(404).json({ error: 'Sirket bulunamadi' }); return; }
+  if (!company) { res.status(404).json({ error: 'Şirket bulunamadı' }); return; }
   res.json(company);
 });
 
 // Scrape single company
 router.post('/:id/scrape', async (req, res) => {
   const company = db.prepare(`SELECT id, name, slug, oid FROM companies WHERE id = ?`).get(req.params.id) as any;
-  if (!company) { res.status(404).json({ error: 'Sirket bulunamadi' }); return; }
+  if (!company) { res.status(404).json({ error: 'Şirket bulunamadı' }); return; }
+  if (getState().running) {
+    res.status(409).json({ error: 'Toplu KAP işlemi devam ederken tek şirket yenilenemez' });
+    return;
+  }
+  if (activeScrapes.has(company.id)) {
+    res.status(409).json({ error: 'Bu şirket zaten KAP kaynağından yenileniyor' });
+    return;
+  }
 
+  activeScrapes.add(company.id);
   db.prepare(`UPDATE companies SET status = 'processing' WHERE id = ?`).run(company.id);
 
   try {
@@ -158,33 +176,27 @@ router.post('/:id/scrape', async (req, res) => {
       return;
     }
 
-    const upsertStmt = db.prepare(`
-      INSERT INTO shareholders (company_id, item_key, value, fetched_at)
-      VALUES (?, ?, ?, datetime('now'))
-      ON CONFLICT(company_id, item_key) DO UPDATE SET value = excluded.value, fetched_at = excluded.fetched_at
-    `);
-
-    const insertMany = db.transaction((items: [number, string, string][]) => {
-      for (const [cid, key, val] of items) upsertStmt.run(cid, key, val);
-    });
-
-    const items = Object.entries(result.data!).map(
-      ([key, val]): [number, string, string] => [company.id, key, JSON.stringify(val)]
-    );
-    insertMany(items);
+    const writeResult = replaceCompanyData(company.id, result.data!);
 
     db.prepare(`UPDATE companies SET status = 'done', last_processed_at = datetime('now') WHERE id = ?`).run(company.id);
     db.prepare(`INSERT INTO processing_log (company_id, action, message) VALUES (?, 'process_company', ?)`).run(
-      company.id, logPayload(company, result.details, `${Object.keys(result.data!).length} veri noktasi`)
+      company.id, logPayload(company, result.details, `${writeResult.keysWritten} veri noktası`)
     );
 
-    res.json({ status: 'ok', keys: Object.keys(result.data!).length, detail: result.details });
+    res.json({
+      status: 'ok',
+      keys: writeResult.keysWritten,
+      graphInvalidated: writeResult.graphInvalidated,
+      detail: result.details,
+    });
   } catch (err: any) {
     const details = errorDetails(err);
     const message = logPayload(company, details, details.errorMessage);
     db.prepare(`UPDATE companies SET status = 'error', last_processed_at = datetime('now') WHERE id = ?`).run(company.id);
     db.prepare(`INSERT INTO processing_log (company_id, action, message) VALUES (?, 'error', ?)`).run(company.id, message);
     res.status(500).json({ status: 'error', message: details.errorMessage, detail: details });
+  } finally {
+    activeScrapes.delete(company.id);
   }
 });
 

@@ -1,24 +1,69 @@
 import { Router, Request, Response, NextFunction } from 'express';
+import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
-
-const SECRET = process.env.JWT_SECRET || 'kap-portal-secret-2024';
-const USERS: Record<string, string> = {
-  admin: process.env.ADMIN_PASS || 'kap2024',
-};
+import { config } from './config.js';
 
 const router = Router();
 
+interface LoginAttempt {
+  failures: number;
+  resetAt: number;
+}
+
+const loginAttempts = new Map<string, LoginAttempt>();
+
+function sameValue(left: string, right: string) {
+  const leftHash = crypto.createHash('sha256').update(left).digest();
+  const rightHash = crypto.createHash('sha256').update(right).digest();
+  return crypto.timingSafeEqual(leftHash, rightHash);
+}
+
+function attemptKey(req: Request) {
+  return req.ip || req.socket.remoteAddress || 'unknown';
+}
+
+function currentAttempt(key: string) {
+  const attempt = loginAttempts.get(key);
+  if (attempt && attempt.resetAt > Date.now()) return attempt;
+  loginAttempts.delete(key);
+  return undefined;
+}
+
 router.post('/login', (req: Request, res: Response) => {
-  const { username, password } = req.body;
+  res.setHeader('Cache-Control', 'no-store');
+  const username = typeof req.body?.username === 'string' ? req.body.username.trim() : '';
+  const password = typeof req.body?.password === 'string' ? req.body.password : '';
   if (!username || !password) {
     res.status(400).json({ error: 'Kullanici adi ve sifre gerekli' });
     return;
   }
-  if (USERS[username] !== password) {
-    res.status(401).json({ error: 'Gecersiz kullanici adi veya sifre' });
+
+  const key = attemptKey(req);
+  const attempt = currentAttempt(key);
+  if (attempt && attempt.failures >= config.loginMaxAttempts) {
+    const retryAfter = Math.max(1, Math.ceil((attempt.resetAt - Date.now()) / 1000));
+    res.setHeader('Retry-After', String(retryAfter));
+    res.status(429).json({ error: 'Çok fazla başarısız deneme. Lütfen daha sonra tekrar deneyin.' });
     return;
   }
-  const token = jwt.sign({ username }, SECRET, { expiresIn: '24h' });
+
+  const validUser = sameValue(username, config.adminUsername);
+  const validPassword = sameValue(password, config.adminPassword);
+  if (!validUser || !validPassword) {
+    loginAttempts.set(key, {
+      failures: (attempt?.failures || 0) + 1,
+      resetAt: attempt?.resetAt || Date.now() + config.loginWindowMs,
+    });
+    res.status(401).json({ error: 'Geçersiz kullanıcı adı veya şifre' });
+    return;
+  }
+
+  loginAttempts.delete(key);
+  const token = jwt.sign(
+    { username, role: 'admin' },
+    config.jwtSecret,
+    { expiresIn: config.jwtExpiresIn as jwt.SignOptions['expiresIn'], issuer: 'finansal-portal' },
+  );
   res.json({ token, username });
 });
 
@@ -29,11 +74,11 @@ export function authMiddleware(req: Request, res: Response, next: NextFunction) 
     return;
   }
   try {
-    const payload = jwt.verify(header.slice(7), SECRET);
+    const payload = jwt.verify(header.slice(7), config.jwtSecret, { issuer: 'finansal-portal' });
     (req as any).user = payload;
     next();
   } catch {
-    res.status(401).json({ error: 'Gecersiz token' });
+    res.status(401).json({ error: 'Geçersiz token' });
   }
 }
 

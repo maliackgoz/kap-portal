@@ -60,13 +60,13 @@ router.put('/', (req, res) => {
 router.post('/:id', (req, res) => {
   const id = Number(req.params.id);
   if (!Number.isFinite(id) || id <= 0) {
-    res.status(400).json({ error: 'Gecersiz sirket id' });
+    res.status(400).json({ error: 'Geçersiz şirket kimliği' });
     return;
   }
 
   const company = db.prepare('SELECT id FROM companies WHERE id = ?').get(id);
   if (!company) {
-    res.status(404).json({ error: 'Sirket bulunamadi' });
+    res.status(404).json({ error: 'Şirket bulunamadı' });
     return;
   }
 
@@ -77,7 +77,7 @@ router.post('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   const id = Number(req.params.id);
   if (!Number.isFinite(id) || id <= 0) {
-    res.status(400).json({ error: 'Gecersiz sirket id' });
+    res.status(400).json({ error: 'Geçersiz şirket kimliği' });
     return;
   }
 

@@ -1,21 +1,24 @@
 const KAP_BASE = 'https://www.kap.org.tr/tr/sirket-bilgileri/genel';
 
 const CONFIG = {
-  timeoutMs: Number(process.env.KAP_REQUEST_TIMEOUT_MS || 30_000),
-  maxRetry: Number(process.env.KAP_MAX_RETRY || 3),
-  retryBaseDelayMs: Number(process.env.KAP_RETRY_BASE_DELAY_MS || 5_000),
+  timeoutMs: Number(process.env.KAP_REQUEST_TIMEOUT_MS || 20_000),
+  totalTimeoutMs: Number(process.env.KAP_TOTAL_TIMEOUT_MS || 75_000),
+  maxRetry: Number(process.env.KAP_MAX_RETRY || 2),
+  retryBaseDelayMs: Number(process.env.KAP_RETRY_BASE_DELAY_MS || 2_500),
 };
 
 const KAP_HEADERS = {
-  'User-Agent': process.env.KAP_USER_AGENT || 'Mozilla/5.0 compatible internal financial portal crawler',
+  'User-Agent': process.env.KAP_USER_AGENT || 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/126.0 Safari/537.36',
   Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
   'Accept-Language': 'tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7',
+  'Cache-Control': 'no-cache',
   Connection: 'close',
 };
 
 export type KapErrorType =
   | 'NETWORK_ERROR'
   | 'TIMEOUT'
+  | 'KAP_BLOCKED'
   | `HTTP_${number}`
   | 'PARSE_ERROR'
   | 'NO_FINANCIAL_DATA'
@@ -31,6 +34,7 @@ export type KapFetchDetails = {
   errorCause?: string;
   durationMs: number;
   retryCount: number;
+  retryAfterMs?: number;
   responseLength?: number;
   processingStartedAt: string;
   processingFinishedAt: string;
@@ -51,7 +55,8 @@ function delay(ms: number) {
 }
 
 function backoffMs(attempt: number) {
-  return CONFIG.retryBaseDelayMs * Math.pow(2, attempt - 1);
+  const base = CONFIG.retryBaseDelayMs * Math.pow(2, attempt - 1);
+  return base + Math.floor(Math.random() * Math.max(250, CONFIG.retryBaseDelayMs / 2));
 }
 
 function kapUrl(slug: string) {
@@ -83,10 +88,30 @@ function classifyFetchError(error: unknown): KapErrorType {
 }
 
 function shouldRetry(details: KapFetchDetails) {
-  if (details.errorType === 'TIMEOUT' || details.errorType === 'NETWORK_ERROR') return true;
-  if (details.httpStatus === 429) return true;
-  if (details.httpStatus && [500, 502, 503, 504].includes(details.httpStatus)) return true;
+  if (details.errorType === 'TIMEOUT' || details.errorType === 'NETWORK_ERROR' || details.errorType === 'KAP_BLOCKED') return true;
+  if (details.httpStatus && [403, 408, 425, 429, 500, 502, 503, 504].includes(details.httpStatus)) return true;
   return false;
+}
+
+function retryAfterMs(value: string | null) {
+  if (!value) return undefined;
+  const seconds = Number(value);
+  if (Number.isFinite(seconds) && seconds >= 0) return Math.min(seconds * 1000, 60_000);
+  const date = Date.parse(value);
+  if (Number.isFinite(date)) return Math.min(Math.max(0, date - Date.now()), 60_000);
+  return undefined;
+}
+
+function looksLikeAccessBlock(html: string) {
+  const sample = html.slice(0, 80_000).toLocaleLowerCase('en-US');
+  return [
+    'cf-chl-',
+    'cloudflare',
+    'captcha',
+    'access denied',
+    'request blocked',
+    'too many requests',
+  ].some(marker => sample.includes(marker));
 }
 
 function buildErrorMessage(details: KapFetchDetails) {
@@ -106,11 +131,14 @@ async function fetchWithRetry(url: string): Promise<{ html: string; details: Kap
   let lastDetails: KapFetchDetails | null = null;
 
   for (let attempt = 0; attempt <= CONFIG.maxRetry; attempt++) {
+    const remainingMs = CONFIG.totalTimeoutMs - (Date.now() - started);
+    if (remainingMs <= 0) break;
     const attemptStarted = Date.now();
     try {
       const res = await fetch(url, {
         headers: KAP_HEADERS,
-        signal: AbortSignal.timeout(CONFIG.timeoutMs),
+        redirect: 'follow',
+        signal: AbortSignal.timeout(Math.max(1, Math.min(CONFIG.timeoutMs, remainingMs))),
       });
       const html = await res.text();
       const details: KapFetchDetails = {
@@ -120,15 +148,21 @@ async function fetchWithRetry(url: string): Promise<{ html: string; details: Kap
         statusText: res.statusText,
         durationMs: Date.now() - started,
         retryCount: attempt,
+        retryAfterMs: retryAfterMs(res.headers.get('retry-after')),
         responseLength: html.length,
         processingStartedAt,
         processingFinishedAt: new Date().toISOString(),
       };
 
-      if (res.ok) return { html, details };
+      if (res.ok && !looksLikeAccessBlock(html)) return { html, details };
 
-      details.errorType = `HTTP_${res.status}`;
-      details.errorMessage = `KAP HTTP ${res.status} ${res.statusText}`;
+      if (res.ok) {
+        details.errorType = 'KAP_BLOCKED';
+        details.errorMessage = 'KAP erişim doğrulama sayfası döndürdü';
+      } else {
+        details.errorType = `HTTP_${res.status}`;
+        details.errorMessage = `KAP HTTP ${res.status} ${res.statusText}`;
+      }
       lastDetails = details;
       if (!shouldRetry(details) || attempt >= CONFIG.maxRetry) break;
     } catch (error) {
@@ -147,7 +181,10 @@ async function fetchWithRetry(url: string): Promise<{ html: string; details: Kap
       if (!shouldRetry(details) || attempt >= CONFIG.maxRetry) break;
     }
 
-    await delay(backoffMs(attempt + 1));
+    const waitMs = lastDetails?.retryAfterMs ?? backoffMs(attempt + 1);
+    const remainingAfterAttempt = CONFIG.totalTimeoutMs - (Date.now() - started);
+    if (remainingAfterAttempt <= 0) break;
+    await delay(Math.min(waitMs, remainingAfterAttempt));
 
     if (Date.now() - attemptStarted < 100) {
       await delay(250);
@@ -204,7 +241,7 @@ export async function scrapeCompany(slug: string) {
       details: {
         ...details,
         errorType: 'NO_FINANCIAL_DATA' as const,
-        errorMessage: 'Genel bilgiler alani bulunamadi',
+        errorMessage: 'Genel bilgiler alanı bulunamadı',
       },
     };
   }
@@ -217,7 +254,7 @@ export async function scrapeCompany(slug: string) {
       details: {
         ...details,
         errorType: 'NO_FINANCIAL_DATA' as const,
-        errorMessage: 'KAP sayfasi geldi ama parse edilebilir itemKey verisi yok',
+        errorMessage: 'KAP sayfası geldi ancak işlenebilir veri alanı bulunamadı',
       },
     };
   }

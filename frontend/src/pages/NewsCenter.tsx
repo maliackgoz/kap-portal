@@ -71,13 +71,13 @@ function isLiveNewsSource(source: RatingSource) {
 
 function statusStyle(status: string) {
   const map: Record<string, { color: string; bg: string; label: string }> = {
-    success: { color: 'var(--green)', bg: 'var(--green-bg)', label: 'Hazir' },
-    partial: { color: 'var(--amber)', bg: 'var(--amber-bg)', label: 'Kismi' },
+    success: { color: 'var(--green)', bg: 'var(--green-bg)', label: 'Hazır' },
+    partial: { color: 'var(--amber)', bg: 'var(--amber-bg)', label: 'Kısmi' },
     error: { color: 'var(--red)', bg: 'var(--red-bg)', label: 'Hata' },
-    empty: { color: 'var(--text-muted)', bg: 'var(--bg-surface-2)', label: 'Bos' },
+    empty: { color: 'var(--text-muted)', bg: 'var(--bg-surface-2)', label: 'Boş' },
     pending: { color: 'var(--text-muted)', bg: 'var(--bg-surface-2)', label: 'Bekliyor' },
     manual: { color: 'var(--blue)', bg: 'var(--blue-bg)', label: 'Manuel' },
-    disabled: { color: 'var(--text-muted)', bg: 'var(--bg-surface-2)', label: 'Kapali' },
+    disabled: { color: 'var(--text-muted)', bg: 'var(--bg-surface-2)', label: 'Kapalı' },
   };
   return map[status] || map.pending;
 }
@@ -85,9 +85,9 @@ function statusStyle(status: string) {
 function riskStyle(level: string | null) {
   const key = normalize(level);
   const map: Record<string, { color: string; bg: string; label: string }> = {
-    high: { color: 'var(--red)', bg: 'var(--red-bg)', label: 'Yuksek' },
+    high: { color: 'var(--red)', bg: 'var(--red-bg)', label: 'Yüksek' },
     medium: { color: 'var(--amber)', bg: 'var(--amber-bg)', label: 'Orta' },
-    low: { color: 'var(--green)', bg: 'var(--green-bg)', label: 'Dusuk' },
+    low: { color: 'var(--green)', bg: 'var(--green-bg)', label: 'Düşük' },
   };
   return map[key] || { color: 'var(--text-muted)', bg: 'var(--bg-surface-2)', label: 'Belirsiz' };
 }
@@ -127,7 +127,7 @@ function SourceChip({ source, active, busy, onClick }: {
     <button
       onClick={onClick}
       disabled={busy}
-      title={`${source.name} haberlerini anlik yenile`}
+      title={`${source.name} haberlerini şimdi yenile`}
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 8, padding: '8px 10px',
         borderRadius: 8, border: active ? '1px solid var(--accent)' : '1px solid var(--border)',
@@ -154,7 +154,7 @@ function LiveSourceToggle({ source, selected, onToggle }: {
     <button
       type="button"
       onClick={onToggle}
-      title={`${source.name} canli aramaya ${selected ? 'dahil' : 'dahil degil'}`}
+      title={`${source.name} canlı aramaya ${selected ? 'dahil' : 'dahil değil'}`}
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 8, height: 32, padding: '0 10px',
         borderRadius: 8, border: selected ? '1px solid var(--accent)' : '1px solid var(--border)',
@@ -284,7 +284,7 @@ export default function NewsCenter() {
       setSources(sourceRes.data);
       setNews(newsRes.data);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Haber verisi alinamadi');
+      setError(err instanceof Error ? err.message : 'Haber verisi alınamadı');
     } finally {
       setLoading(false);
     }
@@ -302,11 +302,19 @@ export default function NewsCenter() {
     setError(null);
     setNotice(null);
     try {
-      await api.refreshRatings(selectedSources.map(item => item.key));
-      setNotice(message);
+      const result = await api.refreshRatings(selectedSources.map(item => item.key));
+      const failed = result.data.filter(item => item.status === 'error' || item.status === 'partial');
       await loadNews(nextSource !== undefined ? { source: nextSource } : undefined);
+      if (failed.length > 0) {
+        const details = failed
+          .map(item => `${item.source}: ${item.errors[0] || item.status}`)
+          .join(' | ');
+        setError(`Kaynak kontrol edildi ancak tam yenilenemedi. ${details}`);
+      } else {
+        setNotice(message);
+      }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Haber kaynagi yenilenemedi');
+      setError(err instanceof Error ? err.message : 'Haber kaynağı yenilenemedi');
       await loadNews(nextSource !== undefined ? { source: nextSource } : undefined);
     } finally {
       setRefreshingKey(null);
@@ -315,7 +323,7 @@ export default function NewsCenter() {
 
   const handleSourceClick = async (item: RatingSource) => {
     setSource(item.name);
-    await refreshSources([item], `${item.name} haberleri yeniden cekildi.`, item.name);
+    await refreshSources([item], `${item.name} haberleri yeniden çekildi.`, item.name);
   };
 
   const toggleLiveSource = (key: string) => {
@@ -338,11 +346,11 @@ export default function NewsCenter() {
   const handleLiveSearch = async () => {
     const term = query.trim();
     if (!term) {
-      setError('Canli arama icin haber konusu veya baslik yaz.');
+      setError('Canlı arama için haber konusu veya başlık yazın.');
       return;
     }
     if (!selectedLiveSources.length) {
-      setError('Canli arama icin en az bir haber kaynagi sec.');
+      setError('Canlı arama için en az bir haber kaynağı seçin.');
       return;
     }
 
@@ -358,7 +366,7 @@ export default function NewsCenter() {
       });
       setNews(result.data);
       setLiveMode(true);
-      setNotice(`${result.data.length.toLocaleString('tr-TR')} canli sonuc bulundu.`);
+      setNotice(`${result.data.length.toLocaleString('tr-TR')} canlı sonuç bulundu.`);
       if (result.source_errors?.length) {
         setError(summarizeSourceErrors(result.source_errors));
       }
@@ -368,7 +376,7 @@ export default function NewsCenter() {
         sources: selectedLiveSources.join(','),
       });
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Canli haber aramasi tamamlanamadi');
+      setError(err instanceof Error ? err.message : 'Canlı haber araması tamamlanamadı');
     } finally {
       setLiveSearching(false);
       setLoading(false);
@@ -408,7 +416,7 @@ export default function NewsCenter() {
     .pop() || null;
   const riskyCount = filteredNews.filter(row => ['high', 'medium'].includes(normalize(row.risk_level))).length;
   const visibleNews = filteredNews.slice(0, 240);
-  const periodLabel = liveMode ? 'Canli arama' : (days ? `${days} gun` : 'Tum arsiv');
+  const periodLabel = liveMode ? 'Canlı arama' : (days ? `${days} gün` : 'Tüm arşiv');
 
   return (
     <div>
@@ -416,11 +424,11 @@ export default function NewsCenter() {
         <div>
           <h1 style={{ fontSize: 24, fontWeight: 850, letterSpacing: 0, marginBottom: 6 }}>Haberler</h1>
           <div style={{ color: 'var(--text-muted)', fontSize: 13 }}>
-            Haber kaynagini sec, anlik cek; sirket, baslik, ozet veya anahtar kelimeyle ara.
+            Haber kaynaklarını yenileyin; şirket, başlık, özet veya anahtar kelimeyle arayın.
           </div>
         </div>
         <button
-          onClick={() => void refreshSources(newsSources, 'Canli haber kaynaklari yenilendi.')}
+          onClick={() => void refreshSources(newsSources, 'Canlı haber kaynakları yenilendi.')}
           disabled={refreshingKey !== null}
           style={{
             display: 'inline-flex', alignItems: 'center', gap: 8, height: 38, padding: '0 14px',
@@ -429,15 +437,15 @@ export default function NewsCenter() {
           }}
         >
           <RefreshCw size={15} style={refreshingKey === 'bulk' ? { animation: 'spin 1s linear infinite' } : {}} />
-          Haberleri cek
+          Haberleri Yenile
         </button>
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', gap: 12, marginBottom: 14 }}>
         <MetricCard label="Haber" value={filteredNews.length.toLocaleString('tr-TR')} icon={Newspaper} color="var(--blue)" bg="var(--blue-bg)" />
-        <MetricCard label="Canli Kaynak" value={newsSources.length.toLocaleString('tr-TR')} icon={Database} color="var(--accent)" bg="var(--accent-bg)" />
+        <MetricCard label="Canlı Kaynak" value={newsSources.length.toLocaleString('tr-TR')} icon={Database} color="var(--accent)" bg="var(--accent-bg)" />
         <MetricCard label="Riskli Haber" value={riskyCount.toLocaleString('tr-TR')} icon={AlertTriangle} color="var(--amber)" bg="var(--amber-bg)" />
-        <MetricCard label="Son Cekim" value={latestSourceTime ? formatDateTime(latestSourceTime) : '-'} icon={CalendarDays} color="var(--text-dim)" bg="var(--bg-surface-2)" />
+        <MetricCard label="Son Çekim" value={latestSourceTime ? formatDateTime(latestSourceTime) : '-'} icon={CalendarDays} color="var(--text-dim)" bg="var(--bg-surface-2)" />
       </div>
 
       <div style={{
@@ -453,7 +461,7 @@ export default function NewsCenter() {
                 value={query}
                 onChange={event => setQuery(event.target.value)}
                 onKeyDown={event => { if (event.key === 'Enter') void handleLiveSearch(); }}
-                placeholder="Baslik, sirket, kaynak veya kelime ara"
+                placeholder="Başlık, şirket, kaynak veya anahtar kelime"
                 style={{
                   width: '100%', height: 38, padding: '0 12px 0 34px', borderRadius: 8,
                   border: '1px solid var(--border)', background: 'var(--bg-surface-2)',
@@ -469,7 +477,7 @@ export default function NewsCenter() {
               onChange={event => setSource(event.target.value)}
               style={{ width: '100%', height: 38, padding: '0 10px', borderRadius: 8, border: '1px solid var(--border)', background: 'var(--bg-surface-2)', color: 'var(--text)', outline: 'none' }}
             >
-              <option value="">Tum kaynaklar</option>
+              <option value="">Tüm kaynaklar</option>
               {newsSources.map(item => <option key={item.key} value={item.name}>{item.name}</option>)}
             </select>
           </div>
@@ -480,24 +488,24 @@ export default function NewsCenter() {
               onChange={event => setRisk(event.target.value)}
               style={{ width: '100%', height: 38, padding: '0 10px', borderRadius: 8, border: '1px solid var(--border)', background: 'var(--bg-surface-2)', color: 'var(--text)', outline: 'none' }}
             >
-              <option value="">Tum riskler</option>
-              <option value="low">Dusuk</option>
+              <option value="">Tüm riskler</option>
+              <option value="low">Düşük</option>
               <option value="medium">Orta</option>
-              <option value="high">Yuksek</option>
+              <option value="high">Yüksek</option>
             </select>
           </div>
           <div>
-            <label style={{ display: 'block', color: 'var(--text-muted)', fontSize: 11, fontWeight: 850, textTransform: 'uppercase', letterSpacing: 0, marginBottom: 6 }}>Aralik</label>
+            <label style={{ display: 'block', color: 'var(--text-muted)', fontSize: 11, fontWeight: 850, textTransform: 'uppercase', letterSpacing: 0, marginBottom: 6 }}>Aralık</label>
             <select
               value={days}
               onChange={event => setDays(event.target.value)}
               style={{ width: '100%', height: 38, padding: '0 10px', borderRadius: 8, border: '1px solid var(--border)', background: 'var(--bg-surface-2)', color: 'var(--text)', outline: 'none' }}
             >
-              <option value="7">7 gun</option>
-              <option value="30">30 gun</option>
-              <option value="60">60 gun</option>
-              <option value="365">1 yil</option>
-              <option value="">Tum arsiv</option>
+              <option value="7">7 gün</option>
+              <option value="30">30 gün</option>
+              <option value="60">60 gün</option>
+              <option value="365">1 yıl</option>
+              <option value="">Tüm arşiv</option>
             </select>
           </div>
           <button
@@ -511,7 +519,7 @@ export default function NewsCenter() {
             }}
           >
             {liveSearching ? <RefreshCw size={14} style={{ animation: 'spin 1s linear infinite' }} /> : <Search size={14} />}
-            Canli ara
+            Canlı ara
           </button>
           <button
             onClick={() => void handleSearch()}
@@ -523,7 +531,7 @@ export default function NewsCenter() {
               fontWeight: 850, whiteSpace: 'nowrap',
             }}
           >
-            <Search size={14} /> Akista ara
+            <Search size={14} /> Akışta ara
           </button>
           <button
             onClick={clearFilters}
@@ -545,7 +553,7 @@ export default function NewsCenter() {
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, flexWrap: 'wrap' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'var(--text)', fontSize: 12, fontWeight: 850 }}>
               <Search size={14} />
-              Canli kaynak arama
+              Canlı kaynak arama
               <span style={{ color: 'var(--text-muted)', fontFamily: 'var(--font-mono)', fontWeight: 650 }}>
                 {selectedLiveSources.length}/{newsSources.length}
               </span>
@@ -560,7 +568,7 @@ export default function NewsCenter() {
                   fontSize: 11, fontWeight: 850,
                 }}
               >
-                Tumunu sec
+                Tümünü seç
               </button>
               <button
                 type="button"
@@ -614,7 +622,7 @@ export default function NewsCenter() {
           )}
           {sourceIssues.length > 0 && (
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 12px', borderRadius: 8, background: 'var(--amber-bg)', color: 'var(--amber)', fontWeight: 800 }}>
-              <AlertTriangle size={15} /> Haber kaynak kontrolu: {sourceIssues.map(item => item.name).join(', ')}
+              <AlertTriangle size={15} /> Haber kaynağı kontrolü: {sourceIssues.map(item => item.name).join(', ')}
             </div>
           )}
         </div>
@@ -623,7 +631,7 @@ export default function NewsCenter() {
       <section style={{ background: 'var(--bg-surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius)', boxShadow: 'var(--shadow)', overflow: 'hidden' }}>
         <SectionHeader
           icon={ListFilter}
-          title={liveMode ? 'Canli Haber Aramasi' : 'Haber Akisi'}
+          title={liveMode ? 'Canlı Haber Araması' : 'Haber Akışı'}
           meta={`${visibleNews.length.toLocaleString('tr-TR')} / ${filteredNews.length.toLocaleString('tr-TR')} haber | ${periodLabel}`}
           action={liveMode ? (
             <button
@@ -635,15 +643,15 @@ export default function NewsCenter() {
                 fontSize: 11, fontWeight: 850,
               }}
             >
-              Akisa don
+              Akışa dön
             </button>
           ) : undefined}
         />
         <div style={{ maxHeight: 'calc(100vh - 360px)', minHeight: 430, overflowY: 'auto', background: 'var(--bg-surface-2)' }}>
           {loading ? (
-            <div style={{ padding: 34, textAlign: 'center', color: 'var(--text-muted)' }}>Haberler yukleniyor...</div>
+            <div style={{ padding: 34, textAlign: 'center', color: 'var(--text-muted)' }}>Haberler yükleniyor...</div>
           ) : visibleNews.length === 0 ? (
-            <div style={{ padding: 34, textAlign: 'center', color: 'var(--text-muted)' }}>Bu filtrelerle haber bulunamadi.</div>
+            <div style={{ padding: 34, textAlign: 'center', color: 'var(--text-muted)' }}>Bu filtrelerle haber bulunamadı.</div>
           ) : (
             <div style={{ display: 'grid', gap: 10, padding: 12 }}>
               {visibleNews.map((row, index) => (

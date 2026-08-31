@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { LockKeyhole } from 'lucide-react';
 import { useAuth } from '../context/useAuth';
 
 export default function LoginForm() {
@@ -34,9 +35,9 @@ export default function LoginForm() {
             display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
             fontSize: 22, fontWeight: 800, color: '#fff', fontFamily: 'var(--font-mono)',
             marginBottom: 16,
-          }}>F</div>
+          }}><LockKeyhole size={22} /></div>
           <h1 style={{ fontSize: 20, fontWeight: 700, letterSpacing: 0, margin: 0 }}>Finansal Portal</h1>
-          <p style={{ color: 'var(--text-muted)', fontSize: 13, marginTop: 4 }}>KAP, ortaklik grafi ve kredi rating merkezi</p>
+          <p style={{ color: 'var(--text-muted)', fontSize: 13, marginTop: 6 }}>Kurumsal finansal analiz platformu</p>
         </div>
 
         {error && (
@@ -48,11 +49,12 @@ export default function LoginForm() {
 
         <div style={{ marginBottom: 16 }}>
           <label style={{ display: 'block', fontSize: 12, fontWeight: 700, color: 'var(--text-dim)', marginBottom: 6, textTransform: 'uppercase', letterSpacing: 0 }}>
-            Kullanici Adi
+            Kullanıcı Adı
           </label>
           <input
             type="text" value={username} onChange={e => setUsername(e.target.value)}
-            placeholder="admin" autoFocus
+            placeholder="Kullanıcı adınızı girin" autoFocus autoComplete="username"
+            disabled={loading} required
             style={{
               width: '100%', padding: '10px 14px', background: 'var(--bg-surface-2)',
               border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)',
@@ -63,11 +65,12 @@ export default function LoginForm() {
 
         <div style={{ marginBottom: 24 }}>
           <label style={{ display: 'block', fontSize: 12, fontWeight: 700, color: 'var(--text-dim)', marginBottom: 6, textTransform: 'uppercase', letterSpacing: 0 }}>
-            Sifre
+            Şifre
           </label>
           <input
             type="password" value={password} onChange={e => setPassword(e.target.value)}
-            placeholder="******"
+            placeholder="Şifrenizi girin" autoComplete="current-password"
+            disabled={loading} required
             style={{
               width: '100%', padding: '10px 14px', background: 'var(--bg-surface-2)',
               border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)',
@@ -82,7 +85,7 @@ export default function LoginForm() {
           cursor: loading ? 'not-allowed' : 'pointer', opacity: loading ? 0.6 : 1,
           fontFamily: 'var(--font-sans)',
         }}>
-          {loading ? 'Giris yapiliyor...' : 'Giris Yap'}
+          {loading ? 'Giriş yapılıyor...' : 'Giriş Yap'}
         </button>
       </form>
     </div>

@@ -34,6 +34,21 @@ export interface GraphStats {
   personNodes: number;
 }
 
+export interface GraphRelationship {
+  node: GraphNode;
+  edge: GraphEdge;
+}
+
+export interface GraphRelationshipSummary {
+  root: GraphNode | null;
+  directOwners: GraphRelationship[];
+  indirectOwners: GraphRelationship[];
+  subsidiaries: GraphRelationship[];
+  relatedCompanyCount: number;
+  organizationCount: number;
+  personCount: number;
+}
+
 // --- In-memory cache ---
 
 let cachedGraph: GraphData | null = null;
@@ -66,7 +81,12 @@ function normalizeName(name: string): string {
 
 // --- Shareholder type detection ---
 
-const COMPANY_INDICATORS = ['A.S.', 'A.\u015E.', 'HOLDING', 'SIRKET', '\u015E\u0130RKET', 'B.V.', 'INC', 'CORP', 'GMBH', 'LTD', 'AKTIENGESELLSCHAFT', 'HOLDİNG', 'ŞİRKET'];
+const COMPANY_INDICATORS = [
+  'A.S.', 'A.Ş.', 'ANONIM', 'ANONİM', 'HOLDING', 'HOLDİNG', 'SIRKET', 'ŞİRKET',
+  'LIMITED', 'LİMİTED', 'LTD', 'LLC', 'LLP', 'PLC', 'INC', 'CORP', 'COMPANY',
+  'GMBH', 'AKTIENGESELLSCHAFT', 'B.V.', 'N.V.', 'S.A.', 'FZCO', 'FZE',
+  ' SA ', ' NV ', ' BV ', ' AG ',
+];
 
 function isCompanyName(name: string): boolean {
   const upper = name.toUpperCase();
@@ -93,7 +113,7 @@ function parseStoredString(value: string): string {
 
 export function buildGraph(): GraphData {
   const nodes = new Map<string, GraphNode>();
-  const edges: GraphEdge[] = [];
+  const edges = new Map<string, GraphEdge>();
 
   // 1. Load all companies
   const companies = db.prepare('SELECT id, name, slug FROM companies').all() as Array<{id: number; name: string; slug: string}>;
@@ -125,7 +145,7 @@ export function buildGraph(): GraphData {
   // Track shareholder node IDs by normalized name to avoid duplicates
   const shareholderNodeMap = new Map<string, string>();
 
-  function getOrCreateShareholderNode(rawName: string): string | null {
+  function getOrCreateShareholderNode(rawName: string, forceOrganization = false): string | null {
     const name = rawName.trim();
     if (shouldSkip(name)) return null;
 
@@ -143,7 +163,7 @@ export function buildGraph(): GraphData {
     }
 
     // Create new node
-    const isCompany = isCompanyName(name);
+    const isCompany = forceOrganization || isCompanyName(name);
     const type = isCompany ? 'shareholder' : 'person';
     const nodeId = `${type}_${shareholderNodeMap.size + 1}`;
 
@@ -155,6 +175,21 @@ export function buildGraph(): GraphData {
 
     shareholderNodeMap.set(normalized, nodeId);
     return nodeId;
+  }
+
+  function upsertEdge(edge: GraphEdge) {
+    const key = `${edge.source}|${edge.target}|${edge.type}`;
+    const current = edges.get(key);
+    if (!current) {
+      edges.set(key, edge);
+      return;
+    }
+    edges.set(key, {
+      ...current,
+      oran_pct: current.oran_pct || edge.oran_pct,
+      pay_tl: current.pay_tl || edge.pay_tl,
+      oy_hakki_pct: current.oy_hakki_pct || edge.oy_hakki_pct,
+    });
   }
 
   for (const row of shareholderRows) {
@@ -176,7 +211,7 @@ export function buildGraph(): GraphData {
           if (!name || shouldSkip(name)) continue;
           const sourceId = getOrCreateShareholderNode(name);
           if (!sourceId) continue;
-          edges.push({
+          upsertEdge({
             source: sourceId,
             target: targetNodeId,
             type: 'OWNS_DIRECTLY',
@@ -195,7 +230,7 @@ export function buildGraph(): GraphData {
           if (!name || shouldSkip(name)) continue;
           const sourceId = getOrCreateShareholderNode(name);
           if (!sourceId) continue;
-          edges.push({
+          upsertEdge({
             source: sourceId,
             target: targetNodeId,
             type: 'OWNS_INDIRECTLY',
@@ -213,7 +248,7 @@ export function buildGraph(): GraphData {
           if (!name || shouldSkip(name)) continue;
           const sourceId = getOrCreateShareholderNode(name);
           if (!sourceId) continue;
-          edges.push({
+          upsertEdge({
             source: sourceId,
             target: targetNodeId,
             type: 'OWNS_DIRECTLY',
@@ -229,9 +264,9 @@ export function buildGraph(): GraphData {
         for (const entry of data) {
           const name = entry.companyTitle || entry.companyName;
           if (!name || shouldSkip(name)) continue;
-          const subsidiaryId = getOrCreateShareholderNode(name);
+          const subsidiaryId = getOrCreateShareholderNode(name, true);
           if (!subsidiaryId) continue;
-          edges.push({
+          upsertEdge({
             source: targetNodeId,
             target: subsidiaryId,
             type: 'HAS_SUBSIDIARY',
@@ -263,7 +298,8 @@ export function buildGraph(): GraphData {
 
   // 4. Compute connectionCount per node
   const connCount = new Map<string, number>();
-  for (const edge of edges) {
+  const graphEdges = Array.from(edges.values());
+  for (const edge of graphEdges) {
     connCount.set(edge.source, (connCount.get(edge.source) || 0) + 1);
     connCount.set(edge.target, (connCount.get(edge.target) || 0) + 1);
   }
@@ -274,7 +310,7 @@ export function buildGraph(): GraphData {
 
   const graphData: GraphData = {
     nodes: Array.from(nodes.values()),
-    edges,
+    edges: graphEdges,
   };
 
   cachedGraph = graphData;
@@ -304,6 +340,14 @@ export function getSubgraph(companyId: number, depth: number = 2): GraphData {
   // Hub threshold — nodes with more than this many connections get limited traversal
   const HUB_THRESHOLD = 15;
 
+  const adjacency = new Map<string, string[]>();
+  for (const edge of fullGraph.edges) {
+    if (!adjacency.has(edge.source)) adjacency.set(edge.source, []);
+    if (!adjacency.has(edge.target)) adjacency.set(edge.target, []);
+    adjacency.get(edge.source)!.push(edge.target);
+    adjacency.get(edge.target)!.push(edge.source);
+  }
+
   // BFS with hub protection
   const relevantNodeIds = new Set<string>([rootId]);
   let frontier = new Set<string>([rootId]);
@@ -311,12 +355,8 @@ export function getSubgraph(companyId: number, depth: number = 2): GraphData {
   for (let d = 0; d < depth; d++) {
     const nextFrontier = new Set<string>();
     for (const nodeId of frontier) {
-      for (const edge of fullGraph.edges) {
-        let neighbor: string | null = null;
-        if (edge.source === nodeId) neighbor = edge.target;
-        if (edge.target === nodeId) neighbor = edge.source;
-
-        if (!neighbor || relevantNodeIds.has(neighbor)) continue;
+      for (const neighbor of adjacency.get(nodeId) || []) {
+        if (relevantNodeIds.has(neighbor)) continue;
 
         // Skip hub nodes at depth > 0 to prevent graph explosion
         const neighborEdges = edgeCount.get(neighbor) || 0;
@@ -335,6 +375,48 @@ export function getSubgraph(companyId: number, depth: number = 2): GraphData {
   const subNodes = fullGraph.nodes.filter(n => relevantNodeIds.has(n.id));
 
   return { nodes: subNodes, edges: subEdges };
+}
+
+function parseRatio(value?: string) {
+  if (!value) return -1;
+  const parsed = Number(value.replace('%', '').replace(/\./g, '').replace(',', '.'));
+  return Number.isFinite(parsed) ? parsed : -1;
+}
+
+export function getRelationshipSummary(companyId: number, graph = getGraph()): GraphRelationshipSummary {
+  const rootId = `company_${companyId}`;
+  const nodeLookup = new Map(graph.nodes.map(node => [node.id, node]));
+  const root = nodeLookup.get(rootId) || null;
+
+  const collect = (type: GraphEdge['type'], direction: 'incoming' | 'outgoing') =>
+    graph.edges
+      .filter(edge => edge.type === type && (direction === 'incoming' ? edge.target === rootId : edge.source === rootId))
+      .map(edge => {
+        const nodeId = direction === 'incoming' ? edge.source : edge.target;
+        const node = nodeLookup.get(nodeId);
+        return node ? { node, edge } : null;
+      })
+      .filter((relation): relation is GraphRelationship => Boolean(relation))
+      .sort((a, b) => parseRatio(b.edge.oran_pct) - parseRatio(a.edge.oran_pct));
+
+  const directOwners = collect('OWNS_DIRECTLY', 'incoming');
+  const indirectOwners = collect('OWNS_INDIRECTLY', 'incoming');
+  const subsidiaries = collect('HAS_SUBSIDIARY', 'outgoing');
+  const relatedNodes = new Map<string, GraphNode>();
+  for (const relation of [...directOwners, ...indirectOwners, ...subsidiaries]) {
+    relatedNodes.set(relation.node.id, relation.node);
+  }
+  const related = Array.from(relatedNodes.values());
+
+  return {
+    root,
+    directOwners,
+    indirectOwners,
+    subsidiaries,
+    relatedCompanyCount: related.filter(node => node.type === 'company').length,
+    organizationCount: related.filter(node => node.type === 'shareholder').length,
+    personCount: related.filter(node => node.type === 'person').length,
+  };
 }
 
 export function getStats(): GraphStats {

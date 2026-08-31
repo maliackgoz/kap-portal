@@ -11,7 +11,7 @@ const scraperPath = path.join(__dirname, '..', '..', '..', 'kap-scraper', 'compa
 const companiesPath = fs.existsSync(localPath) ? localPath : fs.existsSync(packagedPath) ? packagedPath : scraperPath;
 
 if (!fs.existsSync(companiesPath)) {
-  console.error(`companies.json bulunamadi. Beklenen lokasyonlar:\n  ${localPath}\n  ${packagedPath}\n  ${scraperPath}`);
+  console.error(`companies.json bulunamadı. Beklenen konumlar:\n  ${localPath}\n  ${packagedPath}\n  ${scraperPath}`);
   process.exit(1);
 }
 
@@ -30,4 +30,4 @@ const insertMany = db.transaction((items: { name: string; slug: string; oid: str
 insertMany(companies);
 
 const count = (db.prepare('SELECT COUNT(*) as c FROM companies').get() as any).c;
-console.log(`Seed tamamlandi: ${count} sirket`);
+console.log(`Seed tamamlandı: ${count} şirket`);

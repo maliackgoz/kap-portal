@@ -3,7 +3,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const DB_PATH = path.join(__dirname, '..', 'data', 'kap.db');
+const DB_PATH = process.env.KAP_DB_PATH || path.join(__dirname, '..', 'data', 'kap.db');
 
 // Ensure data directory exists
 import fs from 'fs';
@@ -11,6 +11,8 @@ fs.mkdirSync(path.dirname(DB_PATH), { recursive: true });
 
 const db = new Database(DB_PATH);
 db.pragma('journal_mode = WAL');
+db.pragma('synchronous = NORMAL');
+db.pragma('busy_timeout = 5000');
 db.pragma('foreign_keys = ON');
 
 // Migrations

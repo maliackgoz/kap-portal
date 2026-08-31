@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getGraph, getSubgraph, getStats, buildGraph, invalidateCache, findPath, getClusters, getSectors } from '../services/graph-builder.js';
+import { getGraph, getSubgraph, getStats, buildGraph, invalidateCache, findPath, getClusters, getSectors, getRelationshipSummary } from '../services/graph-builder.js';
 
 const router = Router();
 
@@ -37,7 +37,7 @@ router.get('/path', (req, res) => {
     if (result) {
       res.json(result);
     } else {
-      res.json({ path: [], edges: [], message: 'Baglanti bulunamadi' });
+      res.json({ path: [], edges: [], message: 'Bağlantı bulunamadı' });
     }
   } catch (err: any) {
     console.error('Graph path error:', err);
@@ -78,13 +78,33 @@ router.get('/stats', (_req, res) => {
   }
 });
 
+// GET /api/graph/company/:id/summary
+router.get('/company/:id/summary', (req, res) => {
+  try {
+    const companyId = Number(req.params.id);
+    if (!Number.isInteger(companyId) || companyId <= 0) {
+      res.status(400).json({ error: 'Geçerli bir şirket id değeri gerekli' });
+      return;
+    }
+    const summary = getRelationshipSummary(companyId);
+    if (!summary.root) {
+      res.status(404).json({ error: 'Şirket graf düğümü bulunamadı' });
+      return;
+    }
+    res.json(summary);
+  } catch (err: any) {
+    console.error('Graph relationship summary error:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // POST /api/graph/rebuild — force rebuild
 router.post('/rebuild', (_req, res) => {
   try {
     invalidateCache();
     const graph = buildGraph();
     res.json({
-      message: 'Graph yeniden olusturuldu',
+      message: 'Grafik yeniden oluşturuldu',
       nodes: graph.nodes.length,
       edges: graph.edges.length,
     });

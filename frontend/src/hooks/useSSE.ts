@@ -19,7 +19,18 @@ export function useSSE(url: string, onEvent: (event: string, data: unknown) => v
     es.onopen = () => setConnected(true);
     es.onerror = () => setConnected(false);
 
-    const events = ['state', 'batch_start', 'progress', 'company_done', 'company_error', 'company_skip', 'batch_done', 'batch_stopped'];
+    const events = [
+      'state',
+      'batch_start',
+      'progress',
+      'company_done',
+      'company_error',
+      'company_skip',
+      'cooldown',
+      'batch_done',
+      'batch_stopped',
+      'batch_error',
+    ];
     for (const evt of events) {
       es.addEventListener(evt, (e: MessageEvent) => {
         let payload: unknown;

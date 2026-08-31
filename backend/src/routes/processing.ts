@@ -6,7 +6,7 @@ const router = Router();
 router.post('/start', async (req, res) => {
   const state = getState();
   if (state.running) {
-    res.status(409).json({ error: 'Zaten calisiyor' });
+    res.status(409).json({ error: 'İşlem zaten çalışıyor' });
     return;
   }
 
@@ -16,14 +16,9 @@ router.post('/start', async (req, res) => {
     ? Array.from(new Set((req.body.companyIds as unknown[]).map(Number).filter(id => Number.isFinite(id) && id > 0)))
     : [];
 
-  if (scope === 'members' && companyIds.length === 0) {
-    res.status(400).json({ error: 'Uye sirket secimi bos' });
-    return;
-  }
-
   // Start async, don't await
   startProcessing(scope, companyIds).catch(err => console.error('Batch error:', err));
-  res.json({ message: 'Baslatildi', scope, companyIds });
+  res.json({ message: 'Başlatıldı', scope, companyIds });
 });
 
 router.post('/stop', (_req, res) => {

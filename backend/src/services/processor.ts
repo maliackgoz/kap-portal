@@ -1,25 +1,40 @@
 import { Response } from 'express';
 import db from '../db.js';
 import { KapScrapeError, scrapeCompany, type KapFetchDetails } from './scraper.js';
+import { replaceCompanyData } from './company-data.js';
 
 interface ProcessingState {
   running: boolean;
   aborted: boolean;
   scope: ProcessingScope;
+  phase: 'idle' | 'processing' | 'cooldown' | 'stopping' | 'failed';
+  message: string;
   current: number;
   total: number;
+  processed: number;
+  errors: number;
+  skipped: number;
+  currentCompanyId: number | null;
   currentCompany: string;
   startedAt: string | null;
+  lastEventAt: string | null;
 }
 
 const state: ProcessingState = {
   running: false,
   aborted: false,
   scope: 'pending',
+  phase: 'idle',
+  message: '',
   current: 0,
   total: 0,
+  processed: 0,
+  errors: 0,
+  skipped: 0,
+  currentCompanyId: null,
   currentCompany: '',
   startedAt: null,
+  lastEventAt: null,
 };
 
 export type ProcessingScope = 'pending' | 'all' | 'members';
@@ -29,6 +44,7 @@ type ProcessingCompany = { id: number; name: string; slug: string; oid: string }
 const sseClients = new Set<Response>();
 
 function broadcast(event: string, data: any) {
+  state.lastEventAt = new Date().toISOString();
   const msg = `event: ${event}\ndata: ${JSON.stringify(data)}\n\n`;
   for (const client of sseClients) {
     try { client.write(msg); } catch { sseClients.delete(client); }
@@ -40,11 +56,23 @@ export function addSSEClient(res: Response) {
     'Content-Type': 'text/event-stream',
     'Cache-Control': 'no-cache',
     'Connection': 'keep-alive',
+    'X-Accel-Buffering': 'no',
   });
   // Send current state immediately
   res.write(`event: state\ndata: ${JSON.stringify(getState())}\n\n`);
   sseClients.add(res);
-  res.on('close', () => sseClients.delete(res));
+  const heartbeat = setInterval(() => {
+    try {
+      res.write(`: heartbeat ${Date.now()}\n\n`);
+    } catch {
+      clearInterval(heartbeat);
+      sseClients.delete(res);
+    }
+  }, 15_000);
+  res.on('close', () => {
+    clearInterval(heartbeat);
+    sseClients.delete(res);
+  });
 }
 
 export function getState() {
@@ -53,13 +81,21 @@ export function getState() {
 
 export function stopProcessing() {
   state.aborted = true;
+  state.phase = 'stopping';
+  state.message = 'Mevcut istek tamamlandığında işlem durdurulacak';
+  broadcast('state', getState());
 }
 
 const REQUEST_DELAY_MS = Number(process.env.KAP_REQUEST_DELAY_MS || 3000);
 const ERROR_COOLDOWN_THRESHOLD = Number(process.env.KAP_ERROR_COOLDOWN_THRESHOLD || 3);
 const ERROR_COOLDOWN_MS = Number(process.env.KAP_ERROR_COOLDOWN_MS || 60_000);
 
-const delay = (ms: number) => new Promise(r => setTimeout(r, ms));
+async function interruptibleDelay(ms: number) {
+  const deadline = Date.now() + ms;
+  while (!state.aborted && Date.now() < deadline) {
+    await new Promise(resolve => setTimeout(resolve, Math.min(500, deadline - Date.now())));
+  }
+}
 
 function logPayload(company: { name: string; oid: string; slug: string }, details: Partial<KapFetchDetails>, message?: string) {
   return JSON.stringify({
@@ -112,9 +148,9 @@ function processingAction(scope: ProcessingScope) {
 }
 
 function processingLabel(scope: ProcessingScope) {
-  if (scope === 'all') return 'tum sirket';
-  if (scope === 'members') return 'uye sirket';
-  return 'bekleyen/hata sirket';
+  if (scope === 'all') return 'tüm şirket';
+  if (scope === 'members') return 'üye şirket';
+  return 'bekleyen/hatalı şirket';
 }
 
 function selectProcessingCompanies(scope: ProcessingScope, companyIds?: number[]): ProcessingCompany[] {
@@ -124,7 +160,14 @@ function selectProcessingCompanies(scope: ProcessingScope, companyIds?: number[]
 
   if (scope === 'members') {
     const ids = cleanIds(companyIds);
-    if (ids.length === 0) return [];
+    if (ids.length === 0) {
+      return db.prepare(`
+        SELECT c.id, c.name, c.slug, c.oid
+        FROM member_companies mc
+        JOIN companies c ON c.id = mc.company_id
+        ORDER BY c.name
+      `).all() as ProcessingCompany[];
+    }
     const placeholders = ids.map(() => '?').join(',');
     return db.prepare(
       `SELECT id, name, slug, oid FROM companies WHERE id IN (${placeholders}) ORDER BY name`,
@@ -137,116 +180,136 @@ function selectProcessingCompanies(scope: ProcessingScope, companyIds?: number[]
 }
 
 export async function startProcessing(scope: ProcessingScope = 'pending', companyIds?: number[]) {
-  if (state.running) throw new Error('Zaten calisiyor');
+  if (state.running) throw new Error('İşlem zaten çalışıyor');
 
   const companies = selectProcessingCompanies(scope, companyIds);
 
   state.running = true;
   state.aborted = false;
   state.scope = scope;
+  state.phase = 'processing';
+  state.message = 'KAP veri çekimi başlatıldı';
   state.current = 0;
   state.total = companies.length;
+  state.processed = 0;
+  state.errors = 0;
+  state.skipped = 0;
+  state.currentCompanyId = null;
   state.currentCompany = '';
   state.startedAt = new Date().toISOString();
-
-  db.prepare(
-    `INSERT INTO processing_log (action, message) VALUES (?, ?)`
-  ).run(processingAction(scope), `${companies.length} ${processingLabel(scope)} isleniyor`);
-
-  broadcast('batch_start', { total: companies.length, scope });
-
-  const upsertStmt = db.prepare(`
-    INSERT INTO shareholders (company_id, item_key, value, fetched_at)
-    VALUES (?, ?, ?, datetime('now'))
-    ON CONFLICT(company_id, item_key) DO UPDATE SET value = excluded.value, fetched_at = excluded.fetched_at
-  `);
+  state.lastEventAt = state.startedAt;
 
   let processed = 0;
   let errors = 0;
-  let consecutiveNetworkErrors = 0;
+  let skipped = 0;
 
-  for (const company of companies) {
-    if (state.aborted) {
-      db.prepare(`INSERT INTO processing_log (action, message) VALUES ('stop_batch', 'Kullanici tarafindan durduruldu')`).run();
-      broadcast('batch_stopped', { processed, errors });
-      break;
-    }
+  try {
 
-    state.current++;
-    state.currentCompany = company.name;
+    db.prepare(
+      `INSERT INTO processing_log (action, message) VALUES (?, ?)`
+    ).run(processingAction(scope), `${companies.length} ${processingLabel(scope)} işleniyor`);
 
-    db.prepare(`UPDATE companies SET status = 'processing' WHERE id = ?`).run(company.id);
-    broadcast('progress', {
-      current: state.current,
-      total: state.total,
-      percent: Math.round((state.current / state.total) * 100),
-      companyName: company.name,
-    });
+    broadcast('batch_start', { total: companies.length, scope });
 
-    try {
-      const result = await scrapeCompany(company.slug);
+    let consecutiveNetworkErrors = 0;
 
-      if (result.status === 'no_data') {
-        db.prepare(`UPDATE companies SET status = 'no_data', last_processed_at = datetime('now') WHERE id = ?`).run(company.id);
-        const message = logPayload(company, result.details, result.details.errorMessage || 'Genel bilgiler yok');
-        db.prepare(`INSERT INTO processing_log (company_id, action, message) VALUES (?, 'no_data', ?)`).run(company.id, message);
-        broadcast('company_skip', { id: company.id, name: company.name, detail: message, error: result.details.errorMessage || 'Genel bilgiler yok' });
-        consecutiveNetworkErrors = 0;
-      } else {
-        // Upsert all parsed key-value pairs
-        const insertMany = db.transaction((items: [number, string, string][]) => {
-          for (const [cid, key, val] of items) {
-            upsertStmt.run(cid, key, val);
-          }
-        });
-
-        const items = Object.entries(result.data!).map(
-          ([key, val]): [number, string, string] => [company.id, key, JSON.stringify(val)]
-        );
-        insertMany(items);
-
-        db.prepare(`UPDATE companies SET status = 'done', last_processed_at = datetime('now') WHERE id = ?`).run(company.id);
-        db.prepare(`INSERT INTO processing_log (company_id, action, message) VALUES (?, 'process_company', ?)`).run(
-          company.id,
-          logPayload(company, result.details, `${Object.keys(result.data!).length} veri noktasi`),
-        );
-        processed++;
-        consecutiveNetworkErrors = 0;
-        broadcast('company_done', { id: company.id, name: company.name, keys: Object.keys(result.data!).length, detail: logPayload(company, result.details) });
+    for (const company of companies) {
+      if (state.aborted) {
+        db.prepare(`INSERT INTO processing_log (action, message) VALUES ('stop_batch', 'Kullanıcı tarafından durduruldu')`).run();
+        broadcast('batch_stopped', { processed, errors, skipped });
+        break;
       }
-    } catch (err: any) {
-      const details = errorDetails(err);
-      const message = logPayload(company, details, details.errorMessage);
-      db.prepare(`UPDATE companies SET status = 'error', last_processed_at = datetime('now') WHERE id = ?`).run(company.id);
-      db.prepare(`INSERT INTO processing_log (company_id, action, message) VALUES (?, 'error', ?)`).run(company.id, message);
-      errors++;
-      broadcast('company_error', { id: company.id, name: company.name, error: details.errorMessage, detail: message });
 
-      if (isNetworkLikeError(details)) {
-        consecutiveNetworkErrors++;
-        if (!state.aborted && consecutiveNetworkErrors >= ERROR_COOLDOWN_THRESHOLD) {
-          const cooldownMessage = `${consecutiveNetworkErrors} ardisik KAP ag hatasi alindi; ${ERROR_COOLDOWN_MS}ms bekleniyor`;
-          db.prepare(`INSERT INTO processing_log (action, message) VALUES ('kap_cooldown', ?)`).run(cooldownMessage);
-          broadcast('cooldown', { message: cooldownMessage, durationMs: ERROR_COOLDOWN_MS });
-          await delay(ERROR_COOLDOWN_MS);
+      state.phase = 'processing';
+      state.message = `${company.name} KAP verisi çekiliyor`;
+      state.current++;
+      state.currentCompanyId = company.id;
+      state.currentCompany = company.name;
+
+      db.prepare(`UPDATE companies SET status = 'processing' WHERE id = ?`).run(company.id);
+      broadcast('progress', {
+        current: state.current,
+        total: state.total,
+        percent: Math.round((state.current / state.total) * 100),
+        companyId: company.id,
+        companyName: company.name,
+        phase: state.phase,
+      });
+
+      try {
+        const result = await scrapeCompany(company.slug);
+
+        if (result.status === 'no_data') {
+          db.prepare(`UPDATE companies SET status = 'no_data', last_processed_at = datetime('now') WHERE id = ?`).run(company.id);
+          const message = logPayload(company, result.details, result.details.errorMessage || 'Genel bilgiler yok');
+          db.prepare(`INSERT INTO processing_log (company_id, action, message) VALUES (?, 'no_data', ?)`).run(company.id, message);
+          skipped++;
+          state.skipped = skipped;
+          broadcast('company_skip', { id: company.id, name: company.name, detail: message, error: result.details.errorMessage || 'Genel bilgiler yok' });
+          consecutiveNetworkErrors = 0;
+        } else {
+          const writeResult = replaceCompanyData(company.id, result.data!);
+
+          db.prepare(`UPDATE companies SET status = 'done', last_processed_at = datetime('now') WHERE id = ?`).run(company.id);
+          db.prepare(`INSERT INTO processing_log (company_id, action, message) VALUES (?, 'process_company', ?)`).run(
+            company.id,
+            logPayload(company, result.details, `${writeResult.keysWritten} veri noktası`),
+          );
+          processed++;
+          state.processed = processed;
+          consecutiveNetworkErrors = 0;
+          broadcast('company_done', { id: company.id, name: company.name, keys: writeResult.keysWritten, detail: logPayload(company, result.details) });
+        }
+      } catch (err: any) {
+        const details = errorDetails(err);
+        const message = logPayload(company, details, details.errorMessage);
+        db.prepare(`UPDATE companies SET status = 'error', last_processed_at = datetime('now') WHERE id = ?`).run(company.id);
+        db.prepare(`INSERT INTO processing_log (company_id, action, message) VALUES (?, 'error', ?)`).run(company.id, message);
+        errors++;
+        state.errors = errors;
+        broadcast('company_error', { id: company.id, name: company.name, error: details.errorMessage, detail: message });
+
+        if (isNetworkLikeError(details)) {
+          consecutiveNetworkErrors++;
+          if (!state.aborted && consecutiveNetworkErrors >= ERROR_COOLDOWN_THRESHOLD) {
+            const cooldownMessage = `${consecutiveNetworkErrors} ardışık KAP ağ hatası alındı; ${Math.ceil(ERROR_COOLDOWN_MS / 1000)} saniye bekleniyor`;
+            state.phase = 'cooldown';
+            state.message = cooldownMessage;
+            db.prepare(`INSERT INTO processing_log (action, message) VALUES ('kap_cooldown', ?)`).run(cooldownMessage);
+            broadcast('cooldown', { message: cooldownMessage, durationMs: ERROR_COOLDOWN_MS });
+            await interruptibleDelay(ERROR_COOLDOWN_MS);
+            state.phase = state.aborted ? 'stopping' : 'processing';
+            state.message = state.aborted ? 'İşlem durduruluyor' : 'KAP veri çekimine devam ediliyor';
+            consecutiveNetworkErrors = 0;
+          }
+        } else {
           consecutiveNetworkErrors = 0;
         }
-      } else {
-        consecutiveNetworkErrors = 0;
       }
+
+      await interruptibleDelay(REQUEST_DELAY_MS);
     }
 
-    // Rate limit
-    await delay(REQUEST_DELAY_MS);
+    if (!state.aborted) {
+      db.prepare(`INSERT INTO processing_log (action, message) VALUES ('complete_batch', ?)`).run(
+        `Tamamlandı: ${processed} başarılı, ${errors} hata, ${skipped} veri yok`
+      );
+      broadcast('batch_done', { processed, errors, skipped });
+    }
+  } catch (error) {
+    state.phase = 'failed';
+    state.message = error instanceof Error ? error.message : String(error);
+    db.prepare(`INSERT INTO processing_log (action, message) VALUES ('batch_error', ?)`).run(state.message);
+    broadcast('batch_error', { error: state.message, processed, errors, skipped });
+    throw error;
+  } finally {
+    state.running = false;
+    state.currentCompanyId = null;
+    state.currentCompany = '';
+    if (state.phase !== 'failed') {
+      state.phase = 'idle';
+      state.message = state.aborted ? 'İşlem durduruldu' : 'İşlem tamamlandı';
+    }
+    broadcast('state', getState());
   }
-
-  if (!state.aborted) {
-    db.prepare(`INSERT INTO processing_log (action, message) VALUES ('complete_batch', ?)`).run(
-      `Tamamlandi: ${processed} basarili, ${errors} hata`
-    );
-    broadcast('batch_done', { processed, errors });
-  }
-
-  state.running = false;
-  state.currentCompany = '';
 }

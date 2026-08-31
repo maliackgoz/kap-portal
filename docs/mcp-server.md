@@ -1,124 +1,101 @@
-# KAP Portal + MCP Kurulum
+# Finansal Portal MCP
 
-Bu Docker imaji tek container icinde KAP Portal'i, Onyx icin MCP HTTP endpoint'ini ve rating servisini beraber kaldirir.
+MCP endpoint portal, rating, haber ve ortaklık grafi verilerini Onyx'e sunar.
 
-- Portal: `http://172.30.146.31:8063`
-- MCP endpoint: `http://172.30.146.31:8060/mcp`
-- MCP health: `http://172.30.146.31:8060/health`
-- Rating health: `http://172.30.146.31:8064/health`
-- Login: `admin` / `kap2024`
-- Tool sayisi: `16`
+## Bağlantı
 
-IP farkliysa `172.30.146.31` yerine sunucunun IP adresini yaz.
-
-## Eski KAP Portal Containerlarini Temizle
-
-Asagidaki komut sadece bu portal icin daha once acilan container isimlerini kaldirir. Onyx veya baska servis containerlarina dokunmaz.
-
-```powershell
-docker rm -f kapportal-mcp kapportal-mcp-remote kap-portal-kapportal-mcp-1 2>$null
+```text
+URL: http://SUNUCU_IP:8060/mcp
+Transport: Streamable HTTP
 ```
 
-Portlari kontrol etmek istersen:
+Sağlık kontrolü:
 
-```powershell
-docker ps --format "table {{.Names}}\t{{.Ports}}"
+```text
+http://SUNUCU_IP:8060/health
 ```
 
-## Pull + Run
+`MCP_API_KEY` tanımlandıysa Onyx bağlantısına aşağıdaki başlıklardan birini
+ekleyin:
 
-```powershell
-docker pull memobaba44/kapportal-mcp:latest
-
-docker run -d --name kapportal-mcp `
-  -p 8060:8060 `
-  -p 8063:8063 `
-  -p 8064:8064 `
-  -e PORT=8063 `
-  -e MCP_PORT=8060 `
-  -e MCP_PATH=/mcp `
-  -e KAP_PORTAL_URL=http://127.0.0.1:8063 `
-  -e KAP_PORTAL_USERNAME=admin `
-  -e KAP_PORTAL_PASSWORD=kap2024 `
-  -e MCP_ALLOWED_HOSTS=localhost,127.0.0.1,::1,0.0.0.0,172.30.146.31 `
-  memobaba44/kapportal-mcp:latest
+```text
+Authorization: Bearer MCP_API_KEY_DEGERI
 ```
 
-Linux shell kullanirsan satir sonu karakteri olarak backtick yerine `\` kullan:
+veya:
+
+```text
+X-API-Key: MCP_API_KEY_DEGERI
+```
+
+## Tool Listesi
+
+| Tool | Amaç |
+| --- | --- |
+| `kap_status` | Portal, işlem ve graph durumunu getirir. |
+| `kap_search_companies` | Şirketleri ad, kod, OID, slug ve durumla arar. |
+| `kap_get_member_companies` | Kaydedilmiş üye şirketleri getirir. |
+| `kap_get_company_profile` | Şirket profilini ve önemli KAP alanlarını getirir. |
+| `kap_get_rating_sources` | Rating/haber kaynaklarının son durumunu getirir. |
+| `kap_get_company_ratings` | UVD, KVD, görünüm ve rating raporlarını getirir. |
+| `kap_get_company_news` | Şirkete ait finansal haberleri getirir. |
+| `kap_search_rating_news` | Rating ve haber kayıtlarında arama yapar. |
+| `kap_get_company_financial_overview` | Profil, rating, haber ve ortaklık özetini birleştirir. |
+| `kap_find_nodes` | Graph içindeki şirket, ortak ve kişileri arar. |
+| `kap_get_company_relationships` | Şirketin sınırlı ortaklık alt grafını getirir. |
+| `kap_find_relationship_path` | İki node arasındaki en kısa ilişki yolunu bulur. |
+| `kap_top_relationship_clusters` | En büyük bağlantılı graph kümelerini getirir. |
+| `kap_rebuild_relationship_graph` | Ortaklık grafiğini yeniden oluşturur. |
+| `kap_start_kap_processing` | Tüm, eksik veya yalnızca üye şirketleri işler. |
+| `kap_refresh_company_from_kap` | Tek şirketin KAP verisini yeniler. |
+
+## Önerilen Onyx Sistem Promptu
+
+```text
+Sen Finansal Portal MCP asistanısın. KAP şirket profilleri, üye şirketler,
+ortaklık grafiği, kredi rating kayıtları ve finansal haberler için önce MCP
+tool'larını kullan.
+
+Şirket adı belirsizse önce kap_search_companies ile eşleştir. Güçlü birden fazla
+eşleşme varsa kısa bir seçim sorusu sor.
+
+KVD kısa vadeli rating notudur ve short_term_rating alanına karşılık gelir.
+UVD uzun vadeli rating notudur ve long_term_rating alanına karşılık gelir.
+Kullanıcı KVD, UVD, rating veya derecelendirme sorarsa
+kap_get_company_ratings tool'unu mutlaka çağır.
+
+Kullanıcı "üyeler" veya "bizim üyeler" derse önce kap_get_member_companies
+tool'unu çağır ve sonraki sorguyu yalnızca bu şirketlerle sınırla.
+
+Ortaklık sorularında doğrudan ortak, dolaylı ortak, bağlı ortaklık, sermaye
+oranı ve oy hakkını birbirinden ayır. İlişki zinciri sorularında graph
+tool'larını kullan.
+
+Kaynak BLOCKED, PARSE_ERROR, LOGIN_REQUIRED veya SUBSCRIPTION_REQUIRED
+dönerse durumu açık Türkçeyle belirt ve source_url, report_url veya pdf_url
+varsa kullanıcıya ver.
+
+Tahminle rating, ortaklık oranı, sermaye veya KAP bilgisi üretme. Veri yoksa
+"Portal verisinde bulunamadı" de.
+
+Yenileme ve toplu işlem side effect oluşturur. Kullanıcı açıkça istemedikçe
+kap_refresh_company_from_kap, kap_start_kap_processing veya
+kap_rebuild_relationship_graph çağırma. Yalnızca üyeler yenilenecekse
+scope="members" kullan.
+
+Cevapları Türkçe, kısa ve kaynaklı ver. Ham JSON, container ve backend
+detaylarını kullanıcı istemedikçe gösterme.
+```
+
+## Sorun Giderme
+
+`8060/health` çalışıyor ama Onyx bağlanamıyorsa:
+
+1. `MCP_ALLOWED_HOSTS` içinde Onyx'in kullandığı sunucu host/IP değerini kontrol edin.
+2. Güvenlik duvarında `8060/tcp` erişimini kontrol edin.
+3. `MCP_API_KEY` kullanılıyorsa Onyx başlığının aynı değeri taşıdığını doğrulayın.
+4. Container logunu inceleyin:
 
 ```bash
-docker pull memobaba44/kapportal-mcp:latest
-
-docker run -d --name kapportal-mcp \
-  -p 8060:8060 \
-  -p 8063:8063 \
-  -p 8064:8064 \
-  -e PORT=8063 \
-  -e MCP_PORT=8060 \
-  -e MCP_PATH=/mcp \
-  -e KAP_PORTAL_URL=http://127.0.0.1:8063 \
-  -e KAP_PORTAL_USERNAME=admin \
-  -e KAP_PORTAL_PASSWORD=kap2024 \
-  -e MCP_ALLOWED_HOSTS=localhost,127.0.0.1,::1,0.0.0.0,172.30.146.31 \
-  memobaba44/kapportal-mcp:latest
+docker compose logs --tail=200 kapportal-mcp
 ```
-
-## Kontrol
-
-```powershell
-curl http://172.30.146.31:8060/health
-curl http://172.30.146.31:8064/health
-```
-
-Beklenen MCP health cevabi:
-
-```json
-{"ok":true,"mcpPath":"/mcp","portal":"http://127.0.0.1:8063"}
-```
-
-Portal kontrolu:
-
-```text
-http://172.30.146.31:8063
-```
-
-## Onyx Baglantisi
-
-Onyx MCP server URL:
-
-```text
-http://172.30.146.31:8060/mcp
-```
-
-Transport tipi sorarsa: `Streamable HTTP`.
-
-`/mcp` tarayicida normal web sayfasi gibi acilmaz. Kontrol icin `/health` endpoint'ini kullan.
-
-## Tool'lar
-
-| Tool | Amac |
-|------|------|
-| `kap_status` | Portal isleme sayilari, graph node/edge sayilari ve sektor sayisini dondurur. |
-| `kap_search_companies` | Sirketleri ad, slug, OID, ticker, status veya sayfalama ile arar. |
-| `kap_get_member_companies` | Portale kaydedilen uye sirket listesini dondurur. |
-| `kap_get_company_profile` | Tek sirketi ve onemli KAP alanlarini getirir. |
-| `kap_get_rating_sources` | Rating ve haber kaynaklarinin durumunu, kayit sayilarini ve hatalarini getirir. |
-| `kap_get_company_ratings` | Sirketin tum kredi rating alanlarini getirir; UVD, KVD, gorunum, aksiyon, tarih ve rapor linklerini dondurur. |
-| `kap_get_company_news` | Sirket haberlerini kaynak, tarih, risk seviyesi, olay tipi ve linkleriyle getirir. |
-| `kap_search_rating_news` | Rating/haber kaynaklarinda konu, sirket veya risk odakli haber arar. |
-| `kap_get_company_financial_overview` | KAP profili, ratingler, haberler ve ortaklik graph ozetini tek cevapta birlestirir. |
-| `kap_find_nodes` | Graph icindeki company/shareholder/person node'larini arar. |
-| `kap_get_company_relationships` | Bir sirket icin sinirli ortaklik subgraph'i getirir. |
-| `kap_find_relationship_path` | Iki sirket/node arasindaki en kisa iliski yolunu bulur. |
-| `kap_top_relationship_clusters` | En buyuk bagli graph bilesenlerini listeler. |
-| `kap_rebuild_relationship_graph` | Graph cache'ini yeniden olusturur. |
-| `kap_start_kap_processing` | Tum sirketleri veya sadece uye sirketleri KAP'tan islemeye baslatir. |
-| `kap_refresh_company_from_kap` | Tek sirketi KAP'tan tekrar ceker; `confirm=true` ister. |
-
-## Ornek Sorular
-
-- `BIM'in dogrudan ortaklari kimler?`
-- `Aygaz KVD/UVD rating bilgilerini getir.`
-- `VAKIF, ZIRAAT ve HALK icin portale kayitli veriler var mi?`
-- `Kayitli uye sirketlerin KAP ortaklik ozetini getir.`
-- `Sabanci Holding ile Akbank arasindaki iliskiyi acikla.`

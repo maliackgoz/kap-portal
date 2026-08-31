@@ -1,7 +1,7 @@
 import { Fragment, useState, useCallback, useRef, useEffect, useMemo } from 'react';
 import { api, type Company } from '../api';
 import { useSSE } from '../hooks/useSSE';
-import { Play, RefreshCw, Square, Loader, CheckCircle, XCircle, MinusCircle, Search, ExternalLink, Star } from 'lucide-react';
+import { Play, RefreshCw, Square, Loader, CheckCircle, XCircle, MinusCircle, Search, ExternalLink, Star, ChevronDown, AlertCircle } from 'lucide-react';
 import { useMemberCompanies } from '../hooks/useMemberCompanies';
 
 interface ProgressInfo {
@@ -42,11 +42,11 @@ type KapLogDetail = {
 const KAP_COMPANY_BASE = 'https://www.kap.org.tr/tr/sirket-bilgileri/genel';
 
 const statusFilters: Array<{ value: CompanyStatusFilter; label: string }> = [
-  { value: 'all', label: 'Tumu' },
-  { value: 'not_done', label: 'Cekilmeyen' },
+  { value: 'all', label: 'Tümü' },
+  { value: 'not_done', label: 'Çekilmeyen' },
   { value: 'problem', label: 'Sorunlu' },
   { value: 'pending', label: 'Bekleyen' },
-  { value: 'done', label: 'Cekildi' },
+  { value: 'done', label: 'Çekildi' },
   { value: 'error', label: 'Hata' },
   { value: 'no_data', label: 'Veri Yok' },
 ];
@@ -68,10 +68,10 @@ function kapCompanyUrl(slug: string) {
 }
 
 function statusMeta(status: string) {
-  if (status === 'done') return { label: 'Cekildi', color: 'var(--green)', bg: 'var(--green-bg)' };
-  if (status === 'error') return { label: 'Cekilemedi', color: 'var(--red)', bg: 'var(--red-bg)' };
+  if (status === 'done') return { label: 'Çekildi', color: 'var(--green)', bg: 'var(--green-bg)' };
+  if (status === 'error') return { label: 'Çekilemedi', color: 'var(--red)', bg: 'var(--red-bg)' };
   if (status === 'no_data') return { label: 'Veri Yok', color: 'var(--amber)', bg: 'var(--amber-bg)' };
-  if (status === 'processing') return { label: 'Cekiliyor', color: 'var(--blue)', bg: 'var(--blue-bg)' };
+  if (status === 'processing') return { label: 'Çekiliyor', color: 'var(--blue)', bg: 'var(--blue-bg)' };
   return { label: 'Bekliyor', color: 'var(--text-muted)', bg: 'var(--bg-surface-2)' };
 }
 
@@ -108,7 +108,7 @@ function shortLogMessage(value: string | null | undefined) {
   const detail = parseLogDetail(value);
   if (!detail) return value || '-';
   const primary = detail.errorType || detail.errorMessage || 'OK';
-  const retry = typeof detail.retryCount === 'number' ? `${detail.retryCount} retry` : null;
+  const retry = typeof detail.retryCount === 'number' ? `${detail.retryCount} tekrar` : null;
   const duration = typeof detail.durationMs === 'number' ? `${detail.durationMs}ms` : null;
   return [primary, detail.errorMessage && detail.errorType ? detail.errorMessage : null, retry, duration].filter(Boolean).join(' - ');
 }
@@ -118,7 +118,7 @@ export default function DataProcessing() {
   const [activeScope, setActiveScope] = useState<ProcessingScope>('pending');
   const [progress, setProgress] = useState<ProgressInfo | null>(null);
   const [logs, setLogs] = useState<LogItem[]>([]);
-  const [summary, setSummary] = useState<{ processed: number; errors: number } | null>(null);
+  const [summary, setSummary] = useState<{ processed: number; errors: number; skipped: number } | null>(null);
   const [companies, setCompanies] = useState<Company[]>([]);
   const [companiesLoading, setCompaniesLoading] = useState(true);
   const [companyQuery, setCompanyQuery] = useState('');
@@ -128,6 +128,9 @@ export default function DataProcessing() {
   const [expandedLogIndex, setExpandedLogIndex] = useState<number | null>(null);
   const [expandedCompanyId, setExpandedCompanyId] = useState<number | null>(null);
   const [membersOnly, setMembersOnly] = useState(false);
+  const [memberPanelOpen, setMemberPanelOpen] = useState(false);
+  const [processingMessage, setProcessingMessage] = useState('');
+  const [processingError, setProcessingError] = useState<string | null>(null);
   const { memberIds, members } = useMemberCompanies(companies);
   const logsRef = useRef<HTMLDivElement>(null);
 
@@ -141,7 +144,7 @@ export default function DataProcessing() {
       const rows = await api.getAllCompanies();
       setCompanies(rows);
     } catch (err) {
-      setCompanyListError(err instanceof Error ? err.message : 'Sirket listesi alinamadi');
+      setCompanyListError(err instanceof Error ? err.message : 'Şirket listesi alınamadı');
     } finally {
       setCompaniesLoading(false);
     }
@@ -161,6 +164,7 @@ export default function DataProcessing() {
     switch (event) {
       case 'state':
         setRunning(data.running === true);
+        setProcessingMessage(stringValue(data.message));
         if (data.scope === 'all' || data.scope === 'pending' || data.scope === 'members') setActiveScope(data.scope);
         if (data.running === true) {
           const current = numberValue(data.current);
@@ -175,12 +179,15 @@ export default function DataProcessing() {
         break;
       case 'batch_start':
         setRunning(true);
+        setProcessingError(null);
+        setProcessingMessage('KAP veri çekimi başlatıldı');
         if (data.scope === 'all' || data.scope === 'pending' || data.scope === 'members') setActiveScope(data.scope);
         setSummary(null);
         setLogs([]);
         setProgress({ current: 0, total: numberValue(data.total), percent: 0, companyName: '' });
         break;
       case 'progress':
+        setProcessingMessage(`${stringValue(data.companyName)} KAP verisi çekiliyor`);
         setProgress({
           current: numberValue(data.current),
           total: numberValue(data.total),
@@ -219,6 +226,7 @@ export default function DataProcessing() {
         updateCompanyStatus(numberValue(data.id), 'no_data');
         break;
       case 'cooldown':
+        setProcessingMessage(stringValue(data.message, 'KAP bağlantısı için bekleniyor'));
         addLog({
           type: 'skip',
           name: 'KAP bekleme',
@@ -229,7 +237,18 @@ export default function DataProcessing() {
       case 'batch_done':
       case 'batch_stopped':
         setRunning(false);
-        setSummary({ processed: numberValue(data.processed), errors: numberValue(data.errors) });
+        setProcessingMessage('');
+        setSummary({
+          processed: numberValue(data.processed),
+          errors: numberValue(data.errors),
+          skipped: numberValue(data.skipped),
+        });
+        void loadCompanies();
+        break;
+      case 'batch_error':
+        setRunning(false);
+        setProcessingMessage('');
+        setProcessingError(stringValue(data.error, 'Toplu KAP işlemi beklenmeyen bir hatayla durdu'));
         void loadCompanies();
         break;
     }
@@ -249,13 +268,24 @@ export default function DataProcessing() {
   const handleStart = async (scope: ProcessingScope) => {
     try {
       if (scope === 'members' && memberIds.length === 0) {
-        alert('Once uye sirket eklemen gerekiyor');
+        setProcessingError('Önce Şirket Detayı veya Ortaklık Grafiği ekranından üye şirket ekleyin.');
         return;
       }
+      const targetCount = scope === 'all'
+        ? companies.length
+        : scope === 'members'
+          ? memberIds.length
+          : companies.filter(company => ['pending', 'error', 'processing', 'no_data'].includes(company.status)).length;
+      if (targetCount > 25 && !window.confirm(
+        `${targetCount.toLocaleString('tr-TR')} şirketin KAP verisi yenilenecek. İşlem uzun sürebilir. Devam edilsin mi?`,
+      )) {
+        return;
+      }
+      setProcessingError(null);
       setActiveScope(scope);
       await api.startProcessing(scope, scope === 'members' ? memberIds : undefined);
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Isleme baslatilamadi');
+      setProcessingError(err instanceof Error ? err.message : 'İşlem başlatılamadı');
     }
   };
 
@@ -263,7 +293,7 @@ export default function DataProcessing() {
     try {
       await api.stopProcessing();
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Isleme durdurulamadi');
+      setProcessingError(err instanceof Error ? err.message : 'İşlem durdurulamadı');
     }
   };
 
@@ -273,7 +303,7 @@ export default function DataProcessing() {
     try {
       await api.scrapeCompany(company.id);
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Sirket cekilemedi');
+      setProcessingError(err instanceof Error ? err.message : 'Şirket verisi çekilemedi');
     } finally {
       await loadCompanies();
       setScrapingId(null);
@@ -284,10 +314,10 @@ export default function DataProcessing() {
   const errorCount = logs.filter(l => l.type === 'error').length;
   const skipCount = logs.filter(l => l.type === 'skip').length;
   const activeScopeLabel = activeScope === 'all'
-    ? 'Tum KAP verileri yenileniyor'
+    ? 'Tüm KAP verileri yenileniyor'
     : activeScope === 'members'
-      ? 'Uye sirketlerin KAP verileri yenileniyor'
-      : 'Bekleyen, hatali ve veri-yok kayitlar isleniyor';
+      ? 'Üye şirketlerin KAP verileri yenileniyor'
+      : 'Eksik ve hatalı kayıtlar işleniyor';
   const memberIdSet = useMemo(() => new Set(memberIds), [memberIds]);
   const filteredCompanies = useMemo(() => {
     const query = normalizeSearch(companyQuery);
@@ -311,8 +341,8 @@ export default function DataProcessing() {
   return (
     <div>
       <div style={{ marginBottom: 22 }}>
-        <h1 style={{ fontSize: 24, fontWeight: 800, letterSpacing: 0, marginBottom: 6 }}>Veri Isleme</h1>
-        <div style={{ fontSize: 13, color: 'var(--text-muted)' }}>KAP sirket verilerini toplu guncelle, canli islem logunu takip et.</div>
+        <h1 style={{ fontSize: 24, fontWeight: 800, letterSpacing: 0, marginBottom: 6 }}>Veri İşleme</h1>
+        <div style={{ fontSize: 13, color: 'var(--text-muted)' }}>KAP şirket verilerini toplu güncelleyin ve canlı işlem durumunu takip edin.</div>
       </div>
 
       {/* Controls */}
@@ -328,14 +358,14 @@ export default function DataProcessing() {
                 background: 'var(--accent)', color: '#fff', border: 'none', borderRadius: 8,
                 fontSize: 14, fontWeight: 700, cursor: 'pointer', fontFamily: 'var(--font-sans)',
               }}>
-                <Play size={16} /> Bekleyen, Hatali ve Veri Yok Olanlari Isle
+                <Play size={16} /> Eksik ve Hatalı Kayıtları İşle
               </button>
               <button onClick={() => void handleStart('all')} style={{
                 display: 'flex', alignItems: 'center', gap: 8, padding: '10px 24px',
                 background: 'var(--blue-bg)', color: 'var(--blue)', border: '1px solid color-mix(in srgb, var(--blue) 22%, transparent)', borderRadius: 8,
                 fontSize: 14, fontWeight: 800, cursor: 'pointer', fontFamily: 'var(--font-sans)',
               }}>
-                <RefreshCw size={16} /> Tum KAP Verilerini Yenile
+                <RefreshCw size={16} /> Tüm KAP Verilerini Yenile
               </button>
               <button
                 onClick={() => void handleStart('members')}
@@ -350,7 +380,7 @@ export default function DataProcessing() {
                   fontFamily: 'var(--font-sans)',
                 }}
               >
-                <Star size={16} /> Uye KAP Verilerini Cek
+                <Star size={16} /> Yalnızca Üyeleri Yenile
               </button>
             </>
           ) : (
@@ -367,17 +397,28 @@ export default function DataProcessing() {
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'var(--text-dim)', fontSize: 13 }}>
               <Loader size={14} style={{ animation: 'spin 1s linear infinite' }} />
               <span style={{ fontWeight: 700 }}>{activeScopeLabel}</span>
-              <span>{progress?.companyName}</span>
+              <span>{processingMessage || progress?.companyName}</span>
             </div>
           )}
 
           {summary && !running && (
             <div style={{ fontSize: 13, color: 'var(--text-dim)' }}>
-              Tamamlandi: <span style={{ color: 'var(--green)', fontWeight: 600 }}>{summary.processed} basarili</span>,{' '}
-              <span style={{ color: 'var(--red)', fontWeight: 600 }}>{summary.errors} hata</span>
+              Tamamlandı: <span style={{ color: 'var(--green)', fontWeight: 600 }}>{summary.processed} başarılı</span>,{' '}
+              <span style={{ color: 'var(--red)', fontWeight: 600 }}>{summary.errors} hata</span>,{' '}
+              <span style={{ color: 'var(--amber)', fontWeight: 600 }}>{summary.skipped} veri yok</span>
             </div>
           )}
         </div>
+
+        {processingError && (
+          <div style={{
+            display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14,
+            padding: '10px 12px', borderRadius: 8, background: 'var(--red-bg)',
+            color: 'var(--red)', fontSize: 12, fontWeight: 700,
+          }}>
+            <AlertCircle size={15} /> {processingError}
+          </div>
+        )}
 
         {/* Progress Bar */}
         {running && progress && (
@@ -400,15 +441,25 @@ export default function DataProcessing() {
       <div style={{
         background: 'var(--bg-surface)', border: '1px solid var(--border)',
         borderRadius: 'var(--radius)', padding: 16, marginBottom: 20, boxShadow: 'var(--shadow)',
-        display: 'grid', gap: 12,
+        display: 'grid', gap: memberPanelOpen ? 12 : 0,
       }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, color: 'var(--accent)', fontSize: 13, fontWeight: 850 }}>
-            <Star size={15} /> Uye Sirketler
+          <button
+            type="button"
+            onClick={() => setMemberPanelOpen(value => !value)}
+            aria-expanded={memberPanelOpen}
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: 8, border: 'none',
+              background: 'transparent', color: 'var(--accent)', fontSize: 13,
+              fontWeight: 850, cursor: 'pointer', padding: 0,
+            }}
+          >
+            <Star size={15} /> Üye Şirketler
             <span style={{ color: 'var(--text-muted)', fontFamily: 'var(--font-mono)', fontSize: 11 }}>
-              {members.length.toLocaleString('tr-TR')} uye
+              {members.length.toLocaleString('tr-TR')} üye
             </span>
-          </div>
+            <ChevronDown size={14} style={{ transform: memberPanelOpen ? 'rotate(180deg)' : undefined, transition: 'transform 0.15s ease' }} />
+          </button>
           <button
             type="button"
             onClick={() => setMembersOnly(value => !value)}
@@ -423,16 +474,18 @@ export default function DataProcessing() {
               fontSize: 12, fontWeight: 850, fontFamily: 'inherit',
             }}
           >
-            {membersOnly ? 'Tum sirketleri goster' : 'Sadece uyeleri goster'}
+            {membersOnly ? 'Tüm şirketleri göster' : 'Sadece üyeleri göster'}
           </button>
         </div>
 
+        {memberPanelOpen && (
+        <>
         {members.length === 0 ? (
           <div style={{
             padding: '10px 12px', borderRadius: 8, border: '1px dashed var(--border)',
             background: 'var(--bg-surface-2)', color: 'var(--text-muted)', fontSize: 12,
           }}>
-            Uye listesi bos. Sirket Detay veya Ortaklik Grafi ekranindan uye ekleyince burada sadece o listeyi cekebilirsin.
+            Henüz üye şirket eklenmedi. Şirket Detayı veya Ortaklık Grafiği ekranından üye ekleyebilirsiniz.
           </div>
         ) : (
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', maxHeight: 120, overflowY: 'auto' }}>
@@ -464,6 +517,8 @@ export default function DataProcessing() {
             })}
           </div>
         )}
+        </>
+        )}
       </div>
 
       {/* Company Status Search */}
@@ -480,7 +535,7 @@ export default function DataProcessing() {
             <input
               value={companyQuery}
               onChange={event => setCompanyQuery(event.target.value)}
-              placeholder="Sirket, kod, OID veya slug ara..."
+              placeholder="Şirket adı, kodu veya OID ile arayın"
               style={{
                 width: '100%', height: 36, padding: '0 12px',
                 borderRadius: 8, border: '1px solid var(--border)',
@@ -518,7 +573,7 @@ export default function DataProcessing() {
           fontSize: 12, color: 'var(--text-muted)',
         }}>
           <span style={{ fontFamily: 'var(--font-mono)' }}>
-            {filteredCompanies.length.toLocaleString('tr-TR')} eslesme
+            {filteredCompanies.length.toLocaleString('tr-TR')} eşleşme
             {filteredCompanies.length > visibleCompanies.length ? ` / ilk ${visibleCompanies.length}` : ''}
           </span>
           {companyListError && <span style={{ color: 'var(--red)', fontWeight: 700 }}>{companyListError}</span>}
@@ -527,17 +582,17 @@ export default function DataProcessing() {
         <div style={{ overflowX: 'auto' }}>
           {companiesLoading ? (
             <div style={{ padding: 34, textAlign: 'center', color: 'var(--text-muted)', fontSize: 13 }}>
-              Sirket listesi yukleniyor...
+              Şirket listesi yükleniyor...
             </div>
           ) : visibleCompanies.length === 0 ? (
             <div style={{ padding: 34, textAlign: 'center', color: 'var(--text-muted)', fontSize: 13 }}>
-              Eslesen sirket yok.
+              Eşleşen şirket yok.
             </div>
           ) : (
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13, minWidth: 1040 }}>
               <thead>
                 <tr style={{ background: 'var(--bg-surface-2)' }}>
-                  {['Sirket', 'Durum', 'Son Detay', 'Son Cekim', 'KAP Link', 'Aksiyon'].map(head => (
+                  {['Şirket', 'Durum', 'Son Detay', 'Son Çekim', 'KAP Linki', 'Aksiyon'].map(head => (
                     <th key={head} style={{ textAlign: 'left', padding: '9px 14px', fontWeight: 850, color: 'var(--text-muted)', fontSize: 11, textTransform: 'uppercase', letterSpacing: 0 }}>
                       {head}
                     </th>
@@ -623,7 +678,7 @@ export default function DataProcessing() {
                             }}
                           >
                             <RefreshCw size={13} style={isBusy ? { animation: 'spin 1s linear infinite' } : undefined} />
-                            {isBusy ? 'Cekiliyor' : 'Yenile'}
+                            {isBusy ? 'Çekiliyor' : 'Yenile'}
                           </button>
                         </td>
                       </tr>
@@ -637,7 +692,7 @@ export default function DataProcessing() {
                                 ['Error Type', lastDetail.errorType || '-'],
                                 ['Error Message', lastDetail.errorMessage || '-'],
                                 ['Error Cause', lastDetail.errorCause || '-'],
-                                ['Retry', typeof lastDetail.retryCount === 'number' ? String(lastDetail.retryCount) : '-'],
+                                ['Tekrar', typeof lastDetail.retryCount === 'number' ? String(lastDetail.retryCount) : '-'],
                                 ['Duration', typeof lastDetail.durationMs === 'number' ? `${lastDetail.durationMs}ms` : '-'],
                                 ['Response Length', typeof lastDetail.responseLength === 'number' ? String(lastDetail.responseLength) : '-'],
                               ].map(([label, value]) => (
@@ -680,13 +735,13 @@ export default function DataProcessing() {
         borderRadius: 'var(--radius)', overflow: 'hidden', boxShadow: 'var(--shadow)',
       }}>
         <div style={{ padding: '14px 20px', borderBottom: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <h2 style={{ fontSize: 14, fontWeight: 600, margin: 0 }}>Islem Kayitlari</h2>
-          <span style={{ fontSize: 12, color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>{logs.length} kayit</span>
+          <h2 style={{ fontSize: 14, fontWeight: 600, margin: 0 }}>İşlem Kayıtları</h2>
+          <span style={{ fontSize: 12, color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>{logs.length} kayıt</span>
         </div>
         <div ref={logsRef} style={{ maxHeight: 450, overflowY: 'auto' }}>
           {logs.length === 0 ? (
             <div style={{ padding: 40, textAlign: 'center', color: 'var(--text-muted)', fontSize: 13 }}>
-              Islem baslatildiginda sirket bazli sonuclar burada gorunur.
+              İşlem başlatıldığında şirket bazlı sonuçlar burada görünür.
             </div>
           ) : (
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
@@ -732,7 +787,7 @@ export default function DataProcessing() {
                                 ['Error Type', log.rawDetail.errorType || '-'],
                                 ['Error Message', log.rawDetail.errorMessage || '-'],
                                 ['Error Cause', log.rawDetail.errorCause || '-'],
-                                ['Retry', typeof log.rawDetail.retryCount === 'number' ? String(log.rawDetail.retryCount) : '-'],
+                                ['Tekrar', typeof log.rawDetail.retryCount === 'number' ? String(log.rawDetail.retryCount) : '-'],
                                 ['Duration', typeof log.rawDetail.durationMs === 'number' ? `${log.rawDetail.durationMs}ms` : '-'],
                                 ['Response Length', typeof log.rawDetail.responseLength === 'number' ? String(log.rawDetail.responseLength) : '-'],
                               ].map(([label, value]) => (

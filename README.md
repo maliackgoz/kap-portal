@@ -1,266 +1,176 @@
 # Finansal Portal
 
-KAP (Kamuyu Aydinlatma Platformu) sirket verileri ile kredi rating/haber verilerini tek portalda birlestiren finansal analiz platformu.
+KAP şirket profilleri, sermaye ve ortaklık verileri, kredi rating kayıtları,
+finansal haberler ve ortaklık grafiğini tek kurumsal arayüzde birleştiren analiz
+portalıdır.
 
-Bu klasor artik tek proje kokudur:
+## Bileşenler
 
-- `backend/`: Express + TypeScript API, auth, KAP isleme, graph ve rating proxy
-- `frontend/`: React + Vite portal arayuzu
-- `rating-service/`: FastAPI tabanli Rating MCP servisi ve dosya tabanli rating/haber cache'i
+- Portal ve REST API: `8063`
+- Onyx uyumlu MCP endpoint: `8060/mcp`
+- MCP sağlık kontrolü: `8060/health`
+- Rating servisi: `8064`
+- Veritabanı: SQLite
+- Arayüz: React + Vite
+- API: Express + TypeScript
+- Rating servisi: FastAPI
 
-## Ozellikler
+Tek Docker container üç servisi birlikte çalıştırır. Portal veritabanı ve rating
+önbelleği Docker volume'larında kalıcı tutulur.
 
-- **Dashboard** — 1083 KAP sirketi, islem istatistikleri, son islemler
-- **Sirket Detay** — Dropdown/arama ile sirket sec, tum KAP verilerini tablolar halinde goruntule, tek sirket guncelle
-- **Kredi Rating** - TurkRating, JCR, SAHA, KobiRate, S&P Global Ratings, Moody's Ratings, Fitch Ratings kaynaklari, son notlar, rating haberleri, kaynak durumlari
-- **Veri Isleme** - Bekleyen/hatalilar veya tum KAP sirketleri icin toplu veri cekme, SSE ile canli ilerleme, hata yonetimi
-- **Ortaklik Grafi** — vis-network ile interaktif graph gorunumu
-  - 6400+ dugum (sirket, ortak, kisi), 6500+ kenar
-  - Derinlik, sektor, holding grubu, min pay orani filtreleri
-  - Yol bulma (iki sirket arasi ortaklik zinciri)
-  - Cluster renklendirme
-  - Node boyutu (sermaye/baglanti sayisi)
-- **Dark/Light tema**
-- **Ticker destegi** — 604 BIST sirketi icin borsa kodu
+## Şirket Sunucusuna Kurulum
 
-## Tech Stack
+Gereksinimler:
 
-| Katman | Teknoloji |
-|--------|-----------|
-| Frontend | React 18, Vite, vis-network, lucide-react |
-| Backend | Express, TypeScript, tsx |
-| Rating Servisi | FastAPI, FastMCP, dosya tabanli JSONL cache |
-| Veritabani | SQLite (better-sqlite3) |
-| Auth | JWT (jsonwebtoken) |
-| Veri Kaynagi | KAP (kap.org.tr) RSC payload parse |
+- Docker Engine 24+
+- Docker Compose v2
+- Sunucuda boş `8060`, `8063` ve `8064` portları
 
-## Hizli Baslangic
-
-### Gereksinimler
-
-- Node.js 18+
-- npm
-
-### Kurulum
+Projeyi alın:
 
 ```bash
-git clone https://github.com/kenan2x/kapportal.git
-cd kapportal
-
-# Backend bagimliklar
-cd backend && npm install && cd ..
-
-# Frontend bagimlikllar
-cd frontend && npm install && cd ..
-
-# Root bagimliklar
-npm install
-
-# Rating servisi Python bagimliklari
-npm run rating:install
+git clone https://github.com/MehmetAliDascilar/kap-portal.git
+cd kap-portal
+cp .env.example .env
 ```
 
-### Veritabanini Olustur
+`.env` içinde en az şu değerleri değiştirin:
+
+```dotenv
+ADMIN_PASS=UZUN_VE_BENZERSIZ_BIR_SIFRE
+JWT_SECRET=EN_AZ_64_KARAKTER_RASTGELE_BIR_DEGER
+MCP_ALLOWED_HOSTS=localhost,127.0.0.1,::1,0.0.0.0,SUNUCU_IP
+```
+
+KAP ve rating kaynakları container içinden çözülemiyorsa `.env` içindeki
+`PRIMARY_DNS` ve `SECONDARY_DNS` değerlerini şirket DNS adresleriyle değiştirin.
+Varsayılan değerler `1.1.1.1` ve `8.8.8.8`'dir.
+
+Rastgele değer üretmek için Linux'ta:
 
 ```bash
-cd backend
-npx tsx src/seed.ts
+openssl rand -hex 32
 ```
 
-Bu komut `kap-scraper/companies.json` dosyasindan 1083 sirketi SQLite'a yukler.
+PowerShell'de:
 
-### Calistir
+```powershell
+[Convert]::ToHexString([Security.Cryptography.RandomNumberGenerator]::GetBytes(32))
+```
+
+Sistemi build edip başlatın:
 
 ```bash
-# Backend (3001), frontend (5173), rating servisi (8787)
-npm run dev
+docker compose up -d --build
+docker compose ps
 ```
 
-Tarayicida: **http://localhost:5173**
-
-Giris: `admin` / `kap2024`
-
-Sadece KAP portalini calistirmak icin:
+Kontrol:
 
 ```bash
-npm run dev:portal
+curl -f http://127.0.0.1:8063/api/ready
+curl -f http://127.0.0.1:8060/health
+curl -f http://127.0.0.1:8064/health
 ```
 
-### Veri Cekme
+Portal:
 
-1. Portala giris yap
-2. "Veri Isle" sekmesine git
-3. Ilk kurulum icin "Bekleyen & Hatali Olanlari Isle" butonuna bas
-4. Gunluk tazeleme icin "Tum KAP Verilerini Yenile" butonuna bas
-5. 1083 sirket sirayla islenir (~1.5 saniye aralikla, ~30 dakika)
-
----
-
-## Docker
-
-Tek container portal, MCP HTTP endpoint ve rating servisini beraber baslatir.
-
-### Build & Calistir
-
-```bash
-docker compose up --build -d
+```text
+http://SUNUCU_IP:8063
 ```
 
-MCP health: **http://localhost:8060/health**
-Onyx MCP URL: **http://localhost:8060/mcp**
-Portal: **http://localhost:8063**
-Rating health: **http://localhost:8064/health**
+Kullanıcı adı `.env` içindeki `ADMIN_USER`, şifre `ADMIN_PASS` değeridir.
 
-### Sadece Build
+## Onyx MCP Bağlantısı
 
-```bash
-docker compose build
+Onyx MCP URL:
+
+```text
+http://SUNUCU_IP:8060/mcp
 ```
 
-### Durdur
+Transport: `Streamable HTTP`
+
+MCP ağı güvenilir değilse `.env` içinde `MCP_API_KEY` tanımlayın. Aynı değeri
+Onyx bağlantısına `Authorization: Bearer ...` veya `X-API-Key` başlığı olarak
+ekleyin.
+
+MCP endpoint tarayıcıda sayfa olarak açılmaz. Bağlantı kontrolü için:
+
+```text
+http://SUNUCU_IP:8060/health
+```
+
+Tool listesi ve örnek sistem promptu için
+[MCP kılavuzuna](docs/mcp-server.md) bakın.
+
+## Veri Kalıcılığı
+
+Compose iki kalıcı volume oluşturur:
+
+- `kapportal_backend_data`: KAP veritabanı, üyeler ve işlem kayıtları
+- `kapportal_rating_data`: rating, haber ve kaynak çalışma kayıtları
+
+Container'ı silmek bu volume'ları silmez:
 
 ```bash
 docker compose down
+docker compose up -d
 ```
 
-### Ortam Degiskenleri
+Volume'ları yalnızca tüm portal verisini bilinçli olarak sıfırlamak istediğinizde
+silin:
 
-| Degisken | Varsayilan | Aciklama |
-|----------|-----------|----------|
-| `PORT` | 8063 | Portal port |
-| `MCP_PORT` | 8060 | MCP HTTP port |
-| `MCP_PATH` | /mcp | MCP endpoint path |
-| `RATING_SERVICE_PORT` | 8064 | Rating servisi port |
-| `JWT_SECRET` | kap-portal-secret-2024 | JWT imzalama anahtari |
-| `ADMIN_PASS` | kap2024 | Admin sifresi |
-
----
-
-## API Endpointleri
-
-### Auth
-| Method | Path | Aciklama |
-|--------|------|----------|
-| POST | `/api/auth/login` | `{username, password}` → `{token}` |
-
-### Dashboard
-| Method | Path | Aciklama |
-|--------|------|----------|
-| GET | `/api/dashboard/stats` | Toplam/islenmis/hata/bekleyen sayilari |
-| GET | `/api/dashboard/activity` | Son 50 islem logu |
-
-### Sirketler
-| Method | Path | Aciklama |
-|--------|------|----------|
-| GET | `/api/companies?search=X&status=done&page=1` | Sirket listesi (sayfalamali) |
-| GET | `/api/companies/all/list` | Tum sirketler (dropdown icin) |
-| GET | `/api/companies/:id` | Tek sirket bilgisi |
-| GET | `/api/companies/:id/data` | Sirketin tum KAP verileri |
-| POST | `/api/companies/:id/scrape` | Tek sirketi yeniden cek |
-
-### Veri Isleme
-| Method | Path | Aciklama |
-|--------|------|----------|
-| POST | `/api/processing/start` | Toplu islemeyi baslat. Body: `{ "scope": "pending" }` veya `{ "scope": "all" }` |
-| POST | `/api/processing/stop` | Durdur |
-| GET | `/api/processing/state` | Mevcut durum |
-| GET | `/api/processing/events` | SSE stream (canli ilerleme) |
-
-### Graph
-| Method | Path | Aciklama |
-|--------|------|----------|
-| GET | `/api/graph/data?company_id=X&depth=2` | Graph verisi (tam veya subgraph) |
-| GET | `/api/graph/stats` | Dugum/kenar sayilari |
-| GET | `/api/graph/sectors` | Sektor listesi |
-| GET | `/api/graph/path?from=X&to=Y` | Iki node arasi en kisa yol |
-| GET | `/api/graph/clusters` | Bagli bilesenleri (cluster) |
-| POST | `/api/graph/rebuild` | Graph cache'i yeniden olustur |
-
----
-
-## MCP Server
-
-Bu repo tek container icinde Onyx icin MCP HTTP endpoint'ini `8060`, portali `8063` ve rating servisini `8064` portunda acar.
-
-```powershell
-docker rm -f kapportal-mcp kapportal-mcp-remote kap-portal-kapportal-mcp-1 2>$null
-docker pull memobaba44/kapportal-mcp:latest
-docker run -d --name kapportal-mcp -p 8060:8060 -p 8063:8063 -p 8064:8064 memobaba44/kapportal-mcp:latest
+```bash
+docker compose down -v
 ```
 
-Yeni portal: `http://172.30.146.31:8063`
+## Güncelleme
 
-Onyx MCP URL: `http://172.30.146.31:8060/mcp`
+Kaynak koddan çalışan kurulum:
 
-`/mcp` tarayicida normal sayfa gibi acilmaz; kontrol icin
-`http://172.30.146.31:8060/health` kullanin. Varsayilan imaj `localhost`,
-`127.0.0.1` ve `172.30.146.31` hostlarini kabul eder. IP degisirse
-container'i `-e MCP_ALLOWED_HOSTS=localhost,127.0.0.1,::1,0.0.0.0,YENI_IP`
-ile calistirin.
-
-Detayli kurulum ve 16 MCP tool listesi icin: [`docs/mcp-server.md`](docs/mcp-server.md)
-
-Baslica tool'lar:
-
-- `kap_status`
-- `kap_search_companies`
-- `kap_get_member_companies`
-- `kap_get_company_profile`
-- `kap_get_rating_sources`
-- `kap_get_company_ratings`
-- `kap_get_company_news`
-- `kap_search_rating_news`
-- `kap_get_company_financial_overview`
-- `kap_get_company_relationships`
-- `kap_find_relationship_path`
-- `kap_start_kap_processing`
-- `kap_refresh_company_from_kap`
-
----
-
-## Proje Yapisi
-
-```
-kap-portal/
-├── backend/
-│   └── src/
-│       ├── index.ts              # Express sunucu
-│       ├── db.ts                 # SQLite baglantisi ve migration
-│       ├── auth.ts               # JWT auth
-│       ├── seed.ts               # companies.json → SQLite
-│       ├── routes/
-│       │   ├── dashboard.ts      # İstatistik API
-│       │   ├── companies.ts      # Sirket CRUD + tek scrape
-│       │   ├── processing.ts     # Toplu isleme + SSE
-│       │   └── graph.ts          # Graph API
-│       └── services/
-│           ├── scraper.ts        # KAP RSC payload parser
-│           ├── processor.ts      # Batch orchestrator
-│           └── graph-builder.ts  # Graph olusturucu
-├── frontend/
-│   └── src/
-│       ├── App.tsx               # Router + providers
-│       ├── api.ts                # Backend API client
-│       ├── components/
-│       │   ├── Layout.tsx        # Sidebar + tema toggle
-│       │   └── LoginForm.tsx     # Giris formu
-│       ├── context/
-│       │   ├── AuthContext.tsx    # JWT auth state
-│       │   └── ThemeContext.tsx   # Dark/light tema
-│       ├── hooks/
-│       │   └── useSSE.ts         # EventSource hook
-│       └── pages/
-│           ├── Dashboard.tsx     # Istatistik kartlari
-│           ├── CompanyDetail.tsx  # Sirket detay + filtreler
-│           ├── DataProcessing.tsx # Toplu isleme UI
-│           └── GraphPlaceholder.tsx # Ortaklik grafi
-├── docs/
-│   └── graph-design.md          # Graph tasarim dokumani
-├── docker-compose.yml
-├── Dockerfile
-└── README.md
+```bash
+git pull --ff-only
+docker compose up -d --build
 ```
 
-## Lisans
+Hazır imaj kullanan kurulum:
 
-MIT
+```bash
+docker compose pull
+docker compose up -d
+```
+
+## Geliştirme
+
+Gereksinimler:
+
+- Node.js 22+
+- Python 3.11+
+
+```bash
+npm ci
+python -m pip install -e "./rating-service[dev]"
+npm run dev
+```
+
+Geliştirme adresleri:
+
+- Frontend: `http://127.0.0.1:5173`
+- Backend: `http://127.0.0.1:3001`
+- Rating: `http://127.0.0.1:8787`
+
+Yerel geliştirme hesabı: `admin / kap2024`. Bu demo şifresi üretimde
+kullanılmamalıdır; Docker çalıştırırken `.env` zorunludur.
+
+Tüm kontroller:
+
+```bash
+npm test
+```
+
+## Güvenlik
+
+Portalı doğrudan internete açmak yerine kurumsal VPN, güvenlik duvarı veya TLS
+sonlandıran bir reverse proxy arkasında çalıştırın. Ayrıntılar
+[SECURITY.md](SECURITY.md) dosyasındadır.

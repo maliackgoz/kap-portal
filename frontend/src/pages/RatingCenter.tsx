@@ -34,12 +34,12 @@ function formatDateTime(value: string | null) {
 }
 
 const DATE_FILTERS = [
-  { value: 'all', label: 'Tum zamanlar' },
-  { value: '3d', label: 'Son 3 gun', days: 3 },
-  { value: '7d', label: 'Son 7 gun', days: 7 },
-  { value: '14d', label: 'Son 14 gun', days: 14 },
+  { value: 'all', label: 'Tüm zamanlar' },
+  { value: '3d', label: 'Son 3 gün', days: 3 },
+  { value: '7d', label: 'Son 7 gün', days: 7 },
+  { value: '14d', label: 'Son 14 gün', days: 14 },
   { value: '30d', label: 'Son 1 ay', days: 30 },
-  { value: 'custom', label: 'Ozel aralik' },
+  { value: 'custom', label: 'Özel aralık' },
 ] as const;
 
 const GLOBAL_RATING_AGENCIES = new Set([
@@ -117,25 +117,25 @@ function isLiveRatingSource(source: RatingSource) {
 
 function statusStyle(status: string) {
   const map: Record<string, { color: string; bg: string; label: string }> = {
-    success: { color: 'var(--green)', bg: 'var(--green-bg)', label: 'Hazir' },
-    partial: { color: 'var(--amber)', bg: 'var(--amber-bg)', label: 'Kismi' },
+    success: { color: 'var(--green)', bg: 'var(--green-bg)', label: 'Hazır' },
+    partial: { color: 'var(--amber)', bg: 'var(--amber-bg)', label: 'Kısmi' },
     error: { color: 'var(--red)', bg: 'var(--red-bg)', label: 'Hata' },
-    empty: { color: 'var(--text-muted)', bg: 'var(--bg-surface-2)', label: 'Bos' },
+    empty: { color: 'var(--text-muted)', bg: 'var(--bg-surface-2)', label: 'Boş' },
     pending: { color: 'var(--text-muted)', bg: 'var(--bg-surface-2)', label: 'Bekliyor' },
     manual: { color: 'var(--blue)', bg: 'var(--blue-bg)', label: 'Manuel' },
-    disabled: { color: 'var(--text-muted)', bg: 'var(--bg-surface-2)', label: 'Kapali' },
+    disabled: { color: 'var(--text-muted)', bg: 'var(--bg-surface-2)', label: 'Kapalı' },
   };
   return map[status] || map.pending;
 }
 
 function providerStatusStyle(status: string | null | undefined) {
   const map: Record<string, { color: string; bg: string; label: string }> = {
-    FOUND: { color: 'var(--green)', bg: 'var(--green-bg)', label: 'FOUND' },
-    NO_MATCH: { color: 'var(--text-muted)', bg: 'var(--bg-surface-2)', label: 'NO_MATCH' },
-    LOGIN_REQUIRED: { color: 'var(--amber)', bg: 'var(--amber-bg)', label: 'LOGIN_REQUIRED' },
-    SUBSCRIPTION_REQUIRED: { color: 'var(--amber)', bg: 'var(--amber-bg)', label: 'SUBSCRIPTION_REQUIRED' },
-    BLOCKED: { color: 'var(--red)', bg: 'var(--red-bg)', label: 'BLOCKED' },
-    PARSE_ERROR: { color: 'var(--red)', bg: 'var(--red-bg)', label: 'PARSE_ERROR' },
+    FOUND: { color: 'var(--green)', bg: 'var(--green-bg)', label: 'Bulundu' },
+    NO_MATCH: { color: 'var(--text-muted)', bg: 'var(--bg-surface-2)', label: 'Eşleşmedi' },
+    LOGIN_REQUIRED: { color: 'var(--amber)', bg: 'var(--amber-bg)', label: 'Giriş Gerekli' },
+    SUBSCRIPTION_REQUIRED: { color: 'var(--amber)', bg: 'var(--amber-bg)', label: 'Abonelik Gerekli' },
+    BLOCKED: { color: 'var(--red)', bg: 'var(--red-bg)', label: 'Erişim Engeli' },
+    PARSE_ERROR: { color: 'var(--red)', bg: 'var(--red-bg)', label: 'Okuma Hatası' },
   };
   return map[status || 'FOUND'] || map.FOUND;
 }
@@ -147,7 +147,7 @@ function ratingReason(row: RatingRow) {
   if (key.includes('CLOUDFLARE')) return 'Cloudflare / guvenlik engeli';
   if (key.includes('SUBSCRIPTION')) return 'Abonelik/entitlement gerekli';
   if (key.includes('LOGIN')) return 'Login gerekli';
-  if (key.includes('LOW_CONFIDENCE')) return 'Eslesme guveni dusuk';
+  if (key.includes('LOW_CONFIDENCE')) return 'Eşleşme güveni düşük';
   if (key.includes('NO_MATCH')) return 'Resmi aramada aday yok';
   if (key.includes('PARSE_ERROR')) return 'Aday var, not parse edilemedi';
   if (key.includes('BLOCKED')) return 'Kaynak erisimi engellendi';
@@ -189,7 +189,7 @@ function SourceChip({ source, active, busy, onClick }: {
     <button
       onClick={onClick}
       disabled={busy}
-      title={`${source.name} kaynagini anlik yenile`}
+      title={`${source.name} kaynağını şimdi yenile`}
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 8, padding: '8px 10px',
         borderRadius: 8, border: active ? '1px solid var(--accent)' : '1px solid var(--border)',
@@ -281,7 +281,7 @@ export default function RatingCenter() {
       setSources(sourceRes.data);
       setRatings(ratingRes.data);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Rating verisi alinamadi');
+      setError(err instanceof Error ? err.message : 'Rating verisi alınamadı');
     } finally {
       setLoading(false);
     }
@@ -299,9 +299,17 @@ export default function RatingCenter() {
     setError(null);
     setNotice(null);
     try {
-      await api.refreshRatings(selectedSources.map(source => source.key));
-      setNotice(message);
+      const result = await api.refreshRatings(selectedSources.map(source => source.key));
+      const failed = result.data.filter(item => item.status === 'error' || item.status === 'partial');
       await loadData(nextAgency !== undefined ? { agency: nextAgency } : undefined);
+      if (failed.length > 0) {
+        const details = failed
+          .map(item => `${item.source}: ${item.errors[0] || item.status}`)
+          .join(' | ');
+        setError(`Kaynak kontrol edildi ancak tam yenilenemedi. ${details}`);
+      } else {
+        setNotice(message);
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Kaynak yenilenemedi');
       await loadData(nextAgency !== undefined ? { agency: nextAgency } : undefined);
@@ -312,7 +320,7 @@ export default function RatingCenter() {
 
   const handleSourceClick = async (source: RatingSource) => {
     setAgency(source.name);
-    await refreshSources([source], `${source.name} yeniden cekildi.`, source.name);
+    await refreshSources([source], `${source.name} yeniden çekildi.`, source.name);
   };
 
   const clearFilters = () => {
@@ -391,11 +399,11 @@ export default function RatingCenter() {
         <div>
           <h1 style={{ fontSize: 24, fontWeight: 850, letterSpacing: 0, marginBottom: 6 }}>Kredi Rating</h1>
           <div style={{ color: 'var(--text-muted)', fontSize: 13 }}>
-            Rating kaynagini sec; son notlari ve raporlari incele.
+            Rating kaynağını seçin; son notları ve raporları inceleyin.
           </div>
         </div>
         <button
-          onClick={() => void refreshSources(ratingSources, 'Canli rating kaynaklari yenilendi.')}
+          onClick={() => void refreshSources(ratingSources, 'Canlı rating kaynakları yenilendi.')}
           disabled={refreshingKey !== null}
           style={{
             display: 'inline-flex', alignItems: 'center', gap: 8, height: 38, padding: '0 14px',
@@ -412,7 +420,7 @@ export default function RatingCenter() {
         <MetricCard label="Rating" value={filteredRatings.length.toLocaleString('tr-TR')} icon={ShieldCheck} color="var(--blue)" bg="var(--blue-bg)" />
         <MetricCard label="Kaynak" value={ratingSources.length.toLocaleString('tr-TR')} icon={Database} color="var(--accent)" bg="var(--accent-bg)" />
         <MetricCard label="Link" value={reportCount.toLocaleString('tr-TR')} icon={FileText} color="var(--amber)" bg="var(--amber-bg)" />
-        <MetricCard label="Son Cekim" value={latestSourceTime ? formatDateTime(latestSourceTime) : '-'} icon={CheckCircle2} color="var(--text-dim)" bg="var(--bg-surface-2)" />
+        <MetricCard label="Son Çekim" value={latestSourceTime ? formatDateTime(latestSourceTime) : '-'} icon={CheckCircle2} color="var(--text-dim)" bg="var(--bg-surface-2)" />
       </div>
 
       <div style={{
@@ -431,14 +439,14 @@ export default function RatingCenter() {
           }}
         >
           <div>
-            <label style={{ display: 'block', color: 'var(--text-muted)', fontSize: 11, fontWeight: 850, textTransform: 'uppercase', letterSpacing: 0, marginBottom: 6 }}>Sirket</label>
+            <label style={{ display: 'block', color: 'var(--text-muted)', fontSize: 11, fontWeight: 850, textTransform: 'uppercase', letterSpacing: 0, marginBottom: 6 }}>Şirket</label>
             <div style={{ position: 'relative' }}>
               <Search size={14} style={{ position: 'absolute', left: 12, top: 11, color: 'var(--text-muted)' }} />
               <input
                 value={company}
                 onChange={e => setCompany(e.target.value)}
                 onKeyDown={e => { if (e.key === 'Enter') handleSearch(); }}
-                placeholder="Sirket adi aratiniz"
+                placeholder="Şirket adıyla arayın"
                 style={{
                   width: '100%', height: 38, padding: '0 12px 0 34px', borderRadius: 8,
                   border: '1px solid var(--border)', background: 'var(--bg-surface-2)',
@@ -448,13 +456,13 @@ export default function RatingCenter() {
             </div>
           </div>
           <div>
-            <label style={{ display: 'block', color: 'var(--text-muted)', fontSize: 11, fontWeight: 850, textTransform: 'uppercase', letterSpacing: 0, marginBottom: 6 }}>Rating kaynagi</label>
+            <label style={{ display: 'block', color: 'var(--text-muted)', fontSize: 11, fontWeight: 850, textTransform: 'uppercase', letterSpacing: 0, marginBottom: 6 }}>Rating kaynağı</label>
             <select
               value={agency}
               onChange={e => setAgency(e.target.value)}
               style={{ width: '100%', height: 38, padding: '0 10px', borderRadius: 8, border: '1px solid var(--border)', background: 'var(--bg-surface-2)', color: 'var(--text)', outline: 'none' }}
             >
-              <option value="">Tum ratingler</option>
+              <option value="">Tüm ratingler</option>
               {ratingSources.map(source => <option key={source.key} value={source.name}>{source.name}</option>)}
             </select>
           </div>
@@ -481,7 +489,7 @@ export default function RatingCenter() {
           {dateRange === 'custom' && (
             <>
               <div>
-                <label style={{ display: 'block', color: 'var(--text-muted)', fontSize: 11, fontWeight: 850, textTransform: 'uppercase', letterSpacing: 0, marginBottom: 6 }}>Baslangic</label>
+                <label style={{ display: 'block', color: 'var(--text-muted)', fontSize: 11, fontWeight: 850, textTransform: 'uppercase', letterSpacing: 0, marginBottom: 6 }}>Başlangıç</label>
                 <input
                   type="date"
                   value={minDate}
@@ -490,7 +498,7 @@ export default function RatingCenter() {
                 />
               </div>
               <div>
-                <label style={{ display: 'block', color: 'var(--text-muted)', fontSize: 11, fontWeight: 850, textTransform: 'uppercase', letterSpacing: 0, marginBottom: 6 }}>Bitis</label>
+                <label style={{ display: 'block', color: 'var(--text-muted)', fontSize: 11, fontWeight: 850, textTransform: 'uppercase', letterSpacing: 0, marginBottom: 6 }}>Bitiş</label>
                 <input
                   type="date"
                   value={maxDate}
@@ -554,7 +562,7 @@ export default function RatingCenter() {
               }}
             >
               <SlidersHorizontal size={14} />
-              Kaynak yonetimi
+              Kaynak yönetimi
               <ChevronDown size={14} style={{ transform: showSources ? 'rotate(180deg)' : undefined }} />
             </button>
           </div>
@@ -562,10 +570,10 @@ export default function RatingCenter() {
 
         {showSources && (
           <div style={{ marginTop: 12, borderTop: '1px solid var(--border)', paddingTop: 12 }}>
-            <div style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 850, textTransform: 'uppercase', marginBottom: 8 }}>Pasife alinan rating kaynaklari</div>
+            <div style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 850, textTransform: 'uppercase', marginBottom: 8 }}>Pasife alınan rating kaynakları</div>
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
               {hiddenSources.length === 0 ? (
-                <span style={{ color: 'var(--text-muted)', fontSize: 12 }}>Pasif rating kaynagi yok</span>
+                <span style={{ color: 'var(--text-muted)', fontSize: 12 }}>Pasif rating kaynağı yok</span>
               ) : hiddenSources.map(source => {
                 const style = statusStyle(source.status_class);
                 return (
@@ -596,7 +604,7 @@ export default function RatingCenter() {
           )}
           {sourceIssues.length > 0 && (
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 12px', borderRadius: 8, background: 'var(--amber-bg)', color: 'var(--amber)', fontWeight: 800 }}>
-              <AlertTriangle size={15} /> Kaynak kontrolu: {sourceIssues.map(source => source.name).join(', ')}
+              <AlertTriangle size={15} /> Rating kaynağı kontrolü: {sourceIssues.map(source => source.name).join(', ')}
             </div>
           )}
         </div>
@@ -610,17 +618,17 @@ export default function RatingCenter() {
         }}>
           <SectionHeader
             icon={Database}
-            title={selectedSource && GLOBAL_RATING_AGENCIES.has(selectedSource.name) ? `${selectedSource.name} Ozeti` : 'Global Ajans Ozeti'}
+            title={selectedSource && GLOBAL_RATING_AGENCIES.has(selectedSource.name) ? `${selectedSource.name} Özeti` : 'Global Ajans Özeti'}
             meta={`${globalSummarySources.length} kaynak`}
           />
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 10, padding: 12 }}>
             {[
-              ['Aranan Sirket', globalSummary.searched.toLocaleString('tr-TR'), 'var(--blue)', 'var(--blue-bg)'],
-              ['Bulunan Kayit', globalSummary.found.toLocaleString('tr-TR'), 'var(--green)', 'var(--green-bg)'],
-              ['Eslesmeyen', globalSummary.noMatch.toLocaleString('tr-TR'), 'var(--text-dim)', 'var(--bg-surface-2)'],
-              ['Login/Abonelik', globalSummary.access.toLocaleString('tr-TR'), 'var(--amber)', 'var(--amber-bg)'],
-              ['Blocked/Parse', (globalSummary.blocked + globalSummary.parse).toLocaleString('tr-TR'), 'var(--red)', 'var(--red-bg)'],
-              ['Son Cekim', globalSummary.lastRefresh ? formatDateTime(globalSummary.lastRefresh) : '-', 'var(--text-dim)', 'var(--bg-surface-2)'],
+              ['Aranan Şirket', globalSummary.searched.toLocaleString('tr-TR'), 'var(--blue)', 'var(--blue-bg)'],
+              ['Bulunan Kayıt', globalSummary.found.toLocaleString('tr-TR'), 'var(--green)', 'var(--green-bg)'],
+              ['Eşleşmeyen', globalSummary.noMatch.toLocaleString('tr-TR'), 'var(--text-dim)', 'var(--bg-surface-2)'],
+              ['Giriş/Abonelik', globalSummary.access.toLocaleString('tr-TR'), 'var(--amber)', 'var(--amber-bg)'],
+              ['Erişim/Okuma Hatası', (globalSummary.blocked + globalSummary.parse).toLocaleString('tr-TR'), 'var(--red)', 'var(--red-bg)'],
+              ['Son Çekim', globalSummary.lastRefresh ? formatDateTime(globalSummary.lastRefresh) : '-', 'var(--text-dim)', 'var(--bg-surface-2)'],
             ].map(([label, value, color, bg]) => (
               <div key={label} style={{ border: '1px solid var(--border)', borderRadius: 8, background: bg, padding: '10px 11px', minWidth: 0 }}>
                 <div style={{ color: 'var(--text-muted)', fontSize: 10, fontWeight: 850, textTransform: 'uppercase', marginBottom: 5 }}>{label}</div>
@@ -632,12 +640,12 @@ export default function RatingCenter() {
       )}
 
       <section style={{ background: 'var(--bg-surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius)', boxShadow: 'var(--shadow)', overflow: 'hidden' }}>
-        <SectionHeader icon={ShieldCheck} title="Rating Kayitlari" meta={`${filteredRatings.length.toLocaleString('tr-TR')} kayit`} />
+        <SectionHeader icon={ShieldCheck} title="Rating Kayıtları" meta={`${filteredRatings.length.toLocaleString('tr-TR')} kayıt`} />
         <div style={{ overflow: 'auto', maxHeight: 'calc(100vh - 360px)', minHeight: 420 }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
             <thead>
               <tr style={{ background: 'var(--bg-surface-2)', position: 'sticky', top: 0, zIndex: 1 }}>
-                {['Sirket', 'Ajans', 'Durum', 'Sebep', 'Tarih', 'UVD', 'KVD', 'Gorunum', 'Aksiyon', 'Sektor', 'Cekim', 'Link'].map(head => (
+                {['Şirket', 'Ajans', 'Durum', 'Sebep', 'Tarih', 'UVD', 'KVD', 'Görünüm', 'Aksiyon', 'Sektör', 'Çekim', 'Link'].map(head => (
                   <th key={head} style={{ textAlign: 'left', padding: '9px 12px', fontSize: 11, color: 'var(--text-muted)', fontWeight: 850, textTransform: 'uppercase', letterSpacing: 0, whiteSpace: 'nowrap' }}>{head}</th>
                 ))}
               </tr>
