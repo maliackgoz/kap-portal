@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { api, type RatingNewsRow, type RatingSource } from '../api';
+import { useAuth } from '../context/useAuth';
 
 function formatDateTime(value: string | null) {
   if (!value) return '-';
@@ -212,6 +213,7 @@ function RiskBadge({ level }: { level: string | null }) {
 }
 
 export default function NewsCenter() {
+  const { isAdmin } = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
   const [sources, setSources] = useState<RatingSource[]>([]);
   const [news, setNews] = useState<RatingNewsRow[]>([]);
@@ -221,6 +223,7 @@ export default function NewsCenter() {
   const [days, setDays] = useState(() => searchParams.get('days') || '60');
   const [loading, setLoading] = useState(true);
   const [refreshingKey, setRefreshingKey] = useState<string | null>(null);
+  const [bulkProgress, setBulkProgress] = useState<{ current: number; total: number; name: string } | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   const [selectedLiveSources, setSelectedLiveSources] = useState<string[]>([]);
@@ -321,8 +324,38 @@ export default function NewsCenter() {
     }
   };
 
+  // Toplu yenileme kaynaklari tek tek ceker; her kaynak bitince liste guncellenir (RatingCenter ile ayni)
+  const refreshAllSources = async () => {
+    if (!newsSources.length) return;
+    setError(null);
+    setNotice(null);
+    const failures: string[] = [];
+    for (const [index, item] of newsSources.entries()) {
+      setRefreshingKey(item.key);
+      setBulkProgress({ current: index + 1, total: newsSources.length, name: item.name });
+      try {
+        const result = await api.refreshRatings([item.key]);
+        result.data
+          .filter(entry => entry.status === 'error' || entry.status === 'partial')
+          .forEach(entry => failures.push(`${entry.source}: ${entry.errors[0] || entry.status}`));
+      } catch (err) {
+        failures.push(`${item.name}: ${err instanceof Error ? err.message : 'yenilenemedi'}`);
+      }
+      await loadNews();
+    }
+    setRefreshingKey(null);
+    setBulkProgress(null);
+    if (failures.length > 0) {
+      setError(`Bazı kaynaklar tam yenilenemedi. ${failures.join(' | ')}`);
+    } else {
+      setNotice('Tüm haber kaynakları yenilendi.');
+    }
+  };
+
   const handleSourceClick = async (item: RatingSource) => {
     setSource(item.name);
+    // Toplu yenileme surerken sadece filtrele, ayni anda ikinci bir cekim baslatma
+    if (!isAdmin || bulkProgress) return;
     await refreshSources([item], `${item.name} haberleri yeniden çekildi.`, item.name);
   };
 
@@ -427,8 +460,8 @@ export default function NewsCenter() {
             Haber kaynaklarını yenileyin; şirket, başlık, özet veya anahtar kelimeyle arayın.
           </div>
         </div>
-        <button
-          onClick={() => void refreshSources(newsSources, 'Canlı haber kaynakları yenilendi.')}
+        {isAdmin && <button
+          onClick={() => void refreshAllSources()}
           disabled={refreshingKey !== null}
           style={{
             display: 'inline-flex', alignItems: 'center', gap: 8, height: 38, padding: '0 14px',
@@ -436,9 +469,9 @@ export default function NewsCenter() {
             color: '#fff', cursor: refreshingKey ? 'wait' : 'pointer', fontWeight: 850,
           }}
         >
-          <RefreshCw size={15} style={refreshingKey === 'bulk' ? { animation: 'spin 1s linear infinite' } : {}} />
-          Haberleri Yenile
-        </button>
+          <RefreshCw size={15} style={bulkProgress ? { animation: 'spin 1s linear infinite' } : {}} />
+          {bulkProgress ? `${bulkProgress.name} yenileniyor (${bulkProgress.current}/${bulkProgress.total})` : 'Haberleri Yenile'}
+        </button>}
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', gap: 12, marginBottom: 14 }}>

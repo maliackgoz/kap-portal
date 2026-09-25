@@ -7,6 +7,7 @@ import time
 import uuid
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
+from pathlib import Path
 from typing import Any
 from urllib.parse import quote_plus, urljoin, urlparse
 
@@ -14,7 +15,7 @@ import httpx
 from bs4 import BeautifulSoup
 from rapidfuzz import fuzz
 
-from ..config import load_companies_config
+from ..config import load_companies_config, load_yaml
 from ..dedupe import dedupe_records, with_rating_id
 from ..models import RatingRecord, RunLog
 from ..normalizer import (
@@ -301,6 +302,14 @@ def parse_rating_date_from_text(text: str) -> str | None:
     return None
 
 
+GLOBAL_PRIORITY_PATH = Path(__file__).resolve().parent.parent / "global_priority.yaml"
+
+
+def global_priority_company_names() -> list[str]:
+    data = load_yaml(GLOBAL_PRIORITY_PATH, default={}) or {}
+    return [str(name).strip() for name in data.get("companies", []) or [] if str(name).strip()]
+
+
 class BaseGlobalRatingsProvider(GenericTableRatingScraper):
     """Company-by-company adapter for global agencies with explicit empty statuses."""
 
@@ -388,10 +397,14 @@ class BaseGlobalRatingsProvider(GenericTableRatingScraper):
 
     def _known_company_names(self) -> list[str]:
         config = load_companies_config(self.settings)
+        # Oncelik listesindekiler once, kalan kota companies.yaml sirasiyla (alfabetik) dolar
+        candidates = global_priority_company_names() + [
+            str(item.get("name") or "") for item in config.get("companies", []) or []
+        ]
         names: list[str] = []
         seen: set[str] = set()
-        for item in config.get("companies", []) or []:
-            name = str(item.get("name") or "").strip()
+        for raw_name in candidates:
+            name = raw_name.strip()
             key = normalize_company_name_for_search(name)
             if name and key and key not in seen:
                 seen.add(key)

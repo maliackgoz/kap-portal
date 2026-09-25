@@ -118,3 +118,25 @@ def test_global_provider_cloudflare_block_message_is_explicit() -> None:
     )
 
     assert "Cloudflare/security page" in message
+
+
+def test_global_provider_searches_priority_companies_before_alphabetical(tmp_path, monkeypatch) -> None:
+    data_dir = tmp_path / "data"
+    (data_dir / "config").mkdir(parents=True)
+    (data_dir / "config" / "companies.yaml").write_text(
+        "companies:\n- name: 1000 YATIRIMLAR HOLDİNG A.Ş.\n- name: AKBANK T.A.Ş.\n- name: A1 BAĞIMSIZ DENETİM A.Ş.\n",
+        encoding="utf-8",
+    )
+    monkeypatch.setenv("RATING_MCP_DATA_DIR", str(data_dir))
+    monkeypatch.setenv("RATING_MCP_GLOBAL_PROVIDER_MAX_COMPANIES", "3")
+
+    from app.config import get_settings
+
+    get_settings.cache_clear()
+    names = FitchRatingsProvider(urls=[], settings=get_settings())._known_company_names()
+    get_settings.cache_clear()
+
+    # Oncelik listesi basta, kota dolunca alfabetik kalanlar hic aranmaz, tekrar yok
+    assert names[0] == "AKBANK T.A.Ş."
+    assert names[:3] == ["AKBANK T.A.Ş.", "TÜRKİYE GARANTİ BANKASI A.Ş.", "TÜRKİYE İŞ BANKASI A.Ş."]
+    assert "1000 YATIRIMLAR HOLDİNG A.Ş." not in names

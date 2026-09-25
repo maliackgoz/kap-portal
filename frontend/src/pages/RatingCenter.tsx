@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { api, type RatingRow, type RatingSource } from '../api';
+import { useAuth } from '../context/useAuth';
 
 function formatDate(value: string | null) {
   if (!value) return '-';
@@ -231,6 +232,7 @@ function SectionHeader({ icon: Icon, title, meta, action }: {
 }
 
 export default function RatingCenter() {
+  const { isAdmin } = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
   const [ratings, setRatings] = useState<RatingRow[]>([]);
   const [sources, setSources] = useState<RatingSource[]>([]);
@@ -246,6 +248,7 @@ export default function RatingCenter() {
   const [latestOnly, setLatestOnly] = useState(() => searchParams.get('latest_only') !== 'false');
   const [loading, setLoading] = useState(true);
   const [refreshingKey, setRefreshingKey] = useState<string | null>(null);
+  const [bulkProgress, setBulkProgress] = useState<{ current: number; total: number; name: string } | null>(null);
   const [showSources, setShowSources] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
@@ -318,8 +321,39 @@ export default function RatingCenter() {
     }
   };
 
+  // Toplu yenileme kaynaklari tek tek ceker; her kaynak bitince tablo guncellenir.
+  // Tek istekte hepsini beklemek global ajanslar yuzunden dakikalar suruyordu ve ekran hic degismiyordu.
+  const refreshAllSources = async () => {
+    if (!ratingSources.length) return;
+    setError(null);
+    setNotice(null);
+    const failures: string[] = [];
+    for (const [index, source] of ratingSources.entries()) {
+      setRefreshingKey(source.key);
+      setBulkProgress({ current: index + 1, total: ratingSources.length, name: source.name });
+      try {
+        const result = await api.refreshRatings([source.key]);
+        result.data
+          .filter(item => item.status === 'error' || item.status === 'partial')
+          .forEach(item => failures.push(`${item.source}: ${item.errors[0] || item.status}`));
+      } catch (err) {
+        failures.push(`${source.name}: ${err instanceof Error ? err.message : 'yenilenemedi'}`);
+      }
+      await loadData();
+    }
+    setRefreshingKey(null);
+    setBulkProgress(null);
+    if (failures.length > 0) {
+      setError(`Bazı kaynaklar tam yenilenemedi. ${failures.join(' | ')}`);
+    } else {
+      setNotice('Tüm rating kaynakları yenilendi.');
+    }
+  };
+
   const handleSourceClick = async (source: RatingSource) => {
     setAgency(source.name);
+    // Toplu yenileme surerken sadece filtrele, ayni anda ikinci bir cekim baslatma
+    if (!isAdmin || bulkProgress) return;
     await refreshSources([source], `${source.name} yeniden çekildi.`, source.name);
   };
 
@@ -402,8 +436,8 @@ export default function RatingCenter() {
             Rating kaynağını seçin; son notları ve raporları inceleyin.
           </div>
         </div>
-        <button
-          onClick={() => void refreshSources(ratingSources, 'Canlı rating kaynakları yenilendi.')}
+        {isAdmin && <button
+          onClick={() => void refreshAllSources()}
           disabled={refreshingKey !== null}
           style={{
             display: 'inline-flex', alignItems: 'center', gap: 8, height: 38, padding: '0 14px',
@@ -411,9 +445,9 @@ export default function RatingCenter() {
             color: '#fff', cursor: refreshingKey ? 'wait' : 'pointer', fontWeight: 850,
           }}
         >
-          <RefreshCw size={15} style={refreshingKey === 'bulk' ? { animation: 'spin 1s linear infinite' } : {}} />
-          Ratingleri yenile
-        </button>
+          <RefreshCw size={15} style={bulkProgress ? { animation: 'spin 1s linear infinite' } : {}} />
+          {bulkProgress ? `${bulkProgress.name} yenileniyor (${bulkProgress.current}/${bulkProgress.total})` : 'Ratingleri yenile'}
+        </button>}
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', gap: 12, marginBottom: 14 }}>

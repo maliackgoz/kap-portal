@@ -1,0 +1,66 @@
+# Fitch / S&P / Moody's taramasinda ONCE aranacak sirketler.
+# Global ajanslar sirket sirket aranıyor ve `global_provider_max_companies` (varsayilan 80) ile sinirli;
+# bu liste olmadan alfabetik ilk 80 KAP sirketi (cogu uluslararasi notu olmayan kucuk sirket) taraniyordu.
+# Isimler companies.yaml'daki KAP adlariyla birebir ayni olmali. Listede olmayanlar kalan kotayi alfabetik doldurur.
+# Bu dosya data volume'unda degil uygulama paketinde durur; degisiklik icin image'i yeniden build etmek yeterli.
+companies:
+  # Bankalar
+  - AKBANK T.A.Ş.
+  - TÜRKİYE GARANTİ BANKASI A.Ş.
+  - TÜRKİYE İŞ BANKASI A.Ş.
+  - YAPI VE KREDİ BANKASI A.Ş.
+  - T.C. ZİRAAT BANKASI A.Ş.
+  - TÜRKİYE HALK BANKASI A.Ş.
+  - TÜRKİYE VAKIFLAR BANKASI T.A.O.
+  - QNB BANK A.Ş.
+  - DENİZBANK A.Ş.
+  - TÜRK EKONOMİ BANKASI A.Ş.
+  - ING BANK A.Ş.
+  - ŞEKERBANK T.A.Ş.
+  - ODEA BANK A.Ş.
+  - ALTERNATİFBANK A.Ş.
+  - BURGAN BANK A.Ş.
+  - FİBABANKA A.Ş.
+  - ANADOLUBANK A.Ş.
+  - HSBC BANK A.Ş.
+  - ICBC TURKEY BANK A.Ş.
+  - KUVEYT TÜRK KATILIM BANKASI A.Ş.
+  - ALBARAKA TÜRK KATILIM BANKASI A.Ş.
+  - TÜRKİYE FİNANS KATILIM BANKASI A.Ş.
+  - VAKIF KATILIM BANKASI A.Ş.
+  - ZİRAAT KATILIM BANKASI A.Ş.
+  - TÜRKİYE EMLAK KATILIM BANKASI A.Ş.
+  - TÜRKİYE SINAİ KALKINMA BANKASI A.Ş.
+  - TÜRKİYE İHRACAT KREDİ BANKASI A.Ş.
+  - TÜRKİYE KALKINMA VE YATIRIM BANKASI A.Ş.
+  - AKTİF YATIRIM BANKASI A.Ş.
+  # Holdingler ve buyuk sirketler
+  - KOÇ HOLDİNG A.Ş.
+  - HACI ÖMER SABANCI HOLDİNG A.Ş.
+  - AG ANADOLU GRUBU HOLDİNG A.Ş.
+  - TÜPRAŞ-TÜRKİYE PETROL RAFİNERİLERİ A.Ş.
+  - FORD OTOMOTİV SANAYİ A.Ş.
+  - TOFAŞ TÜRK OTOMOBİL FABRİKASI A.Ş.
+  - ARÇELİK A.Ş.
+  - TÜRK HAVA YOLLARI A.O.
+  - PEGASUS HAVA TAŞIMACILIĞI A.Ş.
+  - TAV HAVALİMANLARI HOLDİNG A.Ş.
+  - TURKCELL İLETİŞİM HİZMETLERİ A.Ş.
+  - TÜRK TELEKOMÜNİKASYON A.Ş.
+  - COCA-COLA İÇECEK A.Ş.
+  - ANADOLU EFES BİRACILIK VE MALT SANAYİİ A.Ş.
+  - TÜRKİYE ŞİŞE VE CAM FABRİKALARI A.Ş.
+  - PETKİM PETROKİMYA HOLDİNG A.Ş.
+  - ÜLKER BİSKÜVİ SANAYİ A.Ş.
+  - MİGROS TİCARET A.Ş.
+  - BİM BİRLEŞİK MAĞAZALAR A.Ş.
+  - EREĞLİ DEMİR VE ÇELİK FABRİKALARI T.A.Ş.
+  - ASELSAN ELEKTRONİK SANAYİ VE TİCARET A.Ş.
+  - ENKA İNŞAAT VE SANAYİ A.Ş.
+  - ENERJİSA ENERJİ A.Ş.
+  - AYDEM YENİLENEBİLİR ENERJİ A.Ş.
+  - ZORLU ENERJİ ELEKTRİK ÜRETİM A.Ş.
+  - LİMAK YATIRIM ENERJİ ÜRETİM İŞLETME HİZMETLERİ VE İNŞAAT A.Ş.
+  - IC İÇTAŞ ENERJİ YATIRIM HOLDİNG A.Ş.
+  - GLOBAL YATIRIM HOLDİNG A.Ş.
+  - MLP SAĞLIK HİZMETLERİ A.Ş.
