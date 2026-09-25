@@ -101,6 +101,7 @@ function logPayload(company: { name: string; oid: string; slug: string }, detail
   return JSON.stringify({
     companyName: company.name,
     kapId: company.oid,
+    source: details.source,
     resolvedKapUrl: details.resolvedKapUrl,
     requestUrl: details.requestUrl,
     httpStatus: details.httpStatus,

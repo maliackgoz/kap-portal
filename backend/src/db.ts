@@ -53,4 +53,9 @@ db.exec(`
 // Add ticker column if not exists
 try { db.exec(`ALTER TABLE companies ADD COLUMN ticker TEXT`); } catch {};
 
+// oid, sirketin KAP kimligi olarak eslesme anahtari — seed.ts bunun uzerinden
+// upsert yapabilsin diye eslsiz index (yeniden adlandirilan sirketlerde slug
+// degisir ama oid degismez).
+try { db.exec(`CREATE UNIQUE INDEX idx_companies_oid ON companies(oid)`); } catch {};
+
 export default db;

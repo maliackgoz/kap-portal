@@ -24,7 +24,10 @@ export type KapErrorType =
   | 'NO_FINANCIAL_DATA'
   | 'UNKNOWN_ERROR';
 
+export type KapDataSource = 'kap_web';
+
 export type KapFetchDetails = {
+  source?: KapDataSource;
   resolvedKapUrl: string;
   requestUrl: string;
   httpStatus?: number;
@@ -142,6 +145,7 @@ async function fetchWithRetry(url: string): Promise<{ html: string; details: Kap
       });
       const html = await res.text();
       const details: KapFetchDetails = {
+        source: 'kap_web',
         resolvedKapUrl: url,
         requestUrl: url,
         httpStatus: res.status,
@@ -167,6 +171,7 @@ async function fetchWithRetry(url: string): Promise<{ html: string; details: Kap
       if (!shouldRetry(details) || attempt >= CONFIG.maxRetry) break;
     } catch (error) {
       const details: KapFetchDetails = {
+        source: 'kap_web',
         resolvedKapUrl: url,
         requestUrl: url,
         errorType: classifyFetchError(error),
@@ -192,6 +197,7 @@ async function fetchWithRetry(url: string): Promise<{ html: string; details: Kap
   }
 
   const details = lastDetails || {
+    source: 'kap_web' as const,
     resolvedKapUrl: url,
     requestUrl: url,
     errorType: 'UNKNOWN_ERROR' as const,

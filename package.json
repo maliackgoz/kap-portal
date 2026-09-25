@@ -17,6 +17,8 @@
     "start:mcp": "npm run start:mcp -w backend",
     "start:mcp:http": "npm run start:mcp:http -w backend",
     "seed": "npm run seed -w backend",
+    "companies:refresh": "npm run companies:refresh -w backend",
+    "companies:sync-rating": "cd rating-service && python sync_companies.py",
     "test": "npm run test -w backend && npm run rating:test && npm run lint -w frontend && npm run build"
   },
   "devDependencies": {

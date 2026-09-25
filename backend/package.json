@@ -12,6 +12,7 @@
     "start:mcp": "node dist/mcp.js",
     "start:mcp:http": "node dist/mcp-http.js",
     "seed": "tsx src/seed.ts",
+    "companies:refresh": "tsx src/refresh-companies.ts",
     "test": "npm run build && node --test \"test/*.test.mjs\""
   },
   "dependencies": {

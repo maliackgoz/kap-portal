@@ -1,5 +1,40 @@
 [
   {
+    "name": "1000 YATIRIMLAR HOLDİNG A.Ş.",
+    "slug": "5900-1000-yatirimlar-holding-a-s",
+    "oid": "5900"
+  },
+  {
+    "name": "24 GAYRİMENKUL VE GİRİŞİM SERMAYESİ PORTFÖY YÖNETİMİ A.Ş.",
+    "slug": "2501-24-gayrimenkul-ve-girisim-sermayesi-portfoy-yonetimi-a-s",
+    "oid": "2501"
+  },
+  {
+    "name": "A.V.O.D. KURUTULMUŞ GIDA VE TARIM ÜRÜNLERİ SANAYİ TİCARET A.Ş.",
+    "slug": "1564-a-v-o-d-kurutulmus-gida-ve-tarim-urunleri-sanayi-ticaret-a-s",
+    "oid": "1564"
+  },
+  {
+    "name": "A1 BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "77-a1-bagimsiz-denetim-a-s",
+    "oid": "77"
+  },
+  {
+    "name": "A1 CAPİTAL PORTFÖY YÖNETİMİ A.Ş.",
+    "slug": "6069-a1-capital-portfoy-yonetimi-a-s",
+    "oid": "6069"
+  },
+  {
+    "name": "A1 CAPİTAL YATIRIM MENKUL DEĞERLER A.Ş.",
+    "slug": "1303-a1-capital-yatirim-menkul-degerler-a-s",
+    "oid": "1303"
+  },
+  {
+    "name": "A1 YENİLENEBİLİR ENERJİ ÜRETİM A.Ş.",
+    "slug": "5376-a1-yenilenebilir-enerji-uretim-a-s",
+    "oid": "5376"
+  },
+  {
     "name": "AAC BAĞIMSIZ DENETİM VE DANIŞMANLIK A.Ş.",
     "slug": "222-aac-bagimsiz-denetim-ve-danismanlik-a-s",
     "oid": "222"
@@ -10,14 +45,24 @@
     "oid": "6062"
   },
   {
+    "name": "ABANA ELEKTROMEKANİK SANAYİİ VE TİCARET A.Ş.",
+    "slug": "829-abana-elektromekanik-sanayii-ve-ticaret-a-s",
+    "oid": "829"
+  },
+  {
+    "name": "ABN AMRO YATIRIM MENKUL DEĞERLER A.Ş.",
+    "slug": "1253-abn-amro-yatirim-menkul-degerler-a-s",
+    "oid": "1253"
+  },
+  {
     "name": "ACAR MENKUL DEĞERLER A.Ş.",
     "slug": "1254-acar-menkul-degerler-a-s",
     "oid": "1254"
   },
   {
-    "name": "REPORT BAĞIMSIZ DENETİM A.Ş.",
-    "slug": "224-report-bagimsiz-denetim-a-s",
-    "oid": "224"
+    "name": "ACIBADEM SAĞLIK HİZMETLERİ VE TİCARET A.Ş.",
+    "slug": "830-acibadem-saglik-hizmetleri-ve-ticaret-a-s",
+    "oid": "830"
   },
   {
     "name": "ACISELSAN ACIPAYAM SELÜLOZ SANAYİ VE TİCARET A.Ş.",
@@ -25,9 +70,24 @@
     "oid": "1626"
   },
   {
-    "name": "PwC BAĞIMSIZ DENETİM VE SERBEST MUHASEBECİ MALİ MÜŞAVİRLİK A.Ş",
-    "slug": "92-pwc-bagimsiz-denetim-ve-serbest-muhasebeci-mali-musavirlik-a-s",
-    "oid": "92"
+    "name": "ACTUS PORTFÖY YÖNETİMİ A.Ş.",
+    "slug": "2379-actus-portfoy-yonetimi-a-s",
+    "oid": "2379"
+  },
+  {
+    "name": "ADA MENKUL DEĞERLER A.Ş.",
+    "slug": "1255-ada-menkul-degerler-a-s",
+    "oid": "1255"
+  },
+  {
+    "name": "ADALYA ULUSLARARASI BAĞIMSIZ DENETİM SMMM A.Ş.",
+    "slug": "228-adalya-uluslararasi-bagimsiz-denetim-smmm-a-s",
+    "oid": "228"
+  },
+  {
+    "name": "ADANA ÇİMENTO SANAYİİ TÜRK A.Ş.",
+    "slug": "831-adana-cimento-sanayii-turk-a-s",
+    "oid": "831"
   },
   {
     "name": "ADEL KALEMCİLİK TİCARET VE SANAYİ A.Ş.",
@@ -40,19 +100,9 @@
     "oid": "1560"
   },
   {
-    "name": "TTK BAĞIMSIZ DENETİM VE YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
-    "slug": "5310-ttk-bagimsiz-denetim-ve-yeminli-mali-musavirlik-a-s",
-    "oid": "5310"
-  },
-  {
     "name": "ADİL VARLIK YÖNETİM A.Ş.",
     "slug": "6148-adil-varlik-yonetim-a-s",
     "oid": "6148"
-  },
-  {
-    "name": "IŞIK YEMİNLİ MALİ MÜŞAVİRLİK VE BAĞIMSIZ DENETİM A.Ş.",
-    "slug": "122-isik-yeminli-mali-musavirlik-ve-bagimsiz-denetim-a-s",
-    "oid": "122"
   },
   {
     "name": "ADRA GAYRİMENKUL YATIRIM ORTAKLIĞI A.Ş.",
@@ -60,9 +110,14 @@
     "oid": "5867"
   },
   {
-    "name": "DENEYİM BAĞIMSIZ DENETİM VE DANIŞMANLIK A.Ş.",
-    "slug": "5529-deneyim-bagimsiz-denetim-ve-danismanlik-a-s",
-    "oid": "5529"
+    "name": "AE ARMA ELEKTROPANÇ ELEKTROMEKANİK SANAYİ MÜHENDİSLİK TAAHHÜT VE TİCARET A.Ş.",
+    "slug": "2455-ae-arma-elektropanc-elektromekanik-sanayi-muhendislik-taahhut-ve-ticaret-a-s",
+    "oid": "2455"
+  },
+  {
+    "name": "AFM ULUSLARARASI FİLM PRODÜKSİYON TİCARET VE SANAYİ A.Ş.",
+    "slug": "1387-afm-uluslararasi-film-produksiyon-ticaret-ve-sanayi-a-s",
+    "oid": "1387"
   },
   {
     "name": "AFYON ÇİMENTO SANAYİ T.A.Ş.",
@@ -70,14 +125,19 @@
     "oid": "833"
   },
   {
-    "name": "DRT BAĞIMSIZ DENETİM VE SERBEST MUHASEBECİ MALİ MÜŞAVİRLİK A.Ş.",
-    "slug": "109-drt-bagimsiz-denetim-ve-serbest-muhasebeci-mali-musavirlik-a-s",
-    "oid": "109"
-  },
-  {
     "name": "AG ANADOLU GRUBU HOLDİNG A.Ş.",
     "slug": "1131-ag-anadolu-grubu-holding-a-s",
     "oid": "1131"
+  },
+  {
+    "name": "AG YEMİNLİ MALİ MÜŞAVİRLİK VE BAĞIMSIZ  DENETİM A.Ş.",
+    "slug": "234-ag-yeminli-mali-musavirlik-ve-bagimsiz-denetim-a-s",
+    "oid": "234"
+  },
+  {
+    "name": "AGD BAĞIMSIZ DENETİM VE DANIŞMANLIK SMMM A.Ş.",
+    "slug": "78-agd-bagimsiz-denetim-ve-danismanlik-smmm-a-s",
+    "oid": "78"
   },
   {
     "name": "AGESA HAYAT VE EMEKLİLİK A.Ş.",
@@ -90,9 +150,9 @@
     "oid": "5899"
   },
   {
-    "name": "ANALİZ BAĞIMSIZ DENETİM VE DANIŞMANLIK A.Ş.",
-    "slug": "85-analiz-bagimsiz-denetim-ve-danismanlik-a-s",
-    "oid": "85"
+    "name": "AĞAOĞLU AVRASYA GAYRİMENKUL YATIRIM ORTAKLIĞI A.Ş.",
+    "slug": "6216-agaoglu-avrasya-gayrimenkul-yatirim-ortakligi-a-s",
+    "oid": "6216"
   },
   {
     "name": "AHES GAYRİMENKUL YATIRIM ORTAKLIĞI A.Ş.",
@@ -100,19 +160,9 @@
     "oid": "6014"
   },
   {
-    "name": "RAM BAĞIMSIZ DENETİM VE DANIŞMANLIK A.Ş.",
-    "slug": "5583-ram-bagimsiz-denetim-ve-danismanlik-a-s",
-    "oid": "5583"
-  },
-  {
     "name": "AHLATCI DOĞAL GAZ DAĞITIM ENERJİ VE YATIRIM A.Ş.",
     "slug": "3064-ahlatci-dogal-gaz-dagitim-enerji-ve-yatirim-a-s",
     "oid": "3064"
-  },
-  {
-    "name": "FİNANSAL EKSEN BAĞIMSIZ DENETİM VE DANIŞMANLIK A.Ş.",
-    "slug": "237-finansal-eksen-bagimsiz-denetim-ve-danismanlik-a-s",
-    "oid": "237"
   },
   {
     "name": "AHLATCI PORTFÖY YÖNETİMİ A.Ş.",
@@ -120,9 +170,9 @@
     "oid": "6077"
   },
   {
-    "name": "REFORM BAĞIMSIZ DENETİM A.Ş.",
-    "slug": "4598-reform-bagimsiz-denetim-a-s",
-    "oid": "4598"
+    "name": "AHLATCI VARLIK KİRALAMA A.Ş.",
+    "slug": "6225-ahlatci-varlik-kiralama-a-s",
+    "oid": "6225"
   },
   {
     "name": "AHLATCI YATIRIM MENKUL DEĞERLER A.Ş.",
@@ -130,14 +180,14 @@
     "oid": "4315"
   },
   {
+    "name": "AK DENETİM YEMİNLİ MALİ MÜŞAVİRLİK ve BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "79-ak-denetim-yeminli-mali-musavirlik-ve-bagimsiz-denetim-a-s",
+    "oid": "79"
+  },
+  {
     "name": "AK FAKTORİNG A.Ş.",
     "slug": "2085-ak-faktoring-a-s",
     "oid": "2085"
-  },
-  {
-    "name": "ARTI DEĞER ULUSLARARASI BAĞIMSIZ DENETİM VE YMM A.Ş.",
-    "slug": "187-arti-deger-uluslararasi-bagimsiz-denetim-ve-ymm-a-s",
-    "oid": "187"
   },
   {
     "name": "AK FİNANSAL KİRALAMA A.Ş.",
@@ -145,14 +195,24 @@
     "oid": "2215"
   },
   {
+    "name": "AK GIDA SANAYİ VE TİCARET A.Ş.",
+    "slug": "2466-ak-gida-sanayi-ve-ticaret-a-s",
+    "oid": "2466"
+  },
+  {
     "name": "AK PORTFÖY YÖNETİMİ A.Ş.",
     "slug": "2283-ak-portfoy-yonetimi-a-s",
     "oid": "2283"
   },
   {
-    "name": "AKM AKMEN",
+    "name": "AK YATIRIM MENKUL DEĞERLER A.Ş.",
     "slug": "2485-ak-yatirim-menkul-degerler-a-s",
     "oid": "2485"
+  },
+  {
+    "name": "AK-AL GAYRİMENKUL GELİŞTİRME VE TEKSTİL SANAYİİ A.Ş.",
+    "slug": "836-ak-al-gayrimenkul-gelistirme-ve-tekstil-sanayii-a-s",
+    "oid": "836"
   },
   {
     "name": "AKADEMİ ÇEVRE ENTEGRE ATIK YÖNETİMİ ENDÜSTRİ A.Ş.",
@@ -160,14 +220,14 @@
     "oid": "6131"
   },
   {
-    "name": "KAİZEN BAĞIMSIZ DENETİM A.Ş.",
-    "slug": "5813-kaizen-bagimsiz-denetim-a-s",
-    "oid": "5813"
-  },
-  {
     "name": "AKADEMİK BAĞIMSIZ DENETİM A.Ş.",
     "slug": "80-akademik-bagimsiz-denetim-a-s",
     "oid": "80"
+  },
+  {
+    "name": "AKASYA PORTFÖY YÖNETİMİ A.Ş.",
+    "slug": "5658-akasya-portfoy-yonetimi-a-s",
+    "oid": "5658"
   },
   {
     "name": "AKBANK T.A.Ş.",
@@ -195,14 +255,19 @@
     "oid": "2377"
   },
   {
+    "name": "AKDENİZ İNŞAAT VE EĞİTİM HİZM. A.Ş.",
+    "slug": "2610-akdeniz-insaat-ve-egitim-hizm-a-s",
+    "oid": "2610"
+  },
+  {
+    "name": "AKDENİZ MENKUL DEĞERLER TİCARETİ A.Ş.",
+    "slug": "1257-akdeniz-menkul-degerler-ticareti-a-s",
+    "oid": "1257"
+  },
+  {
     "name": "AKDENİZ YATIRIM HOLDİNG A.Ş.",
     "slug": "1623-akdeniz-yatirim-holding-a-s",
     "oid": "1623"
-  },
-  {
-    "name": "ÇÖZÜM ÜNLÜER BAĞIMSIZ DENETİM VE YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
-    "slug": "5542-cozum-unluer-bagimsiz-denetim-ve-yeminli-mali-musavirlik-a-s",
-    "oid": "5542"
   },
   {
     "name": "AKENERJİ ELEKTRİK ÜRETİM A.Ş.",
@@ -240,19 +305,14 @@
     "oid": "6188"
   },
   {
-    "name": "EREN BAĞIMSIZ DENETİM A.Ş.",
-    "slug": "226-eren-bagimsiz-denetim-a-s",
-    "oid": "226"
+    "name": "AKIN ERDEM YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "81-akin-erdem-yeminli-mali-musavirlik-a-s",
+    "oid": "81"
   },
   {
     "name": "AKIN TEKSTİL A.Ş.",
     "slug": "839-akin-tekstil-a-s",
     "oid": "839"
-  },
-  {
-    "name": "KARAR BAĞIMSIZ DENETİM VE DANIŞMANLIK A.Ş.",
-    "slug": "229-karar-bagimsiz-denetim-ve-danismanlik-a-s",
-    "oid": "229"
   },
   {
     "name": "AKİŞ GAYRİMENKUL YATIRIM ORTAKLIĞI A.Ş.",
@@ -275,6 +335,11 @@
     "oid": "1505"
   },
   {
+    "name": "AKSEL YATIRIM HOLDİNG A.Ş.",
+    "slug": "1556-aksel-yatirim-holding-a-s",
+    "oid": "1556"
+  },
+  {
     "name": "AKSİGORTA A.Ş.",
     "slug": "841-aksigorta-a-s",
     "oid": "841"
@@ -285,14 +350,19 @@
     "oid": "241"
   },
   {
+    "name": "AKSİYON BAĞIMSIZ DENETİM VE DANIŞMANLIK A.Ş.",
+    "slug": "83-aksiyon-bagimsiz-denetim-ve-danismanlik-a-s",
+    "oid": "83"
+  },
+  {
     "name": "AKSU ENERJİ VE TİCARET A.Ş.",
     "slug": "842-aksu-enerji-ve-ticaret-a-s",
     "oid": "842"
   },
   {
-    "name": "GÜÇBİR BAĞIMSIZ DENETİM A.Ş.",
-    "slug": "117-gucbir-bagimsiz-denetim-a-s",
-    "oid": "117"
+    "name": "AKSU İPLİK DOKUMA VE BOYA APRE FABRİKALARI T.A.Ş.",
+    "slug": "843-aksu-iplik-dokuma-ve-boya-apre-fabrikalari-t-a-s",
+    "oid": "843"
   },
   {
     "name": "AKT BAĞIMSIZ DENETİM A.Ş.",
@@ -300,9 +370,24 @@
     "oid": "217"
   },
   {
+    "name": "AKTAN BAĞIMSIZ DENETİM VE YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "84-aktan-bagimsiz-denetim-ve-yeminli-mali-musavirlik-a-s",
+    "oid": "84"
+  },
+  {
+    "name": "AKTENTAŞ AKSARAY TARIM ENDÜSTRİ TİCARET A.Ş.",
+    "slug": "1590-aktentas-aksaray-tarim-endustri-ticaret-a-s",
+    "oid": "1590"
+  },
+  {
     "name": "AKTİF BANK SUKUK VARLIK KİRALAMA A.Ş.",
     "slug": "2203-aktif-bank-sukuk-varlik-kiralama-a-s",
     "oid": "2203"
+  },
+  {
+    "name": "AKTİF MENKUL DEĞERLER A.Ş.",
+    "slug": "1258-aktif-menkul-degerler-a-s",
+    "oid": "1258"
   },
   {
     "name": "AKTİF PORTFÖY YÖNETİMİ A.Ş.",
@@ -310,7 +395,7 @@
     "oid": "4358"
   },
   {
-    "name": "AFB AKTIF",
+    "name": "AKTİF YATIRIM BANKASI A.Ş.",
     "slug": "2212-aktif-yatirim-bankasi-a-s",
     "oid": "2212"
   },
@@ -320,14 +405,14 @@
     "oid": "6195"
   },
   {
+    "name": "AKYÜREK TÜKETİM ÜRÜNLERİ PAZARLAMA DAĞITIM VE TİCARET A.Ş.",
+    "slug": "1974-akyurek-tuketim-urunleri-pazarlama-dagitim-ve-ticaret-a-s",
+    "oid": "1974"
+  },
+  {
     "name": "ALARKO CARRIER SANAYİ VE TİCARET A.Ş.",
     "slug": "844-alarko-carrier-sanayi-ve-ticaret-a-s",
     "oid": "844"
-  },
-  {
-    "name": "KPMG BAĞIMSIZ DENETİM VE SERBEST MUHASEBECİ MALİ MÜŞAVİRLİK A.Ş.",
-    "slug": "82-kpmg-bagimsiz-denetim-ve-serbest-muhasebeci-mali-musavirlik-a-s",
-    "oid": "82"
   },
   {
     "name": "ALARKO GAYRİMENKUL YATIRIM ORTAKLIĞI A.Ş.",
@@ -340,24 +425,34 @@
     "oid": "846"
   },
   {
-    "name": "BDO DENET BAĞIMSIZ DENETİM VE DANIŞMANLIK A.Ş.",
-    "slug": "103-bdo-denet-bagimsiz-denetim-ve-danismanlik-a-s",
-    "oid": "103"
-  },
-  {
     "name": "ALBARAKA PORTFÖY YÖNETİMİ A.Ş.",
     "slug": "2562-albaraka-portfoy-yonetimi-a-s",
     "oid": "2562"
   },
   {
-    "name": "ALBRK ALK",
+    "name": "ALBARAKA TÜRK KATILIM BANKASI A.Ş.",
     "slug": "2414-albaraka-turk-katilim-bankasi-a-s",
     "oid": "2414"
+  },
+  {
+    "name": "ALBAYRAK HAZIR BETON SANAYİ VE TİCARET A.Ş.",
+    "slug": "6256-albayrak-hazir-beton-sanayi-ve-ticaret-a-s",
+    "oid": "6256"
   },
   {
     "name": "ALCATEL LUCENT TELETAŞ TELEKOMÜNİKASYON A.Ş.",
     "slug": "847-alcatel-lucent-teletas-telekomunikasyon-a-s",
     "oid": "847"
+  },
+  {
+    "name": "ALESTA GİRİŞİM SERMAYESİ YATIRIM ORTAKLIĞI A.Ş.",
+    "slug": "2028-alesta-girisim-sermayesi-yatirim-ortakligi-a-s",
+    "oid": "2028"
+  },
+  {
+    "name": "ALFA MENKUL DEĞERLER A.Ş.",
+    "slug": "1260-alfa-menkul-degerler-a-s",
+    "oid": "1260"
   },
   {
     "name": "ALFA SOLAR ENERJİ SANAYİ VE TİCARET A.Ş.",
@@ -370,14 +465,19 @@
     "oid": "2378"
   },
   {
+    "name": "ALKHAIR CAPITAL MENKUL DEĞERLER A.Ş.",
+    "slug": "1318-alkhair-capital-menkul-degerler-a-s",
+    "oid": "1318"
+  },
+  {
+    "name": "ALKHAIR PORTFÖY YÖNETİMİ A.Ş.",
+    "slug": "2352-alkhair-portfoy-yonetimi-a-s",
+    "oid": "2352"
+  },
+  {
     "name": "ALKİM ALKALİ KİMYA A.Ş.",
     "slug": "849-alkim-alkali-kimya-a-s",
     "oid": "849"
-  },
-  {
-    "name": "RSM TURKEY ULUSLARARASI BAĞIMSIZ DENETİM A.Ş.",
-    "slug": "213-rsm-turkey-uluslararasi-bagimsiz-denetim-a-s",
-    "oid": "213"
   },
   {
     "name": "ALKİM KAĞIT SANAYİ VE TİCARET A.Ş.",
@@ -390,24 +490,14 @@
     "oid": "6125"
   },
   {
-    "name": "NEVADOS BAĞIMSIZ DENETİM A.Ş.",
-    "slug": "5793-nevados-bagimsiz-denetim-a-s",
-    "oid": "5793"
-  },
-  {
     "name": "ALLBATROSS PORTFÖY YÖNETİMİ A.Ş.",
     "slug": "4880-allbatross-portfoy-yonetimi-a-s",
     "oid": "4880"
   },
   {
-    "name": "ALQ ALROS",
+    "name": "ALLBATROSS YATIRIM MENKUL DEĞERLER A.Ş.",
     "slug": "1272-allbatross-yatirim-menkul-degerler-a-s",
     "oid": "1272"
-  },
-  {
-    "name": "GÜRELİ YEMİNLİ MALİ MÜŞAVİRLİK VE BAĞIMSIZ DENETİM HİZMETLERİ A.Ş.",
-    "slug": "119-gureli-yeminli-mali-musavirlik-ve-bagimsiz-denetim-hizmetleri-a-s",
-    "oid": "119"
   },
   {
     "name": "ALLIANZ HAYAT VE EMEKLİLİK A.Ş.",
@@ -420,14 +510,19 @@
     "oid": "1844"
   },
   {
-    "name": "ALNUS ANC",
+    "name": "ALNUS YATIRIM MENKUL DEĞERLER A.Ş.",
     "slug": "1327-alnus-yatirim-menkul-degerler-a-s",
     "oid": "1327"
   },
   {
-    "name": "ANY PARTNERS BAĞIMSIZ DENETİM A.Ş.",
-    "slug": "5757-any-partners-bagimsiz-denetim-a-s",
-    "oid": "5757"
+    "name": "ALTAY YATIRIM MENKUL DEĞERLER A.Ş.",
+    "slug": "1261-altay-yatirim-menkul-degerler-a-s",
+    "oid": "1261"
+  },
+  {
+    "name": "ALTERNATİF BAĞIMSIZ DENETİM VE YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "136-alternatif-bagimsiz-denetim-ve-yeminli-mali-musavirlik-a-s",
+    "oid": "136"
   },
   {
     "name": "ALTERNATİF FİNANSAL KİRALAMA A.Ş.",
@@ -440,7 +535,17 @@
     "oid": "1262"
   },
   {
-    "name": "ALNTF ANF",
+    "name": "ALTERNATİF PORTFÖY YÖNETİMİ A.Ş. (FAALİYET İZNİ İPTAL EDİLMİŞTİR)",
+    "slug": "2351-alternatif-portfoy-yonetimi-a-s-faaliyet-izni-iptal-edilmistir",
+    "oid": "2351"
+  },
+  {
+    "name": "ALTERNATİF YATIRIM ORTAKLIĞI A.Ş.",
+    "slug": "851-alternatif-yatirim-ortakligi-a-s",
+    "oid": "851"
+  },
+  {
+    "name": "ALTERNATİFBANK A.Ş.",
     "slug": "2430-alternatifbank-a-s",
     "oid": "2430"
   },
@@ -470,19 +575,29 @@
     "oid": "5935"
   },
   {
-    "name": "NOTE OFFİCE ULUSLARARASI BAĞIMSIZ DENETİM DANIŞMANLIK A.Ş.",
-    "slug": "4841-note-office-uluslararasi-bagimsiz-denetim-danismanlik-a-s",
-    "oid": "4841"
-  },
-  {
     "name": "ANADOLU ANONİM TÜRK SİGORTA ŞİRKETİ",
     "slug": "856-anadolu-anonim-turk-sigorta-sirketi",
     "oid": "856"
   },
   {
+    "name": "ANADOLU CAM SANAYİİ A.Ş.",
+    "slug": "857-anadolu-cam-sanayii-a-s",
+    "oid": "857"
+  },
+  {
     "name": "ANADOLU EFES BİRACILIK VE MALT SANAYİİ A.Ş.",
     "slug": "858-anadolu-efes-biracilik-ve-malt-sanayii-a-s",
     "oid": "858"
+  },
+  {
+    "name": "ANADOLU FİNANSAL KİRALAMA A.Ş.",
+    "slug": "2639-anadolu-finansal-kiralama-a-s",
+    "oid": "2639"
+  },
+  {
+    "name": "ANADOLU GİRİŞİM SERMAYESİ YATIRIM ORTAKLIĞI A.Ş.",
+    "slug": "2027-anadolu-girisim-sermayesi-yatirim-ortakligi-a-s",
+    "oid": "2027"
   },
   {
     "name": "ANADOLU HAYAT EMEKLİLİK A.Ş.",
@@ -505,14 +620,24 @@
     "oid": "2010"
   },
   {
+    "name": "ANALİTİK GÖZLEM BAĞIMSIZ DENETİM SMMM A.Ş.",
+    "slug": "198-analitik-gozlem-bagimsiz-denetim-smmm-a-s",
+    "oid": "198"
+  },
+  {
+    "name": "ANALİZ BAĞIMSIZ DENETİM VE DANIŞMANLIK A.Ş.",
+    "slug": "85-analiz-bagimsiz-denetim-ve-danismanlik-a-s",
+    "oid": "85"
+  },
+  {
+    "name": "ANALİZ FAKTORİNG A.Ş.",
+    "slug": "2192-analiz-faktoring-a-s",
+    "oid": "2192"
+  },
+  {
     "name": "ANATOLIA GAYRİMENKUL VE GİRİŞİM SERMAYESİ PORTFÖY YÖNETİMİ A.Ş.",
     "slug": "6075-anatolia-gayrimenkul-ve-girisim-sermayesi-portfoy-yonetimi-a-s",
     "oid": "6075"
-  },
-  {
-    "name": "VİZYON GRUP BAĞIMSIZ DENETİM.A.Ş.",
-    "slug": "4660-vizyon-grup-bagimsiz-denetim-a-s",
-    "oid": "4660"
   },
   {
     "name": "ANATOLİA TANI VE BİYOTEKNOLOJİ ÜRÜNLERİ ARAŞTIRMA GELİŞTİRME SANAYİ VE TİCARET A.Ş.",
@@ -520,14 +645,19 @@
     "oid": "5424"
   },
   {
+    "name": "AND BAĞIMSIZ DENETİM VE DANIŞMANLIK ANONİM ŞİRKETİ",
+    "slug": "4700-and-bagimsiz-denetim-ve-danismanlik-anonim-sirketi",
+    "oid": "4700"
+  },
+  {
     "name": "ANEL ELEKTRİK PROJE TAAHHÜT VE TİCARET A.Ş.",
     "slug": "1475-anel-elektrik-proje-taahhut-ve-ticaret-a-s",
     "oid": "1475"
   },
   {
-    "name": "CNS BAĞIMSIZ DENETİM A.Ş.",
-    "slug": "5137-cns-bagimsiz-denetim-a-s",
-    "oid": "5137"
+    "name": "ANEL TELEKOMÜNİKASYON ELEKTRONİK SİSTEMLERİ SANAYİ VE TİCARET A.Ş.",
+    "slug": "1408-anel-telekomunikasyon-elektronik-sistemleri-sanayi-ve-ticaret-a-s",
+    "oid": "1408"
   },
   {
     "name": "ANIL YEMİNLİ MALİ MÜŞAVİRLİK VE BAĞIMSIZ DENETİM A.Ş.",
@@ -535,19 +665,44 @@
     "oid": "199"
   },
   {
+    "name": "ANY PARTNERS BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "5757-any-partners-bagimsiz-denetim-a-s",
+    "oid": "5757"
+  },
+  {
+    "name": "AR TARIM ORGANİK GIDA A.Ş.",
+    "slug": "1609-ar-tarim-organik-gida-a-s",
+    "oid": "1609"
+  },
+  {
+    "name": "ARAP TÜRK BANKASI A.Ş.",
+    "slug": "2030-arap-turk-bankasi-a-s",
+    "oid": "2030"
+  },
+  {
+    "name": "ARAT TEKSTİL SANAYİ VE TİCARET A.Ş.",
+    "slug": "862-arat-tekstil-sanayi-ve-ticaret-a-s",
+    "oid": "862"
+  },
+  {
+    "name": "ARBUL ENTEGRE TEKSTİL İŞLETMELERİ A.Ş.",
+    "slug": "2245-arbul-entegre-tekstil-isletmeleri-a-s",
+    "oid": "2245"
+  },
+  {
     "name": "ARÇELİK A.Ş.",
     "slug": "863-arcelik-a-s",
     "oid": "863"
   },
   {
-    "name": "GÜNEY BAĞIMSIZ DENETİM VE SERBEST MUHASEBECİ MALİ MÜŞAVİRLİK A.Ş.",
-    "slug": "118-guney-bagimsiz-denetim-ve-serbest-muhasebeci-mali-musavirlik-a-s",
-    "oid": "118"
-  },
-  {
     "name": "ARD GRUP BİLİŞİM TEKNOLOJİLERİ A.Ş.",
     "slug": "4967-ard-grup-bilisim-teknolojileri-a-s",
     "oid": "4967"
+  },
+  {
+    "name": "ARDEN BAĞIMSIZ DENETİM DANIŞMANLIK HİZMETLERİ A.Ş.",
+    "slug": "86-arden-bagimsiz-denetim-danismanlik-hizmetleri-a-s",
+    "oid": "86"
   },
   {
     "name": "ARENA BİLGİSAYAR SANAYİ VE TİCARET A.Ş.",
@@ -560,19 +715,9 @@
     "oid": "6170"
   },
   {
-    "name": "TİTANYUM BAĞIMSIZ DENETİM HİZMETLERİ A.Ş.",
-    "slug": "6024-titanyum-bagimsiz-denetim-hizmetleri-a-s",
-    "oid": "6024"
-  },
-  {
     "name": "ARGEUS GAYRİMENKUL VE GİRİŞİM SERMAYESİ PORTFÖY YÖNETİMİ A.Ş.",
     "slug": "5954-argeus-gayrimenkul-ve-girisim-sermayesi-portfoy-yonetimi-a-s",
     "oid": "5954"
-  },
-  {
-    "name": "YEDİTEPE BAĞIMSIZ DENETİM VE YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
-    "slug": "216-yeditepe-bagimsiz-denetim-ve-yeminli-mali-musavirlik-a-s",
-    "oid": "216"
   },
   {
     "name": "ARILAR BAĞIMSIZ DENETİM VE YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
@@ -590,29 +735,14 @@
     "oid": "2169"
   },
   {
-    "name": "CONSULTA BAĞIMSIZ DENETİM VE Y.M.M. A.Ş.",
-    "slug": "223-consulta-bagimsiz-denetim-ve-y-m-m-a-s",
-    "oid": "223"
-  },
-  {
     "name": "ARSAN HOLDİNG A.Ş.",
     "slug": "865-arsan-holding-a-s",
     "oid": "865"
   },
   {
-    "name": "ERCİYES YEMİNLİ MALİ MÜŞAVİRLİK VE BAĞIMSIZ DENETİM A.Ş.",
-    "slug": "209-erciyes-yeminli-mali-musavirlik-ve-bagimsiz-denetim-a-s",
-    "oid": "209"
-  },
-  {
     "name": "ARSAN VARLIK YÖNETİM A.Ş.",
     "slug": "4876-arsan-varlik-yonetim-a-s",
     "oid": "4876"
-  },
-  {
-    "name": "HSY DANIŞMANLIK VE BAĞIMSIZ DENETİM A.Ş.",
-    "slug": "194-hsy-danismanlik-ve-bagimsiz-denetim-a-s",
-    "oid": "194"
   },
   {
     "name": "ARSEN BAĞIMSIZ DENETİM HİZMETLERİ A.Ş.",
@@ -623,6 +753,26 @@
     "name": "ARTEMİS HALI A.Ş.",
     "slug": "5936-artemis-hali-a-s",
     "oid": "5936"
+  },
+  {
+    "name": "ARTI DEĞER ULUSLARARASI BAĞIMSIZ DENETİM VE YMM A.Ş.",
+    "slug": "187-arti-deger-uluslararasi-bagimsiz-denetim-ve-ymm-a-s",
+    "oid": "187"
+  },
+  {
+    "name": "ARTI GÖRSEL SANATLAR VE TURİZM A.Ş.",
+    "slug": "1266-arti-gorsel-sanatlar-ve-turizm-a-s",
+    "oid": "1266"
+  },
+  {
+    "name": "ARTI YATIRIM HOLDİNG A.Ş.",
+    "slug": "1426-arti-yatirim-holding-a-s",
+    "oid": "1426"
+  },
+  {
+    "name": "ARTI YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "88-arti-yeminli-mali-musavirlik-a-s",
+    "oid": "88"
   },
   {
     "name": "ARZ GAYRİMENKUL VE GİRİŞİM SERMAYESİ PORTFÖY YÖNETİMİ A.Ş.",
@@ -640,6 +790,11 @@
     "oid": "191"
   },
   {
+    "name": "ASAŞ ALÜMİNYUM SANAYİ VE TİCARET A.Ş.",
+    "slug": "5888-asas-aluminyum-sanayi-ve-ticaret-a-s",
+    "oid": "5888"
+  },
+  {
     "name": "ASCE GAYRİMENKUL YATIRIM ORTAKLIĞI A.Ş.",
     "slug": "4687-asce-gayrimenkul-yatirim-ortakligi-a-s",
     "oid": "4687"
@@ -650,14 +805,24 @@
     "oid": "866"
   },
   {
+    "name": "ASHMORE PORTFÖY YÖNETİMİ A.Ş.",
+    "slug": "2298-ashmore-portfoy-yonetimi-a-s",
+    "oid": "2298"
+  },
+  {
+    "name": "ASİL ÇELİK SANAYİ VE TİCARET A.Ş.",
+    "slug": "1586-asil-celik-sanayi-ve-ticaret-a-s",
+    "oid": "1586"
+  },
+  {
+    "name": "ASLAN ÇİMENTO A.Ş.",
+    "slug": "1014-aslan-cimento-a-s",
+    "oid": "1014"
+  },
+  {
     "name": "ASREM GAYRİMENKUL VE GİRİŞİM SERMAYESİ PORTFÖY YÖNETİMİ A.Ş.",
     "slug": "6144-asrem-gayrimenkul-ve-girisim-sermayesi-portfoy-yonetimi-a-s",
     "oid": "6144"
-  },
-  {
-    "name": "EDİT BAĞIMSIZ DENETİM HİZMETLERİ A.Ş.",
-    "slug": "4930-edit-bagimsiz-denetim-hizmetleri-a-s",
-    "oid": "4930"
   },
   {
     "name": "ASTOR ENERJİ A.Ş.",
@@ -670,9 +835,24 @@
     "oid": "2299"
   },
   {
-    "name": "ATA ULUSLARARASI BAĞIMSIZ DENETİM VE SMMM A.Ş.",
-    "slug": "89-ata-uluslararasi-bagimsiz-denetim-ve-smmm-a-s",
-    "oid": "89"
+    "name": "ASYA GİRİŞİM SERMAYESİ YATIRIM ORTAKLIĞI A.Ş.",
+    "slug": "2232-asya-girisim-sermayesi-yatirim-ortakligi-a-s",
+    "oid": "2232"
+  },
+  {
+    "name": "ASYA KATILIM BANKASI A.Ş.",
+    "slug": "1423-asya-katilim-bankasi-a-s",
+    "oid": "1423"
+  },
+  {
+    "name": "ASYA MEYVE SUYU VE GIDA SANAYİ A.Ş.",
+    "slug": "1699-asya-meyve-suyu-ve-gida-sanayi-a-s",
+    "oid": "1699"
+  },
+  {
+    "name": "ASYA VARLIK KİRALAMA A.Ş.",
+    "slug": "1703-asya-varlik-kiralama-a-s",
+    "oid": "1703"
   },
   {
     "name": "ATA GAYRİMENKUL YATIRIM ORTAKLIĞI A.Ş.",
@@ -690,14 +870,24 @@
     "oid": "6194"
   },
   {
+    "name": "ATA ULUSLARARASI BAĞIMSIZ DENETİM VE SMMM A.Ş.",
+    "slug": "89-ata-uluslararasi-bagimsiz-denetim-ve-smmm-a-s",
+    "oid": "89"
+  },
+  {
     "name": "ATA VARLIK KİRALAMA A.Ş.",
     "slug": "6073-ata-varlik-kiralama-a-s",
     "oid": "6073"
   },
   {
-    "name": "ATA ATAYM",
+    "name": "ATA YATIRIM MENKUL KIYMETLER A.Ş.",
     "slug": "1268-ata-yatirim-menkul-kiymetler-a-s",
     "oid": "1268"
+  },
+  {
+    "name": "ATAÇ İNŞAAT VE SANAYİ A.Ş.",
+    "slug": "1551-atac-insaat-ve-sanayi-a-s",
+    "oid": "1551"
   },
   {
     "name": "ATAKEY PATATES GIDA SANAYİ VE TİCARET A.Ş.",
@@ -710,14 +900,24 @@
     "oid": "868"
   },
   {
+    "name": "ATAONLINE MENKUL KIYMETLER A.Ş.",
+    "slug": "1269-ataonline-menkul-kiymetler-a-s",
+    "oid": "1269"
+  },
+  {
+    "name": "ATIG YATIRIM MENKUL DEĞERLER A.Ş.",
+    "slug": "1612-atig-yatirim-menkul-degerler-a-s",
+    "oid": "1612"
+  },
+  {
     "name": "ATILIM FAKTORİNG A.Ş.",
     "slug": "2088-atilim-faktoring-a-s",
     "oid": "2088"
   },
   {
-    "name": "HLB SAYGIN BAĞIMSIZ DENETİM A.Ş.",
-    "slug": "211-hlb-saygin-bagimsiz-denetim-a-s",
-    "oid": "211"
+    "name": "ATLANTİK PETROL ÜRÜNLERİ TİCARET VE SANAYİ A.Ş.",
+    "slug": "1686-atlantik-petrol-urunleri-ticaret-ve-sanayi-a-s",
+    "oid": "1686"
   },
   {
     "name": "ATLANTİS YATIRIM HOLDİNG A.Ş.",
@@ -750,14 +950,9 @@
     "oid": "2349"
   },
   {
-    "name": "İTİMAT BAĞIMSIZ DENETİM A.Ş.",
-    "slug": "125-itimat-bagimsiz-denetim-a-s",
-    "oid": "125"
-  },
-  {
-    "name": "A.V.O.D. KURUTULMUŞ GIDA VE TARIM ÜRÜNLERİ SANAYİ TİCARET A.Ş.",
-    "slug": "1564-a-v-o-d-kurutulmus-gida-ve-tarim-urunleri-sanayi-ticaret-a-s",
-    "oid": "1564"
+    "name": "AVRASYA BAĞIMSIZ DENETİM ve YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "184-avrasya-bagimsiz-denetim-ve-yeminli-mali-musavirlik-a-s",
+    "oid": "184"
   },
   {
     "name": "AVRASYA GAYRİMENKUL YATIRIM ORTAKLIĞI A.Ş.",
@@ -768,6 +963,11 @@
     "name": "AVRASYA PETROL VE TURİSTİK TESİSLER YATIRIMLAR A.Ş.",
     "slug": "1454-avrasya-petrol-ve-turistik-tesisler-yatirimlar-a-s",
     "oid": "1454"
+  },
+  {
+    "name": "AVRASYA TERMİNAL İŞLETMELERİ A.Ş.",
+    "slug": "1592-avrasya-terminal-isletmeleri-a-s",
+    "oid": "1592"
   },
   {
     "name": "AVRUPA YATIRIM HOLDİNG A.Ş.",
@@ -785,9 +985,19 @@
     "oid": "1805"
   },
   {
+    "name": "AYBORSA MENKUL DEĞERLER TİCARETİ A.Ş.",
+    "slug": "1270-ayborsa-menkul-degerler-ticareti-a-s",
+    "oid": "1270"
+  },
+  {
     "name": "AYDEM YENİLENEBİLİR ENERJİ A.Ş.",
     "slug": "5317-aydem-yenilenebilir-enerji-a-s",
     "oid": "5317"
+  },
+  {
+    "name": "AYDOĞAN TURİZM TAAHHÜT TİCARET VE SANAYİ A.Ş.",
+    "slug": "1689-aydogan-turizm-taahhut-ticaret-ve-sanayi-a-s",
+    "oid": "1689"
   },
   {
     "name": "AYEN ENERJİ A.Ş.",
@@ -805,14 +1015,39 @@
     "oid": "873"
   },
   {
+    "name": "AYK BAĞIMSIZ DIŞ DENETİM VE DANIŞMANLIK A.Ş.",
+    "slug": "192-ayk-bagimsiz-dis-denetim-ve-danismanlik-a-s",
+    "oid": "192"
+  },
+  {
     "name": "AYMA PARTNERS BAĞIMSIZ DENETİM A.Ş.",
     "slug": "6070-ayma-partners-bagimsiz-denetim-a-s",
     "oid": "6070"
   },
   {
+    "name": "AYNES GIDA SANAYİ VE TİCARET A.Ş.",
+    "slug": "2231-aynes-gida-sanayi-ve-ticaret-a-s",
+    "oid": "2231"
+  },
+  {
+    "name": "AYTEMİZ AKARYAKIT DAĞITIM A.Ş.",
+    "slug": "3499-aytemiz-akaryakit-dagitim-a-s",
+    "oid": "3499"
+  },
+  {
     "name": "AYTEMİZ YATIRIM BANKASI A.Ş.",
     "slug": "6137-aytemiz-yatirim-bankasi-a-s",
     "oid": "6137"
+  },
+  {
+    "name": "AZ NOTUS PORTFÖY YÖNETİMİ A.Ş.",
+    "slug": "2353-az-notus-portfoy-yonetimi-a-s",
+    "oid": "2353"
+  },
+  {
+    "name": "AZİMUT BOSPHORUS CAPİTAL PORTFÖY YÖNETİMİ A.Ş.",
+    "slug": "2345-azimut-bosphorus-capital-portfoy-yonetimi-a-s",
+    "oid": "2345"
   },
   {
     "name": "AZİMUT PORTFÖY YÖNETİMİ A.Ş.",
@@ -825,29 +1060,9 @@
     "oid": "5649"
   },
   {
-    "name": "A1 BAĞIMSIZ DENETİM A.Ş.",
-    "slug": "77-a1-bagimsiz-denetim-a-s",
-    "oid": "77"
-  },
-  {
-    "name": "A1 CAPİTAL PORTFÖY YÖNETİMİ A.Ş.",
-    "slug": "6069-a1-capital-portfoy-yonetimi-a-s",
-    "oid": "6069"
-  },
-  {
-    "name": "PKF ADAY BAĞIMSIZ DENETİM A.Ş.",
-    "slug": "227-pkf-aday-bagimsiz-denetim-a-s",
-    "oid": "227"
-  },
-  {
-    "name": "A1CAP ACP",
-    "slug": "1303-a1-capital-yatirim-menkul-degerler-a-s",
-    "oid": "1303"
-  },
-  {
-    "name": "A1 YENİLENEBİLİR ENERJİ ÜRETİM A.Ş.",
-    "slug": "5376-a1-yenilenebilir-enerji-uretim-a-s",
-    "oid": "5376"
+    "name": "B.A.B.MENKUL DEĞERLER TİCARETİ A.Ş.",
+    "slug": "1271-b-a-b-menkul-degerler-ticareti-a-s",
+    "oid": "1271"
   },
   {
     "name": "BAGFAŞ BANDIRMA GÜBRE FABRİKALARI A.Ş.",
@@ -865,6 +1080,16 @@
     "oid": "875"
   },
   {
+    "name": "BAKANLAR MEDYA A.Ş.",
+    "slug": "1956-bakanlar-medya-a-s",
+    "oid": "1956"
+  },
+  {
+    "name": "BAKIRCI GAYRİMENKUL YATIRIM ORTAKLIĞI A.Ş.",
+    "slug": "6279-bakirci-gayrimenkul-yatirim-ortakligi-a-s",
+    "oid": "6279"
+  },
+  {
     "name": "BAKIŞ YEMİNLİ MALİ MÜŞAVİRLİK VE BAĞIMSIZ DENETİM A.Ş.",
     "slug": "175-bakis-yeminli-mali-musavirlik-ve-bagimsiz-denetim-a-s",
     "oid": "175"
@@ -880,12 +1105,17 @@
     "oid": "5614"
   },
   {
+    "name": "BAN-DEN BAĞIMSIZ DENETİM HİZMETLERİ A.Ş.",
+    "slug": "91-ban-den-bagimsiz-denetim-hizmetleri-a-s",
+    "oid": "91"
+  },
+  {
     "name": "BANK OF AMERICA YATIRIM BANK A.Ş.",
     "slug": "2011-bank-of-america-yatirim-bank-a-s",
     "oid": "2011"
   },
   {
-    "name": "BPOZ POZ",
+    "name": "BANKPOZİTİF KREDİ VE KALKINMA BANKASI A.Ş.",
     "slug": "1523-bankpozitif-kredi-ve-kalkinma-bankasi-a-s",
     "oid": "1523"
   },
@@ -893,11 +1123,6 @@
     "name": "BANTAŞ BANDIRMA AMBALAJ SANAYİ VE TİCARET A.Ş.",
     "slug": "2468-bantas-bandirma-ambalaj-sanayi-ve-ticaret-a-s",
     "oid": "2468"
-  },
-  {
-    "name": "ULUSLARARASI BAĞIMSIZ DENETİM A.Ş.",
-    "slug": "233-uluslararasi-bagimsiz-denetim-a-s",
-    "oid": "233"
   },
   {
     "name": "BANVİT BANDIRMA VİTAMİNLİ YEM SANAYİ A.Ş.",
@@ -915,19 +1140,14 @@
     "oid": "5567"
   },
   {
-    "name": "GÖRÜŞ BAĞIMSIZ DENETİM VE YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
-    "slug": "5344-gorus-bagimsiz-denetim-ve-yeminli-mali-musavirlik-a-s",
-    "oid": "5344"
-  },
-  {
-    "name": "BAŞER FİNANS FAKTORİNG A.Ş.",
-    "slug": "2270-baser-finans-faktoring-a-s",
-    "oid": "2270"
-  },
-  {
     "name": "BAŞKENT DOĞALGAZ DAĞITIM GAYRİMENKUL YATIRIM ORTAKLIĞI A.Ş.",
     "slug": "2840-baskent-dogalgaz-dagitim-gayrimenkul-yatirim-ortakligi-a-s",
     "oid": "2840"
+  },
+  {
+    "name": "BAŞKENT ELEKTRİK DAĞITIM A.Ş.",
+    "slug": "2103-baskent-elektrik-dagitim-a-s",
+    "oid": "2103"
   },
   {
     "name": "BAŞKENT MENKUL DEĞERLER A.Ş.",
@@ -940,18 +1160,28 @@
     "oid": "1582"
   },
   {
+    "name": "BAŞYEM BAŞMAKÇI YEM SANAYİ VE TİCARET A.Ş.",
+    "slug": "1676-basyem-basmakci-yem-sanayi-ve-ticaret-a-s",
+    "oid": "1676"
+  },
+  {
     "name": "BATI EGE GAYRİMENKUL YATIRIM ORTAKLIĞI A.Ş.",
     "slug": "5906-bati-ege-gayrimenkul-yatirim-ortakligi-a-s",
     "oid": "5906"
   },
   {
-    "name": "BATIÇİM BATI ANADOLU ÇİMENTO SANAYİİ A.Ş.",
-    "slug": "877-baticim-bati-anadolu-cimento-sanayii-a-s",
+    "name": "BATI YEMİNLİ MALİ MÜŞAVİRLİK VE BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "189-bati-yeminli-mali-musavirlik-ve-bagimsiz-denetim-a-s",
+    "oid": "189"
+  },
+  {
+    "name": "BATIÇİM BATI ANADOLU SANAYİ VE TİCARET A.Ş.",
+    "slug": "877-baticim-bati-anadolu-sanayi-ve-ticaret-a-s",
     "oid": "877"
   },
   {
-    "name": "BATISÖKE SÖKE ÇİMENTO SANAYİİ T.A.Ş.",
-    "slug": "878-batisoke-soke-cimento-sanayii-t-a-s",
+    "name": "BATIÇİM ÇİMENTO SANAYİ A.Ş.",
+    "slug": "878-baticim-cimento-sanayi-a-s",
     "oid": "878"
   },
   {
@@ -960,9 +1190,24 @@
     "oid": "5853"
   },
   {
+    "name": "BAYLAN BAĞIMSIZ DENETİM VE SERBEST MUHASEBECİ MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "93-baylan-bagimsiz-denetim-ve-serbest-muhasebeci-mali-musavirlik-a-s",
+    "oid": "93"
+  },
+  {
     "name": "BAYRAK EBT TABAN SANAYİ VE TİCARET A.Ş.",
     "slug": "5054-bayrak-ebt-taban-sanayi-ve-ticaret-a-s",
     "oid": "5054"
+  },
+  {
+    "name": "BBD BALANS BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "90-bbd-balans-bagimsiz-denetim-a-s",
+    "oid": "90"
+  },
+  {
+    "name": "BD BAĞIMSIZ DENETİM VE YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "200-bd-bagimsiz-denetim-ve-yeminli-mali-musavirlik-a-s",
+    "oid": "200"
   },
   {
     "name": "BDD BAĞIMSIZ DENETİM VE DANIŞMANLIK A.Ş.",
@@ -970,14 +1215,19 @@
     "oid": "201"
   },
   {
+    "name": "BDO DENET BAĞIMSIZ DENETİM VE DANIŞMANLIK A.Ş.",
+    "slug": "103-bdo-denet-bagimsiz-denetim-ve-danismanlik-a-s",
+    "oid": "103"
+  },
+  {
     "name": "BERA HOLDİNG A.Ş.",
     "slug": "1693-bera-holding-a-s",
     "oid": "1693"
   },
   {
-    "name": "İRFAN BAĞIMSIZ DENETİM VE YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
-    "slug": "124-irfan-bagimsiz-denetim-ve-yeminli-mali-musavirlik-a-s",
-    "oid": "124"
+    "name": "BERDAN TEKSTİL SANAYİ VE TİCARET A.Ş.",
+    "slug": "880-berdan-tekstil-sanayi-ve-ticaret-a-s",
+    "oid": "880"
   },
   {
     "name": "BEREKET EMEKLİLİK VE HAYAT A.Ş.",
@@ -1010,14 +1260,39 @@
     "oid": "881"
   },
   {
+    "name": "BETA ENERJİ VE TEKNOLOJİ A.Ş.",
+    "slug": "5345-beta-enerji-ve-teknoloji-a-s",
+    "oid": "5345"
+  },
+  {
+    "name": "BEWEN ENERJİ A.Ş.",
+    "slug": "4992-bewen-enerji-a-s",
+    "oid": "4992"
+  },
+  {
     "name": "BEYAZ FİLO OTO KİRALAMA A.Ş.",
     "slug": "1518-beyaz-filo-oto-kiralama-a-s",
     "oid": "1518"
   },
   {
+    "name": "BEYKOZ DOĞA ÖĞRETİM YATIRIM VE TİCARET A.Ş.",
+    "slug": "2296-beykoz-doga-ogretim-yatirim-ve-ticaret-a-s",
+    "oid": "2296"
+  },
+  {
     "name": "BEYLERBEYİ PORTFÖY YÖNETİMİ A.Ş.",
     "slug": "6072-beylerbeyi-portfoy-yonetimi-a-s",
     "oid": "6072"
+  },
+  {
+    "name": "BEYMEN MAĞAZACILIK A.Ş.",
+    "slug": "2696-beymen-magazacilik-a-s",
+    "oid": "2696"
+  },
+  {
+    "name": "BEYMEN PERAKENDE VE TEKSTİL YATIRIMLARI A.Ş.",
+    "slug": "854-beymen-perakende-ve-tekstil-yatirimlari-a-s",
+    "oid": "854"
   },
   {
     "name": "BİEN YAPI ÜRÜNLERİ SANAYİ TURİZM VE TİCARET A.Ş.",
@@ -1028,6 +1303,16 @@
     "name": "BİG MEDYA TEKNOLOJİ A.Ş.",
     "slug": "918-big-medya-teknoloji-a-s",
     "oid": "918"
+  },
+  {
+    "name": "BİLGİ BAĞIMSIZ DENETİM VE YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "94-bilgi-bagimsiz-denetim-ve-yeminli-mali-musavirlik-a-s",
+    "oid": "94"
+  },
+  {
+    "name": "BİLGİLİ BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "202-bilgili-bagimsiz-denetim-a-s",
+    "oid": "202"
   },
   {
     "name": "BİLGİN GLOBAL BAĞIMSIZ DENETİM A.Ş.",
@@ -1050,6 +1335,11 @@
     "oid": "1406"
   },
   {
+    "name": "BİMEKS BİLGİ İŞLEM VE DIŞ TİCARET A.Ş.",
+    "slug": "1520-bimeks-bilgi-islem-ve-dis-ticaret-a-s",
+    "oid": "1520"
+  },
+  {
     "name": "BİN ULAŞIM VE AKILLI ŞEHİR TEKNOLOJİLERİ A.Ş.",
     "slug": "6026-bin-ulasim-ve-akilli-sehir-teknolojileri-a-s",
     "oid": "6026"
@@ -1058,6 +1348,11 @@
     "name": "BİOTREND ÇEVRE VE ENERJİ YATIRIMLARI A.Ş.",
     "slug": "5289-biotrend-cevre-ve-enerji-yatirimlari-a-s",
     "oid": "5289"
+  },
+  {
+    "name": "BİRİKİM BAĞIMSIZ DENETİM VE MALİ DANIŞMANLIK A.Ş.",
+    "slug": "95-birikim-bagimsiz-denetim-ve-mali-danismanlik-a-s",
+    "oid": "95"
   },
   {
     "name": "BİRİKİM VARLIK YÖNETİM A.Ş.",
@@ -1070,9 +1365,9 @@
     "oid": "1493"
   },
   {
-    "name": "C&Ç BAĞIMSIZ DENETİM VE YÖNETİM DANIŞMANLIĞI A.Ş.",
-    "slug": "203-c-c-bagimsiz-denetim-ve-yonetim-danismanligi-a-s",
-    "oid": "203"
+    "name": "BİRLEŞİK EKOL BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "4334-birlesik-ekol-bagimsiz-denetim-a-s",
+    "oid": "4334"
   },
   {
     "name": "BİRLEŞİK FON BANKASI A.Ş.",
@@ -1110,9 +1405,19 @@
     "oid": "882"
   },
   {
+    "name": "BİS ENERJİ ELEKTRİK ÜRETİM A.Ş.",
+    "slug": "2382-bis-enerji-elektrik-uretim-a-s",
+    "oid": "2382"
+  },
+  {
     "name": "BİZİM MENKUL DEĞERLER A.Ş.",
     "slug": "1276-bizim-menkul-degerler-a-s",
     "oid": "1276"
+  },
+  {
+    "name": "BİZİM PORTFÖY YÖNETİMİ A.Ş.",
+    "slug": "2479-bizim-portfoy-yonetimi-a-s",
+    "oid": "2479"
   },
   {
     "name": "BİZİM TOPTAN SATIŞ MAĞAZALARI A.Ş.",
@@ -1120,19 +1425,19 @@
     "oid": "1536"
   },
   {
+    "name": "BİZİM VARLIK KİRALAMA A.Ş.",
+    "slug": "6239-bizim-varlik-kiralama-a-s",
+    "oid": "6239"
+  },
+  {
+    "name": "BKR KAYNAK YEMİNLİ MALİ MÜŞAVİRLİK VE BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "98-bkr-kaynak-yeminli-mali-musavirlik-ve-bagimsiz-denetim-a-s",
+    "oid": "98"
+  },
+  {
     "name": "BLUME METAL KİMYA A.Ş.",
     "slug": "1032-blume-metal-kimya-a-s",
     "oid": "1032"
-  },
-  {
-    "name": "VENTERA BAĞIMSIZ DENETİM A.Ş.",
-    "slug": "5805-ventera-bagimsiz-denetim-a-s",
-    "oid": "5805"
-  },
-  {
-    "name": "BLUPAY MENKUL DEĞERLER A.Ş.",
-    "slug": "5931-blupay-menkul-degerler-a-s",
-    "oid": "5931"
   },
   {
     "name": "BM BAĞIMSIZ DENETİM A.Ş.",
@@ -1170,14 +1475,24 @@
     "oid": "5812"
   },
   {
+    "name": "BOĞAZİÇİ BAĞIMSIZ DIŞ DENETİM A.Ş.",
+    "slug": "99-bogazici-bagimsiz-dis-denetim-a-s",
+    "oid": "99"
+  },
+  {
     "name": "BOĞAZİÇİ BETON SANAYİ VE TİCARET A.Ş.",
     "slug": "5320-bogazici-beton-sanayi-ve-ticaret-a-s",
     "oid": "5320"
   },
   {
-    "name": "REANDA AREN BAĞIMSIZ DENETİM VE SMMM A.Ş.",
-    "slug": "240-reanda-aren-bagimsiz-denetim-ve-smmm-a-s",
-    "oid": "240"
+    "name": "BOĞAZİÇİ VARLIK YÖNETİM A.Ş.",
+    "slug": "5067-bogazici-varlik-yonetim-a-s",
+    "oid": "5067"
+  },
+  {
+    "name": "BOLU ÇİMENTO SANAYİİ A.Ş.",
+    "slug": "884-bolu-cimento-sanayii-a-s",
+    "oid": "884"
   },
   {
     "name": "BOR ŞEKER A.Ş.",
@@ -1188,6 +1503,16 @@
     "name": "BORLEASE OTOMOTİV A.Ş.",
     "slug": "5878-borlease-otomotiv-a-s",
     "oid": "5878"
+  },
+  {
+    "name": "BORSA İSTANBUL A.Ş.",
+    "slug": "49-borsa-istanbul-a-s",
+    "oid": "49"
+  },
+  {
+    "name": "BORSA İSTANBUL BISTECH DEVRE KESİCİ UYGULAMASI",
+    "slug": "50-borsa-istanbul-bistech-devre-kesici-uygulamasi",
+    "oid": "50"
   },
   {
     "name": "BORUSAN BİRLEŞİK BORU FABRİKALARI SANAYİ VE TİCARET A.Ş.",
@@ -1210,9 +1535,24 @@
     "oid": "889"
   },
   {
+    "name": "BOYASAN TEKSTİL SANAYİ VE TİCARET A.Ş.",
+    "slug": "890-boyasan-tekstil-sanayi-ve-ticaret-a-s",
+    "oid": "890"
+  },
+  {
+    "name": "BOYNER BÜYÜK MAĞAZACILIK A.Ş.",
+    "slug": "900-boyner-buyuk-magazacilik-a-s",
+    "oid": "900"
+  },
+  {
     "name": "BRİSA BRİDGESTONE SABANCI LASTİK SANAYİ VE TİCARET A.Ş.",
     "slug": "891-brisa-bridgestone-sabanci-lastik-sanayi-ve-ticaret-a-s",
     "oid": "891"
+  },
+  {
+    "name": "BSH EV ALETLERİ SANAYİ VE TİCARET A.Ş.",
+    "slug": "892-bsh-ev-aletleri-sanayi-ve-ticaret-a-s",
+    "oid": "892"
   },
   {
     "name": "BTCTURK PORTFÖY YÖNETİMİ A.Ş.",
@@ -1230,17 +1570,12 @@
     "oid": "5458"
   },
   {
-    "name": "MİTRA BAĞIMSIZ DENETİM A.Ş.",
-    "slug": "238-mitra-bagimsiz-denetim-a-s",
-    "oid": "238"
-  },
-  {
     "name": "BULLS PORTFÖY YÖNETİMİ A.Ş.",
     "slug": "6046-bulls-portfoy-yonetimi-a-s",
     "oid": "6046"
   },
   {
-    "name": "BLS BLSMD",
+    "name": "BULLS YATIRIM MENKUL DEĞERLER A.Ş.",
     "slug": "1343-bulls-yatirim-menkul-degerler-a-s",
     "oid": "1343"
   },
@@ -1250,17 +1585,12 @@
     "oid": "894"
   },
   {
-    "name": "KAVRAM BAĞIMSIZ DENETİM VE DANIŞMANLIK A.Ş.",
-    "slug": "127-kavram-bagimsiz-denetim-ve-danismanlik-a-s",
-    "oid": "127"
-  },
-  {
     "name": "BURÇELİK VANA SANAYİ VE TİCARET A.Ş.",
     "slug": "1388-burcelik-vana-sanayi-ve-ticaret-a-s",
     "oid": "1388"
   },
   {
-    "name": "BRGAN BUR",
+    "name": "BURGAN BANK A.Ş.",
     "slug": "2494-burgan-bank-a-s",
     "oid": "2494"
   },
@@ -1268,6 +1598,11 @@
     "name": "BURGAN FİNANSAL KİRALAMA A.Ş.",
     "slug": "2434-burgan-finansal-kiralama-a-s",
     "oid": "2434"
+  },
+  {
+    "name": "BURGAN PORTFÖY YÖNETİMİ A.Ş.",
+    "slug": "2297-burgan-portfoy-yonetimi-a-s",
+    "oid": "2297"
   },
   {
     "name": "BURGAN YATIRIM MENKUL DEĞERLER A.Ş.",
@@ -1280,11 +1615,6 @@
     "oid": "895"
   },
   {
-    "name": "SUN BAĞIMSIZ DENETİM VE YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
-    "slug": "146-sun-bagimsiz-denetim-ve-yeminli-mali-musavirlik-a-s",
-    "oid": "146"
-  },
-  {
     "name": "BÜLBÜLOĞLU VİNÇ SANAYİ VE TİCARET A.Ş.",
     "slug": "5769-bulbuloglu-vinc-sanayi-ve-ticaret-a-s",
     "oid": "5769"
@@ -1295,14 +1625,39 @@
     "oid": "5819"
   },
   {
+    "name": "BÜYÜKDEMİR PORTFÖY YÖNETİMİ A.Ş.",
+    "slug": "6223-buyukdemir-portfoy-yonetimi-a-s",
+    "oid": "6223"
+  },
+  {
     "name": "BV PORTFÖY YÖNETİMİ A.Ş.",
     "slug": "5652-bv-portfoy-yonetimi-a-s",
     "oid": "5652"
   },
   {
-    "name": "ULUSAL BAĞIMSIZ DENETİM VE YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
-    "slug": "149-ulusal-bagimsiz-denetim-ve-yeminli-mali-musavirlik-a-s",
-    "oid": "149"
+    "name": "C FAKTORİNG A.Ş.",
+    "slug": "2105-c-faktoring-a-s",
+    "oid": "2105"
+  },
+  {
+    "name": "CAMİŞ LOJİSTİK HİZMETLERİ VE TİCARET A.Ş.",
+    "slug": "896-camis-lojistik-hizmetleri-ve-ticaret-a-s",
+    "oid": "896"
+  },
+  {
+    "name": "CAMİŞ MENKUL DEĞERLER A.Ş.",
+    "slug": "1278-camis-menkul-degerler-a-s",
+    "oid": "1278"
+  },
+  {
+    "name": "CAN MENKUL DEĞERLER A.Ş.",
+    "slug": "1279-can-menkul-degerler-a-s",
+    "oid": "1279"
+  },
+  {
+    "name": "CAN ULUSLARARASI BAĞIMSIZ DENETİM VE SMMM A.Ş.",
+    "slug": "152-can-uluslararasi-bagimsiz-denetim-ve-smmm-a-s",
+    "oid": "152"
   },
   {
     "name": "CARREFOURSA CARREFOUR SABANCI TİCARET MERKEZİ A.Ş.",
@@ -1320,9 +1675,34 @@
     "oid": "6019"
   },
   {
+    "name": "CENSA MENKUL DEĞERLER A.Ş.",
+    "slug": "1280-censa-menkul-degerler-a-s",
+    "oid": "1280"
+  },
+  {
     "name": "CEO EVENT MEDYA A.Ş.",
     "slug": "4856-ceo-event-medya-a-s",
     "oid": "4856"
+  },
+  {
+    "name": "CEREAN ENERJİ A.Ş.",
+    "slug": "3329-cerean-enerji-a-s",
+    "oid": "3329"
+  },
+  {
+    "name": "CEROS MENKUL DEĞERLER A.Ş.",
+    "slug": "1381-ceros-menkul-degerler-a-s",
+    "oid": "1381"
+  },
+  {
+    "name": "CEVDET SUNER DENETİM VE YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "100-cevdet-suner-denetim-ve-yeminli-mali-musavirlik-a-s",
+    "oid": "100"
+  },
+  {
+    "name": "CEYTAŞ MADENCİLİK TEKSTİL SAN. VE TİC. A.Ş.",
+    "slug": "898-ceytas-madencilik-tekstil-san-ve-tic-a-s",
+    "oid": "898"
   },
   {
     "name": "CITI MENKUL DEĞERLER A.Ş.",
@@ -1335,14 +1715,24 @@
     "oid": "2254"
   },
   {
+    "name": "CLK HOLDİNG A.Ş.",
+    "slug": "1549-clk-holding-a-s",
+    "oid": "1549"
+  },
+  {
+    "name": "CNS BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "5137-cns-bagimsiz-denetim-a-s",
+    "oid": "5137"
+  },
+  {
     "name": "COCA-COLA İÇECEK A.Ş.",
     "slug": "1424-coca-cola-icecek-a-s",
     "oid": "1424"
   },
   {
-    "name": "COLENDİ MENKUL DEĞERLER A.Ş.",
-    "slug": "5615-colendi-menkul-degerler-a-s",
-    "oid": "5615"
+    "name": "CONSULTA BAĞIMSIZ DENETİM VE Y.M.M. A.Ş.",
+    "slug": "223-consulta-bagimsiz-denetim-ve-y-m-m-a-s",
+    "oid": "223"
   },
   {
     "name": "CONSUS ENERJİ İŞLETMECİLİĞİ VE HİZMETLERİ A.Ş.",
@@ -1355,9 +1745,9 @@
     "oid": "893"
   },
   {
-    "name": "REHBER BAĞIMSIZ DENETİM VE YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
-    "slug": "139-rehber-bagimsiz-denetim-ve-yeminli-mali-musavirlik-a-s",
-    "oid": "139"
+    "name": "CPA BAĞIMSIZ DENETİM VE DANIŞMANLIK A.Ş.",
+    "slug": "204-cpa-bagimsiz-denetim-ve-danismanlik-a-s",
+    "oid": "204"
   },
   {
     "name": "CPATURK BAĞIMSIZ DENETİM VE YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
@@ -1365,9 +1755,19 @@
     "oid": "236"
   },
   {
+    "name": "CREDIT SUISSE İSTANBUL MENKUL DEĞERLER A.Ş.",
+    "slug": "1273-credit-suisse-istanbul-menkul-degerler-a-s",
+    "oid": "1273"
+  },
+  {
     "name": "CREDITWEST FAKTORİNG A.Ş.",
     "slug": "1097-creditwest-faktoring-a-s",
     "oid": "1097"
+  },
+  {
+    "name": "CROWE OLGU BAĞIMSIZ DENETİM VE YMM A.Ş.",
+    "slug": "212-crowe-olgu-bagimsiz-denetim-ve-ymm-a-s",
+    "oid": "212"
   },
   {
     "name": "CVK MADEN İŞLETMELERİ SANAYİ VE TİCARET A.Ş.",
@@ -1375,9 +1775,19 @@
     "oid": "5807"
   },
   {
+    "name": "CVS MAKİNA İNŞAAT SANAYİ VE TİCARET A.Ş.",
+    "slug": "2372-cvs-makina-insaat-sanayi-ve-ticaret-a-s",
+    "oid": "2372"
+  },
+  {
     "name": "CW ENERJİ MÜHENDİSLİK TİCARET VE SANAYİ A.Ş.",
     "slug": "5033-cw-enerji-muhendislik-ticaret-ve-sanayi-a-s",
     "oid": "5033"
+  },
+  {
+    "name": "ÇAĞDAŞ BAĞIMSIZ DENETİM VE SMMM A.Ş.",
+    "slug": "205-cagdas-bagimsiz-denetim-ve-smmm-a-s",
+    "oid": "205"
   },
   {
     "name": "ÇAĞDAŞ CAM SANAYİ VE TİCARET A.Ş.",
@@ -1390,6 +1800,21 @@
     "oid": "2150"
   },
   {
+    "name": "ÇAĞRI MENKUL DEĞERLER A.Ş.",
+    "slug": "1282-cagri-menkul-degerler-a-s",
+    "oid": "1282"
+  },
+  {
+    "name": "ÇALIK DENİM TEKSTİL SANAYİ VE TİCARET A.Ş.",
+    "slug": "4963-calik-denim-tekstil-sanayi-ve-ticaret-a-s",
+    "oid": "4963"
+  },
+  {
+    "name": "ÇALIK ENERJİ SANAYİ VE TİCARET A.Ş.",
+    "slug": "2410-calik-enerji-sanayi-ve-ticaret-a-s",
+    "oid": "2410"
+  },
+  {
     "name": "ÇAMLI YEM BESİCİLİK SANAYİ VE TİCARET A.Ş.",
     "slug": "2824-camli-yem-besicilik-sanayi-ve-ticaret-a-s",
     "oid": "2824"
@@ -1398,6 +1823,11 @@
     "name": "ÇAMSAN ENTEGRE AĞAÇ SANAYİ VE TİCARET A.Ş.",
     "slug": "6165-camsan-entegre-agac-sanayi-ve-ticaret-a-s",
     "oid": "6165"
+  },
+  {
+    "name": "ÇAMSAN POYRAZ AĞAÇ ÜRÜNLERİ TURİZM İNŞAAT TARIM ENERJİ SANAYİ VE TİCARET A.Ş.",
+    "slug": "1591-camsan-poyraz-agac-urunleri-turizm-insaat-tarim-enerji-sanayi-ve-ticaret-a-s",
+    "oid": "1591"
   },
   {
     "name": "ÇAN2 TERMİK A.Ş.",
@@ -1410,6 +1840,16 @@
     "oid": "5905"
   },
   {
+    "name": "ÇBS BOYA KİMYA SANAYİİ VE TİCARETİ A.Ş.",
+    "slug": "901-cbs-boya-kimya-sanayii-ve-ticareti-a-s",
+    "oid": "901"
+  },
+  {
+    "name": "ÇBS PRİNTAŞ OTO BOYA VE GEREÇLERİ SANAYİİ A.Ş.",
+    "slug": "902-cbs-printas-oto-boya-ve-gerecleri-sanayii-a-s",
+    "oid": "902"
+  },
+  {
     "name": "ÇELEBİ HAVA SERVİSİ A.Ş.",
     "slug": "903-celebi-hava-servisi-a-s",
     "oid": "903"
@@ -1420,14 +1860,14 @@
     "oid": "904"
   },
   {
-    "name": "RASYONEL BAĞIMSIZ DENETİM VE YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
-    "slug": "138-rasyonel-bagimsiz-denetim-ve-yeminli-mali-musavirlik-a-s",
-    "oid": "138"
-  },
-  {
     "name": "ÇELİK MOTOR TİCARET A.Ş.",
     "slug": "2106-celik-motor-ticaret-a-s",
     "oid": "2106"
+  },
+  {
+    "name": "ÇELİKLER TAAHHÜT İNŞAAT VE SANAYİ A.Ş.",
+    "slug": "2373-celikler-taahhut-insaat-ve-sanayi-a-s",
+    "oid": "2373"
   },
   {
     "name": "ÇEMAŞ DÖKÜM SANAYİ A.Ş.",
@@ -1455,9 +1895,24 @@
     "oid": "908"
   },
   {
+    "name": "ÇİTLEKÇİ MAĞAZACILIK GIDA A.Ş.",
+    "slug": "6275-citlekci-magazacilik-gida-a-s",
+    "oid": "6275"
+  },
+  {
+    "name": "ÇÖZÜM ÜNLÜER BAĞIMSIZ DENETİM VE YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "5542-cozum-unluer-bagimsiz-denetim-ve-yeminli-mali-musavirlik-a-s",
+    "oid": "5542"
+  },
+  {
     "name": "ÇUHADAROĞLU METAL SANAYİ VE PAZARLAMA A.Ş.",
     "slug": "2592-cuhadaroglu-metal-sanayi-ve-pazarlama-a-s",
     "oid": "2592"
+  },
+  {
+    "name": "ÇUKUROVA ELEKTRİK A.Ş.",
+    "slug": "909-cukurova-elektrik-a-s",
+    "oid": "909"
   },
   {
     "name": "D VARLIK KİRALAMA A.Ş.",
@@ -1490,9 +1945,9 @@
     "oid": "1416"
   },
   {
-    "name": "MGI BAĞIMSIZ DENETİM A.Ş.",
-    "slug": "129-mgi-bagimsiz-denetim-a-s",
-    "oid": "129"
+    "name": "DATEK MENKUL DEĞERLER A.Ş.",
+    "slug": "1283-datek-menkul-degerler-a-s",
+    "oid": "1283"
   },
   {
     "name": "DCT TRADİNG DIŞ TİCARET A.Ş.",
@@ -1500,9 +1955,24 @@
     "oid": "5997"
   },
   {
+    "name": "DEFACTO PERAKENDE TİCARET A.Ş.",
+    "slug": "3080-defacto-perakende-ticaret-a-s",
+    "oid": "3080"
+  },
+  {
     "name": "DEĞER VARLIK KİRALAMA A.Ş.",
     "slug": "5245-deger-varlik-kiralama-a-s",
     "oid": "5245"
+  },
+  {
+    "name": "DEHA MENKUL KIYMETLER A.Ş.",
+    "slug": "1285-deha-menkul-kiymetler-a-s",
+    "oid": "1285"
+  },
+  {
+    "name": "DELTA BAĞIMSIZ DENETLEME VE YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "102-delta-bagimsiz-denetleme-ve-yeminli-mali-musavirlik-a-s",
+    "oid": "102"
   },
   {
     "name": "DELTA MENKUL DEĞERLER A.Ş.",
@@ -1510,9 +1980,29 @@
     "oid": "1286"
   },
   {
+    "name": "DEMİRER ENERJİ ÜRETİM VE SANAYİ TİCARET A.Ş.",
+    "slug": "2107-demirer-enerji-uretim-ve-sanayi-ticaret-a-s",
+    "oid": "2107"
+  },
+  {
+    "name": "DEMİRÖREN GAZETECİLİK A.Ş.",
+    "slug": "1034-demiroren-gazetecilik-a-s",
+    "oid": "1034"
+  },
+  {
     "name": "DEMİSAŞ DÖKÜM EMAYE MAMÜLLERİ SANAYİ A.Ş.",
     "slug": "911-demisas-dokum-emaye-mamulleri-sanayi-a-s",
     "oid": "911"
+  },
+  {
+    "name": "DENETİM SERBEST MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "104-denetim-serbest-mali-musavirlik-a-s",
+    "oid": "104"
+  },
+  {
+    "name": "DENEYİM BAĞIMSIZ DENETİM VE DANIŞMANLIK A.Ş.",
+    "slug": "5529-deneyim-bagimsiz-denetim-ve-danismanlik-a-s",
+    "oid": "5529"
   },
   {
     "name": "DENGE ANKARA BAĞIMSIZ DENETİM VE YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
@@ -1520,9 +2010,19 @@
     "oid": "231"
   },
   {
+    "name": "DENGE ANKARA YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "105-denge-ankara-yeminli-mali-musavirlik-a-s",
+    "oid": "105"
+  },
+  {
     "name": "DENGE BAĞIMSIZ DENETİM SERBEST MUHASEBECİ MALİ MÜŞAVİRLİK A.Ş.",
     "slug": "106-denge-bagimsiz-denetim-serbest-muhasebeci-mali-musavirlik-a-s",
     "oid": "106"
+  },
+  {
+    "name": "DENGE İZMİR BAĞIMSIZ DENETİM VE YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "107-denge-izmir-bagimsiz-denetim-ve-yeminli-mali-musavirlik-a-s",
+    "oid": "107"
   },
   {
     "name": "DENGE VARLIK YÖNETİM A.Ş.",
@@ -1560,14 +2060,34 @@
     "oid": "2336"
   },
   {
-    "name": "DZY DZYMK",
+    "name": "DENİZ YATIRIM MENKUL KIYMETLER A.Ş.",
     "slug": "1287-deniz-yatirim-menkul-kiymetler-a-s",
     "oid": "1287"
   },
   {
-    "name": "DENIZ DNZ",
+    "name": "DENİZBANK A.Ş.",
     "slug": "2415-denizbank-a-s",
     "oid": "2415"
+  },
+  {
+    "name": "DENİZLİ CAM SANAYİİ VE TİCARET A.Ş.",
+    "slug": "913-denizli-cam-sanayii-ve-ticaret-a-s",
+    "oid": "913"
+  },
+  {
+    "name": "DENKAR BAĞIMSIZ DENETİM YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "188-denkar-bagimsiz-denetim-yeminli-mali-musavirlik-a-s",
+    "oid": "188"
+  },
+  {
+    "name": "DENTAŞ AMBALAJ VE KAĞIT SANAYİ A.Ş.",
+    "slug": "914-dentas-ambalaj-ve-kagit-sanayi-a-s",
+    "oid": "914"
+  },
+  {
+    "name": "DEREN VARLIK YÖNETİM A.Ş.",
+    "slug": "3166-deren-varlik-yonetim-a-s",
+    "oid": "3166"
   },
   {
     "name": "DERİMOD KONFEKSİYON AYAKKABI DERİ SANAYİ VE TİCARET A.Ş.",
@@ -1575,14 +2095,14 @@
     "oid": "915"
   },
   {
+    "name": "DERİNDERE TURİZM OTOMOTİV SANAYİ VE TİCARET A.Ş.",
+    "slug": "2380-derindere-turizm-otomotiv-sanayi-ve-ticaret-a-s",
+    "oid": "2380"
+  },
+  {
     "name": "DERLÜKS YATIRIM HOLDİNG A.Ş.",
     "slug": "4864-derluks-yatirim-holding-a-s",
     "oid": "4864"
-  },
-  {
-    "name": "VARLIK GLOBAL BAĞIMSIZ DENETİM VE SERBEST MUHASEBECİ MALİ MÜŞAVİRLİK A.Ş.",
-    "slug": "5811-varlik-global-bagimsiz-denetim-ve-serbest-muhasebeci-mali-musavirlik-a-s",
-    "oid": "5811"
   },
   {
     "name": "DESA DERİ SANAYİ VE TİCARET A.Ş.",
@@ -1600,14 +2120,24 @@
     "oid": "2191"
   },
   {
+    "name": "DESTEK PORTFÖY YÖNETİMİ A.Ş.",
+    "slug": "6220-destek-portfoy-yonetimi-a-s",
+    "oid": "6220"
+  },
+  {
     "name": "DESTEK YATIRIM BANKASI A.Ş.",
     "slug": "5430-destek-yatirim-bankasi-a-s",
     "oid": "5430"
   },
   {
-    "name": "DMD DSYAT",
+    "name": "DESTEK YATIRIM MENKUL DEĞERLER A.Ş.",
     "slug": "6039-destek-yatirim-menkul-degerler-a-s",
     "oid": "6039"
+  },
+  {
+    "name": "DESTEK YATIRIM MENKUL DEĞERLER A.Ş. (TERKİN)",
+    "slug": "1522-destek-yatirim-menkul-degerler-a-s-terkin",
+    "oid": "1522"
   },
   {
     "name": "DETAY BAĞIMSIZ DENETİM VE YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
@@ -1625,9 +2155,29 @@
     "oid": "2009"
   },
   {
+    "name": "DEUTSCHE BANK AG",
+    "slug": "1519-deutsche-bank-ag",
+    "oid": "1519"
+  },
+  {
+    "name": "DEUTSCHE SECURITIES MENKUL DEĞERLER A.Ş.",
+    "slug": "1275-deutsche-securities-menkul-degerler-a-s",
+    "oid": "1275"
+  },
+  {
     "name": "DEVA HOLDİNG A.Ş.",
     "slug": "916-deva-holding-a-s",
     "oid": "916"
+  },
+  {
+    "name": "DEVİR FAKTORİNG A.Ş.",
+    "slug": "2580-devir-faktoring-a-s",
+    "oid": "2580"
+  },
+  {
+    "name": "DFK DENETİM FİNANS KONTROL YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "108-dfk-denetim-finans-kontrol-yeminli-mali-musavirlik-a-s",
+    "oid": "108"
   },
   {
     "name": "DİLER YATIRIM BANKASI A.Ş.",
@@ -1645,8 +2195,8 @@
     "oid": "5185"
   },
   {
-    "name": "DİNAMİK YATIRIM MENKUL DEĞERLER A.Ş.",
-    "slug": "1292-dinamik-yatirim-menkul-degerler-a-s",
+    "name": "DİNAMİK MENKUL DEĞERLER A.Ş.",
+    "slug": "1292-dinamik-menkul-degerler-a-s",
     "oid": "1292"
   },
   {
@@ -1660,14 +2210,24 @@
     "oid": "1580"
   },
   {
-    "name": "DİTAŞ DOĞAN YEDEK PARÇA İMALAT VE TEKNİK A.Ş.",
-    "slug": "917-ditas-dogan-yedek-parca-imalat-ve-teknik-a-s",
+    "name": "DİTAŞ BDY YEDEK PARÇA İMALAT VE TEKNİK A.Ş.",
+    "slug": "917-ditas-bdy-yedek-parca-imalat-ve-teknik-a-s",
     "oid": "917"
+  },
+  {
+    "name": "DİVAN TURİZM İŞLETMELERİ A.Ş.",
+    "slug": "2879-divan-turizm-isletmeleri-a-s",
+    "oid": "2879"
   },
   {
     "name": "DK VARLIK KİRALAMA A.Ş.",
     "slug": "6133-dk-varlik-kiralama-a-s",
     "oid": "6133"
+  },
+  {
+    "name": "DK YILDIZ VARLIK KİRALAMA A.Ş.",
+    "slug": "6231-dk-yildiz-varlik-kiralama-a-s",
+    "oid": "6231"
   },
   {
     "name": "DMF SİSTEM ULUSLARARASI BAĞIMSIZ DENETİM DANIŞMANLIK VE YMM. A.Ş.",
@@ -1685,11 +2245,6 @@
     "oid": "5870"
   },
   {
-    "name": "DO & CO AKTIENGESELLSCHAFT",
-    "slug": "1530-do-co-aktiengesellschaft",
-    "oid": "1530"
-  },
-  {
     "name": "DOF ROBOTİK SANAYİ A.Ş.",
     "slug": "6130-dof-robotik-sanayi-a-s",
     "oid": "6130"
@@ -1700,9 +2255,9 @@
     "oid": "5879"
   },
   {
-    "name": "GÜNCEL BAĞIMSIZ DENETİM DANIŞMANLIK A.Ş.",
-    "slug": "210-guncel-bagimsiz-denetim-danismanlik-a-s",
-    "oid": "210"
+    "name": "DOĞAN DIŞ TİCARET VE MÜMESSİLLİK A.Ş.",
+    "slug": "3971-dogan-dis-ticaret-ve-mumessillik-a-s",
+    "oid": "3971"
   },
   {
     "name": "DOĞAN ŞİRKETLER GRUBU HOLDİNG A.Ş.",
@@ -1713,6 +2268,11 @@
     "name": "DOĞAN TREND OTOMOTİV TİCARET HİZMET VE TEKNOLOJİ A.Ş.",
     "slug": "5607-dogan-trend-otomotiv-ticaret-hizmet-ve-teknoloji-a-s",
     "oid": "5607"
+  },
+  {
+    "name": "DOĞAN YAYIN HOLDİNG A.Ş.",
+    "slug": "920-dogan-yayin-holding-a-s",
+    "oid": "920"
   },
   {
     "name": "DOĞANLAR MOBİLYA GRUBU İMALAT SANAYİ VE TİCARET A.Ş.",
@@ -1740,14 +2300,29 @@
     "oid": "921"
   },
   {
+    "name": "DOĞUŞ ÇAY VE GIDA MADDELERİ ÜRETİM PAZARLAMA İTHALAT İHRACAT A.Ş.",
+    "slug": "2465-dogus-cay-ve-gida-maddeleri-uretim-pazarlama-ithalat-ihracat-a-s",
+    "oid": "2465"
+  },
+  {
     "name": "DOĞUŞ GAYRİMENKUL YATIRIM ORTAKLIĞI A.Ş.",
     "slug": "960-dogus-gayrimenkul-yatirim-ortakligi-a-s",
     "oid": "960"
   },
   {
+    "name": "DOĞUŞ HOLDİNG A.Ş.",
+    "slug": "2724-dogus-holding-a-s",
+    "oid": "2724"
+  },
+  {
     "name": "DOĞUŞ OTOMOTİV SERVİS VE TİCARET A.Ş.",
     "slug": "1391-dogus-otomotiv-servis-ve-ticaret-a-s",
     "oid": "1391"
+  },
+  {
+    "name": "DOĞUŞ SK GİRİŞİM SERMAYESİ YATIRIM ORTAKLIĞI A.Ş.",
+    "slug": "2233-dogus-sk-girisim-sermayesi-yatirim-ortakligi-a-s",
+    "oid": "2233"
   },
   {
     "name": "DORUK FAKTORİNG A.Ş.",
@@ -1765,6 +2340,16 @@
     "oid": "4785"
   },
   {
+    "name": "DRT BAĞIMSIZ DENETİM VE SERBEST MUHASEBECİ MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "109-drt-bagimsiz-denetim-ve-serbest-muhasebeci-mali-musavirlik-a-s",
+    "oid": "109"
+  },
+  {
+    "name": "DRT YEMİNLİ MALİ MÜŞAVİRLİK VE BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "208-drt-yeminli-mali-musavirlik-ve-bagimsiz-denetim-a-s",
+    "oid": "208"
+  },
+  {
     "name": "DURAN DOĞAN BASIM VE AMBALAJ SANAYİ A.Ş.",
     "slug": "923-duran-dogan-basim-ve-ambalaj-sanayi-a-s",
     "oid": "923"
@@ -1773,6 +2358,11 @@
     "name": "DURUKAN ŞEKERLEME SANAYİ VE TİCARET A.Ş.",
     "slug": "6023-durukan-sekerleme-sanayi-ve-ticaret-a-s",
     "oid": "6023"
+  },
+  {
+    "name": "DÜNYA GÖZ HASTANESİ SANAYİ VE TİCARET A.Ş.",
+    "slug": "2310-dunya-goz-hastanesi-sanayi-ve-ticaret-a-s",
+    "oid": "2310"
   },
   {
     "name": "DÜNYA HOLDİNG A.Ş.",
@@ -1790,6 +2380,11 @@
     "oid": "6181"
   },
   {
+    "name": "DÜNYA MENKUL DEĞERLER A.Ş.",
+    "slug": "1290-dunya-menkul-degerler-a-s",
+    "oid": "1290"
+  },
+  {
     "name": "DÜNYA VARLIK YÖNETİM A.Ş.",
     "slug": "4902-dunya-varlik-yonetim-a-s",
     "oid": "4902"
@@ -1805,6 +2400,11 @@
     "oid": "924"
   },
   {
+    "name": "E-DATA TEKNOLOJİ PAZARLAMA A.Ş.",
+    "slug": "5333-e-data-teknoloji-pazarlama-a-s",
+    "oid": "5333"
+  },
+  {
     "name": "EBEBEK MAĞAZACILIK A.Ş.",
     "slug": "5861-ebebek-magazacilik-a-s",
     "oid": "5861"
@@ -1815,9 +2415,14 @@
     "oid": "6140"
   },
   {
-    "name": "ECOVİS DEĞER BAĞIMSIZ DENETİM VE YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
+    "name": "ECOVİS DEĞER BAĞIMSIZ DENETİM VE YEMİNLİ MALİ MÜŞAVİRLİK A.Ş. ",
     "slug": "101-ecovis-deger-bagimsiz-denetim-ve-yeminli-mali-musavirlik-a-s",
     "oid": "101"
+  },
+  {
+    "name": "ECZACIBAŞI YAPI GEREÇLERİ SANAYİ VE TİCARET A.Ş.",
+    "slug": "925-eczacibasi-yapi-gerecleri-sanayi-ve-ticaret-a-s",
+    "oid": "925"
   },
   {
     "name": "ECZACIBAŞI YATIRIM HOLDİNG ORTAKLIĞI A.Ş.",
@@ -1825,14 +2430,14 @@
     "oid": "926"
   },
   {
+    "name": "ECZACIBAŞI YATIRIM MENKUL DEĞERLER A.Ş.",
+    "slug": "1291-eczacibasi-yatirim-menkul-degerler-a-s",
+    "oid": "1291"
+  },
+  {
     "name": "ED CAPİTAL PORTFÖY YÖNETİMİ A.Ş.",
     "slug": "6202-ed-capital-portfoy-yonetimi-a-s",
     "oid": "6202"
-  },
-  {
-    "name": "E-DATA TEKNOLOJİ PAZARLAMA A.Ş.",
-    "slug": "5333-e-data-teknoloji-pazarlama-a-s",
-    "oid": "5333"
   },
   {
     "name": "EDİP GAYRİMENKUL YATIRIM SANAYİ VE TİCARET A.Ş.",
@@ -1840,9 +2445,24 @@
     "oid": "928"
   },
   {
+    "name": "EDİT BAĞIMSIZ DENETİM HİZMETLERİ A.Ş.",
+    "slug": "4930-edit-bagimsiz-denetim-hizmetleri-a-s",
+    "oid": "4930"
+  },
+  {
+    "name": "EFES SINAİ YATIRIM HOLDİNG A.Ş.",
+    "slug": "929-efes-sinai-yatirim-holding-a-s",
+    "oid": "929"
+  },
+  {
     "name": "EFOR YATIRIM SANAYİ TİCARET A.Ş.",
     "slug": "5654-efor-yatirim-sanayi-ticaret-a-s",
     "oid": "5654"
+  },
+  {
+    "name": "EGE BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "180-ege-bagimsiz-denetim-a-s",
+    "oid": "180"
   },
   {
     "name": "EGE ENDÜSTRİ VE TİCARET A.Ş.",
@@ -1865,11 +2485,6 @@
     "oid": "933"
   },
   {
-    "name": "MBK BAĞIMSIZ DENETİM VE SMMM A.Ş.",
-    "slug": "221-mbk-bagimsiz-denetim-ve-smmm-a-s",
-    "oid": "221"
-  },
-  {
     "name": "EGEPLAST EGE PLASTİK TİCARET VE SANAYİ A.Ş.",
     "slug": "934-egeplast-ege-plastik-ticaret-ve-sanayi-a-s",
     "oid": "934"
@@ -1878,6 +2493,26 @@
     "name": "EGEYAPI AVRUPA GAYRİMENKUL YATIRIM ORTAKLIĞI A.Ş.",
     "slug": "6051-egeyapi-avrupa-gayrimenkul-yatirim-ortakligi-a-s",
     "oid": "6051"
+  },
+  {
+    "name": "EGS EGESER GİYİM SANAYİİ İÇ VE DIŞ TİC. A.Ş.",
+    "slug": "935-egs-egeser-giyim-sanayii-ic-ve-dis-tic-a-s",
+    "oid": "935"
+  },
+  {
+    "name": "EGS FİNANSAL KİRALAMA A.Ş.",
+    "slug": "936-egs-finansal-kiralama-a-s",
+    "oid": "936"
+  },
+  {
+    "name": "EGS GAYRİMENKUL YATIRIM ORTAKLIĞI A.Ş.",
+    "slug": "937-egs-gayrimenkul-yatirim-ortakligi-a-s",
+    "oid": "937"
+  },
+  {
+    "name": "EGS HOLDİNG A.Ş.",
+    "slug": "938-egs-holding-a-s",
+    "oid": "938"
   },
   {
     "name": "EİP ECZACIBAŞI İLAÇ PAZARLAMA A.Ş.",
@@ -1895,6 +2530,26 @@
     "oid": "5933"
   },
   {
+    "name": "EKİM TURİZM TİCARET VE SANAYİ A.Ş.",
+    "slug": "2444-ekim-turizm-ticaret-ve-sanayi-a-s",
+    "oid": "2444"
+  },
+  {
+    "name": "EKİNCİLER DEMİR VE ÇELİK SANAYİ A.Ş.",
+    "slug": "3089-ekinciler-demir-ve-celik-sanayi-a-s",
+    "oid": "3089"
+  },
+  {
+    "name": "EKİNCİLER PORTFÖY YÖNETİMİ A.Ş.",
+    "slug": "2284-ekinciler-portfoy-yonetimi-a-s",
+    "oid": "2284"
+  },
+  {
+    "name": "EKİP YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "110-ekip-yeminli-mali-musavirlik-a-s",
+    "oid": "110"
+  },
+  {
     "name": "EKİZ KİMYA SANAYİ VE TİCARET A.Ş.",
     "slug": "1515-ekiz-kimya-sanayi-ve-ticaret-a-s",
     "oid": "1515"
@@ -1903,6 +2558,11 @@
     "name": "EKO FAKTORİNG A.Ş.",
     "slug": "2109-eko-faktoring-a-s",
     "oid": "2109"
+  },
+  {
+    "name": "EKOL MENKUL DEĞERLER A.Ş.",
+    "slug": "1294-ekol-menkul-degerler-a-s",
+    "oid": "1294"
   },
   {
     "name": "EKOS TEKNOLOJİ VE ELEKTRİK A.Ş.",
@@ -1915,14 +2575,24 @@
     "oid": "5927"
   },
   {
+    "name": "EKSPO FAKTORİNG A.Ş.",
+    "slug": "1525-ekspo-faktoring-a-s",
+    "oid": "1525"
+  },
+  {
+    "name": "EKSPRES MENKUL DEĞERLER A.Ş.",
+    "slug": "1295-ekspres-menkul-degerler-a-s",
+    "oid": "1295"
+  },
+  {
+    "name": "EKSPRES YATIRIM MENKUL DEĞERLER A.Ş.",
+    "slug": "2616-ekspres-yatirim-menkul-degerler-a-s",
+    "oid": "2616"
+  },
+  {
     "name": "EKSUN GIDA TARIM SANAYİ VE TİCARET A.Ş.",
     "slug": "5796-eksun-gida-tarim-sanayi-ve-ticaret-a-s",
     "oid": "5796"
-  },
-  {
-    "name": "VEZİN BAĞIMSIZ DENETİM A.Ş.",
-    "slug": "239-vezin-bagimsiz-denetim-a-s",
-    "oid": "239"
   },
   {
     "name": "ELİT BAĞIMSIZ DENETİM VE YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
@@ -1938,6 +2608,11 @@
     "name": "EMAA BLUE PORTFÖY YÖNETİMİ A.Ş.",
     "slug": "6080-emaa-blue-portfoy-yonetimi-a-s",
     "oid": "6080"
+  },
+  {
+    "name": "EMAY İNŞAAT TAAHHÜT SANAYİ VE TİCARET A.Ş.",
+    "slug": "2454-emay-insaat-taahhut-sanayi-ve-ticaret-a-s",
+    "oid": "2454"
   },
   {
     "name": "EMEK ELEKTRİK ENDÜSTRİSİ A.Ş.",
@@ -1990,6 +2665,16 @@
     "oid": "6057"
   },
   {
+    "name": "ENDEKS MENKUL DEĞERLER A.Ş.",
+    "slug": "1355-endeks-menkul-degerler-a-s",
+    "oid": "1355"
+  },
+  {
+    "name": "ENERJİSA ELEKTRİK DAĞITIM A.Ş.",
+    "slug": "3493-enerjisa-elektrik-dagitim-a-s",
+    "oid": "3493"
+  },
+  {
     "name": "ENERJİSA ENERJİ A.Ş.",
     "slug": "3494-enerjisa-enerji-a-s",
     "oid": "3494"
@@ -1998,6 +2683,11 @@
     "name": "ENERYA ENERJİ A.Ş.",
     "slug": "2872-enerya-enerji-a-s",
     "oid": "2872"
+  },
+  {
+    "name": "ENGİN SERBEST MUHASEBECİLİK MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "111-engin-serbest-muhasebecilik-mali-musavirlik-a-s",
+    "oid": "111"
   },
   {
     "name": "ENKA İNŞAAT VE SANAYİ A.Ş.",
@@ -2015,6 +2705,11 @@
     "oid": "5560"
   },
   {
+    "name": "ERA CAPİTAL GAYRİMENKUL VE GİRİŞİM SERMAYESİ PORTFÖY YÖNETİMİ A.Ş.",
+    "slug": "4606-era-capital-gayrimenkul-ve-girisim-sermayesi-portfoy-yonetimi-a-s",
+    "oid": "4606"
+  },
+  {
     "name": "ERBOSAN ERCİYAS BORU SANAYİ VE TİCARET A.Ş.",
     "slug": "943-erbosan-erciyas-boru-sanayi-ve-ticaret-a-s",
     "oid": "943"
@@ -2023,6 +2718,16 @@
     "name": "ERCİYAS ÇELİK BORU SANAYİ A.Ş.",
     "slug": "5516-erciyas-celik-boru-sanayi-a-s",
     "oid": "5516"
+  },
+  {
+    "name": "ERCİYES MENKUL DEĞERLER A.Ş.",
+    "slug": "1297-erciyes-menkul-degerler-a-s",
+    "oid": "1297"
+  },
+  {
+    "name": "ERCİYES YEMİNLİ MALİ MÜŞAVİRLİK VE BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "209-erciyes-yeminli-mali-musavirlik-ve-bagimsiz-denetim-a-s",
+    "oid": "209"
   },
   {
     "name": "EREĞLİ DEMİR VE ÇELİK FABRİKALARI T.A.Ş.",
@@ -2035,9 +2740,49 @@
     "oid": "2112"
   },
   {
-    "name": "TENET BAĞIMSIZ DENETİM A.Ş.",
-    "slug": "6112-tenet-bagimsiz-denetim-a-s",
-    "oid": "6112"
+    "name": "EREN BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "226-eren-bagimsiz-denetim-a-s",
+    "oid": "226"
+  },
+  {
+    "name": "ERGAZ SANAYİ VE TİCARET A.Ş.",
+    "slug": "1589-ergaz-sanayi-ve-ticaret-a-s",
+    "oid": "1589"
+  },
+  {
+    "name": "ERGO EMEKLİLİK VE HAYAT A.Ş.",
+    "slug": "1962-ergo-emeklilik-ve-hayat-a-s",
+    "oid": "1962"
+  },
+  {
+    "name": "ERGO SİGORTA A.Ş.",
+    "slug": "1622-ergo-sigorta-a-s",
+    "oid": "1622"
+  },
+  {
+    "name": "ERİCOM TELEKOMÜNİKASYON VE ENERJİ TEKNOLOJİLERİ A.Ş.",
+    "slug": "1550-ericom-telekomunikasyon-ve-enerji-teknolojileri-a-s",
+    "oid": "1550"
+  },
+  {
+    "name": "ERİŞİM FAKTORİNG A.Ş.",
+    "slug": "2263-erisim-faktoring-a-s",
+    "oid": "2263"
+  },
+  {
+    "name": "ERK PAZARLAMA VE GİYİM SANAYİ TİCARET A.Ş.",
+    "slug": "2362-erk-pazarlama-ve-giyim-sanayi-ticaret-a-s",
+    "oid": "2362"
+  },
+  {
+    "name": "ERMED TIP MEDİKAL TİCARET A.Ş.",
+    "slug": "6071-ermed-tip-medikal-ticaret-a-s",
+    "oid": "6071"
+  },
+  {
+    "name": "EROĞLU YAPI İNŞAAT GAYRİMENKUL VE GELİŞTİRME SANAYİ VE TİCARET A.Ş.",
+    "slug": "5218-eroglu-yapi-insaat-gayrimenkul-ve-gelistirme-sanayi-ve-ticaret-a-s",
+    "oid": "5218"
   },
   {
     "name": "ERSAN ALIŞVERİŞ HİZMETLERİ VE GIDA SANAYİ TİCARET A.Ş.",
@@ -2045,9 +2790,29 @@
     "oid": "5342"
   },
   {
+    "name": "ERSTE GROUP BANK AG",
+    "slug": "1683-erste-group-bank-ag",
+    "oid": "1683"
+  },
+  {
+    "name": "ERSTE SECURITIES İSTANBUL MENKUL DEĞERLER A.Ş.",
+    "slug": "1329-erste-securities-istanbul-menkul-degerler-a-s",
+    "oid": "1329"
+  },
+  {
     "name": "ERSU MEYVE VE GIDA SANAYİ A.Ş.",
     "slug": "945-ersu-meyve-ve-gida-sanayi-a-s",
     "oid": "945"
+  },
+  {
+    "name": "ERYAP MÜHENDİSLİK İNŞAAT TAAHHÜT TURİZM SANAYİ VE TİCARET A.Ş.",
+    "slug": "4978-eryap-muhendislik-insaat-taahhut-turizm-sanayi-ve-ticaret-a-s",
+    "oid": "4978"
+  },
+  {
+    "name": "ES MENKUL DEĞERLER YATIRIM A.Ş.",
+    "slug": "1298-es-menkul-degerler-yatirim-a-s",
+    "oid": "1298"
   },
   {
     "name": "ESAS PORTFÖY YÖNETİMİ A.Ş.",
@@ -2065,14 +2830,29 @@
     "oid": "946"
   },
   {
+    "name": "ESEM SPOR GİYİM SANAYİ VE TİCARET A.Ş.",
+    "slug": "947-esem-spor-giyim-sanayi-ve-ticaret-a-s",
+    "oid": "947"
+  },
+  {
     "name": "ESENBOĞA ELEKTRİK ÜRETİM A.Ş.",
     "slug": "5190-esenboga-elektrik-uretim-a-s",
     "oid": "5190"
   },
   {
+    "name": "ETİ MENKUL KIYMETLER A.Ş.",
+    "slug": "1299-eti-menkul-kiymetler-a-s",
+    "oid": "1299"
+  },
+  {
     "name": "ETİLER GIDA VE TİCARİ YATIRIMLAR SANAYİ VE TİCARET A.Ş.",
     "slug": "1625-etiler-gida-ve-ticari-yatirimlar-sanayi-ve-ticaret-a-s",
     "oid": "1625"
+  },
+  {
+    "name": "EURO FİNANS MENKUL DEĞERLER A.Ş.",
+    "slug": "2316-euro-finans-menkul-degerler-a-s",
+    "oid": "2316"
   },
   {
     "name": "EURO KAPİTAL YATIRIM ORTAKLIĞI A.Ş.",
@@ -2083,6 +2863,11 @@
     "name": "EURO MENKUL KIYMET YATIRIM ORTAKLIĞI A.Ş.",
     "slug": "1427-euro-menkul-kiymet-yatirim-ortakligi-a-s",
     "oid": "1427"
+  },
+  {
+    "name": "EURO PORTFÖY YÖNETİMİ A.Ş.",
+    "slug": "2285-euro-portfoy-yonetimi-a-s",
+    "oid": "2285"
   },
   {
     "name": "EURO TREND YATIRIM ORTAKLIĞI A.Ş.",
@@ -2115,6 +2900,11 @@
     "oid": "5711"
   },
   {
+    "name": "FACTOFİNANS ALACAK ALIMI A.Ş.",
+    "slug": "949-factofinans-alacak-alimi-a-s",
+    "oid": "949"
+  },
+  {
     "name": "FADE GIDA YATIRIM SANAYİ TİCARET A.Ş.",
     "slug": "5021-fade-gida-yatirim-sanayi-ticaret-a-s",
     "oid": "5021"
@@ -2125,9 +2915,24 @@
     "oid": "6138"
   },
   {
+    "name": "FAKIF FAKTORİNG A.Ş.",
+    "slug": "2534-fakif-faktoring-a-s",
+    "oid": "2534"
+  },
+  {
     "name": "FASDAT GIDA DAĞITIM SANAYİ VE TİCARET A.Ş.",
     "slug": "4056-fasdat-gida-dagitim-sanayi-ve-ticaret-a-s",
     "oid": "4056"
+  },
+  {
+    "name": "FAVORİ DİNLENME YERLERİ A.Ş.",
+    "slug": "950-favori-dinlenme-yerleri-a-s",
+    "oid": "950"
+  },
+  {
+    "name": "FED MENKUL DEĞERLER A.Ş.",
+    "slug": "1995-fed-menkul-degerler-a-s",
+    "oid": "1995"
   },
   {
     "name": "FEDERAL MOGUL İZMİT PİSTON VE PİM ÜRETİM TESİSLERİ A.Ş.",
@@ -2138,6 +2943,16 @@
     "name": "FENERBAHÇE FUTBOL A.Ş.",
     "slug": "1383-fenerbahce-futbol-a-s",
     "oid": "1383"
+  },
+  {
+    "name": "FENİŞ ALÜMİNYUM SANAYİ VE TİCARET A.Ş.",
+    "slug": "952-fenis-aluminyum-sanayi-ve-ticaret-a-s",
+    "oid": "952"
+  },
+  {
+    "name": "FERONİA GİRİŞİM SERMAYESİ PORTFÖY YÖNETİMİ A.Ş.",
+    "slug": "2519-feronia-girisim-sermayesi-portfoy-yonetimi-a-s",
+    "oid": "2519"
   },
   {
     "name": "FİBA FAKTORİNG A.Ş.",
@@ -2160,7 +2975,7 @@
     "oid": "6118"
   },
   {
-    "name": "FBB FBBNK",
+    "name": "FİBABANKA A.Ş.",
     "slug": "2067-fibabanka-a-s",
     "oid": "2067"
   },
@@ -2180,9 +2995,34 @@
     "oid": "3184"
   },
   {
+    "name": "FİNAL VARLIK YÖNETİM A.Ş.",
+    "slug": "2276-final-varlik-yonetim-a-s",
+    "oid": "2276"
+  },
+  {
+    "name": "FİNANS YATIRIM ORTAKLIĞI A.Ş.",
+    "slug": "954-finans-yatirim-ortakligi-a-s",
+    "oid": "954"
+  },
+  {
+    "name": "FİNANSAL EKSEN BAĞIMSIZ DENETİM VE DANIŞMANLIK A.Ş.",
+    "slug": "237-finansal-eksen-bagimsiz-denetim-ve-danismanlik-a-s",
+    "oid": "237"
+  },
+  {
     "name": "FLAP KONGRE TOPLANTI HİZMETLERİ OTOMOTİV VE TURİZM A.Ş.",
     "slug": "1617-flap-kongre-toplanti-hizmetleri-otomotiv-ve-turizm-a-s",
     "oid": "1617"
+  },
+  {
+    "name": "FLEETCORP OPERASYONEL TAŞIT KİRALAMA VE TURİZM A.Ş.",
+    "slug": "3643-fleetcorp-operasyonel-tasit-kiralama-ve-turizm-a-s",
+    "oid": "3643"
+  },
+  {
+    "name": "FOKUS PORTFÖY YÖNETİMİ A.Ş.",
+    "slug": "2342-fokus-portfoy-yonetimi-a-s",
+    "oid": "2342"
   },
   {
     "name": "FONET BİLGİ TEKNOLOJİLERİ A.Ş.",
@@ -2200,6 +3040,11 @@
     "oid": "956"
   },
   {
+    "name": "FORM DENETİM VE DANİŞMANLIK A.Ş.",
+    "slug": "113-form-denetim-ve-danismanlik-a-s",
+    "oid": "113"
+  },
+  {
     "name": "FORMET METAL VE CAM SANAYİ A.Ş.",
     "slug": "4639-formet-metal-ve-cam-sanayi-a-s",
     "oid": "4639"
@@ -2213,6 +3058,21 @@
     "name": "FORTE BİLGİ İLETİŞİM TEKNOLOJİLERİ VE SAVUNMA SANAYİ A.Ş.",
     "slug": "5598-forte-bilgi-iletisim-teknolojileri-ve-savunma-sanayi-a-s",
     "oid": "5598"
+  },
+  {
+    "name": "FORTIS BANK A.Ş.",
+    "slug": "1080-fortis-bank-a-s",
+    "oid": "1080"
+  },
+  {
+    "name": "FORTİS YATIRIM MENKUL DEĞERLER A.Ş.",
+    "slug": "1288-fortis-yatirim-menkul-degerler-a-s",
+    "oid": "1288"
+  },
+  {
+    "name": "FREEDOM BANK A.Ş.",
+    "slug": "2201-freedom-bank-a-s",
+    "oid": "2201"
   },
   {
     "name": "FRİGO-PAK GIDA MADDELERİ SANAYİ VE TİCARET A.Ş.",
@@ -2250,6 +3110,11 @@
     "oid": "5349"
   },
   {
+    "name": "GARANTİ BBVA OPERASYONEL KİRALAMA HİZMETLERİ A.Ş.",
+    "slug": "2113-garanti-bbva-operasyonel-kiralama-hizmetleri-a-s",
+    "oid": "2113"
+  },
+  {
     "name": "GARANTİ EMEKLİLİK VE HAYAT A.Ş.",
     "slug": "1802-garanti-emeklilik-ve-hayat-a-s",
     "oid": "1802"
@@ -2258,11 +3123,6 @@
     "name": "GARANTİ FAKTORİNG A.Ş.",
     "slug": "959-garanti-faktoring-a-s",
     "oid": "959"
-  },
-  {
-    "name": "GARANTİ FİLO YÖNETİM HİZMETLERİ A.Ş.",
-    "slug": "2113-garanti-filo-yonetim-hizmetleri-a-s",
-    "oid": "2113"
   },
   {
     "name": "GARANTİ FİNANSAL KİRALAMA A.Ş.",
@@ -2275,7 +3135,7 @@
     "oid": "2294"
   },
   {
-    "name": "GRM GRYAT",
+    "name": "GARANTİ YATIRIM MENKUL KIYMETLER A.Ş.",
     "slug": "1304-garanti-yatirim-menkul-kiymetler-a-s",
     "oid": "1304"
   },
@@ -2295,6 +3155,11 @@
     "oid": "1692"
   },
   {
+    "name": "GÇS METAL ÇATI İZOLASYON TAAHHÜT TİCARET VE SANAYİ A.Ş.",
+    "slug": "2376-gcs-metal-cati-izolasyon-taahhut-ticaret-ve-sanayi-a-s",
+    "oid": "2376"
+  },
+  {
     "name": "GEDİK YATIRIM MENKUL DEĞERLER A.Ş.",
     "slug": "1517-gedik-yatirim-menkul-degerler-a-s",
     "oid": "1517"
@@ -2305,11 +3170,6 @@
     "oid": "2209"
   },
   {
-    "name": "YKY BAĞIMSIZ DENETİM VE YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
-    "slug": "154-yky-bagimsiz-denetim-ve-yeminli-mali-musavirlik-a-s",
-    "oid": "154"
-  },
-  {
     "name": "GELECEK VARLIK YÖNETİMİ A.Ş.",
     "slug": "4811-gelecek-varlik-yonetimi-a-s",
     "oid": "4811"
@@ -2318,6 +3178,16 @@
     "name": "GEN İLAÇ VE SAĞLIK ÜRÜNLERİ SANAYİ VE TİCARET A.Ş.",
     "slug": "5385-gen-ilac-ve-saglik-urunleri-sanayi-ve-ticaret-a-s",
     "oid": "5385"
+  },
+  {
+    "name": "GEN YATIRIM HOLDİNG A.Ş.",
+    "slug": "1036-gen-yatirim-holding-a-s",
+    "oid": "1036"
+  },
+  {
+    "name": "GENPOWER HOLDİNG A.Ş.",
+    "slug": "1407-genpower-holding-a-s",
+    "oid": "1407"
   },
   {
     "name": "GENTAŞ DEKORATİF YÜZEYLER SANAYİ VE TİCARET A.Ş.",
@@ -2340,9 +3210,19 @@
     "oid": "5519"
   },
   {
+    "name": "GFC GENERAL FİNANS MENKUL DEĞERLER A.Ş.",
+    "slug": "1306-gfc-general-finans-menkul-degerler-a-s",
+    "oid": "1306"
+  },
+  {
     "name": "GIPTA OFİS KIRTASİYE VE PROMOSYON ÜRÜNLERİ İMALAT SANAYİ A.Ş.",
     "slug": "5864-gipta-ofis-kirtasiye-ve-promosyon-urunleri-imalat-sanayi-a-s",
     "oid": "5864"
+  },
+  {
+    "name": "GİMA GIDA VE İHTİYAÇ MADDELERİ T.A.Ş.",
+    "slug": "965-gima-gida-ve-ihtiyac-maddeleri-t-a-s",
+    "oid": "965"
   },
   {
     "name": "GİMAT MAĞAZACILIK SANAYİ VE TİCARET A.Ş.",
@@ -2350,9 +3230,24 @@
     "oid": "3697"
   },
   {
+    "name": "GİMSAN GEDİZ İPLİK VE MENSUCAT SANAYİİ A.Ş.",
+    "slug": "966-gimsan-gediz-iplik-ve-mensucat-sanayii-a-s",
+    "oid": "966"
+  },
+  {
     "name": "GİRİŞİM ELEKTRİK SANAYİ TAAHHÜT VE TİCARET A.Ş.",
     "slug": "5400-girisim-elektrik-sanayi-taahhut-ve-ticaret-a-s",
     "oid": "5400"
+  },
+  {
+    "name": "GİRİŞİM VARLIK YÖNETİMİ A.Ş.",
+    "slug": "2499-girisim-varlik-yonetimi-a-s",
+    "oid": "2499"
+  },
+  {
+    "name": "GLOBAL LİMAN İŞLETMELERİ A.Ş.",
+    "slug": "2467-global-liman-isletmeleri-a-s",
+    "oid": "2467"
   },
   {
     "name": "GLOBAL MD PORTFÖY YÖNETİMİ A.Ş.",
@@ -2360,7 +3255,7 @@
     "oid": "2317"
   },
   {
-    "name": "GLB GLBMD",
+    "name": "GLOBAL MENKUL DEĞERLER A.Ş.",
     "slug": "1554-global-menkul-degerler-a-s",
     "oid": "1554"
   },
@@ -2368,6 +3263,16 @@
     "name": "GLOBAL YATIRIM HOLDİNG A.Ş.",
     "slug": "967-global-yatirim-holding-a-s",
     "oid": "967"
+  },
+  {
+    "name": "GOLDA GIDA SANAYİ VE TİCARET A.Ş.",
+    "slug": "3523-golda-gida-sanayi-ve-ticaret-a-s",
+    "oid": "3523"
+  },
+  {
+    "name": "GOLDAŞ KUYUMCULUK SANAYİ İTHALAT İHRACAT A.Ş.",
+    "slug": "969-goldas-kuyumculuk-sanayi-ithalat-ihracat-a-s",
+    "oid": "969"
   },
   {
     "name": "GOLDEN GLOBAL PORTFÖY YÖNETİMİ A.Ş.",
@@ -2395,6 +3300,11 @@
     "oid": "970"
   },
   {
+    "name": "GORBON IŞIL SERAMİK A.Ş.",
+    "slug": "971-gorbon-isil-seramik-a-s",
+    "oid": "971"
+  },
+  {
     "name": "GÖKNUR GIDA MADDELERİ ENERJİ İMALAT İTHALAT İHRACAT TİCARET VE SANAYİ A.Ş.",
     "slug": "3518-goknur-gida-maddeleri-enerji-imalat-ithalat-ihracat-ticaret-ve-sanayi-a-s",
     "oid": "3518"
@@ -2405,9 +3315,24 @@
     "oid": "972"
   },
   {
+    "name": "GÖRÜŞ BAĞIMSIZ DENETİM VE YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "5344-gorus-bagimsiz-denetim-ve-yeminli-mali-musavirlik-a-s",
+    "oid": "5344"
+  },
+  {
     "name": "GÖZDE GİRİŞİM SERMAYESİ YATIRIM ORTAKLIĞI A.Ş.",
     "slug": "1499-gozde-girisim-sermayesi-yatirim-ortakligi-a-s",
     "oid": "1499"
+  },
+  {
+    "name": "GÖZET YEMİNLİ MALİ MÜŞAVİRLİK VE BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "115-gozet-yeminli-mali-musavirlik-ve-bagimsiz-denetim-a-s",
+    "oid": "115"
+  },
+  {
+    "name": "GÖZLEM DENETİM VE DANIŞMANLIK HİZMETLERİ A.Ş.",
+    "slug": "116-gozlem-denetim-ve-danismanlik-hizmetleri-a-s",
+    "oid": "116"
   },
   {
     "name": "GRAINTURK HOLDİNG A.Ş.",
@@ -2418,6 +3343,16 @@
     "name": "GRC BAĞIMSIZ DENETİM A.Ş.",
     "slug": "230-grc-bagimsiz-denetim-a-s",
     "oid": "230"
+  },
+  {
+    "name": "GROUPAMA HAYAT A.Ş.",
+    "slug": "1751-groupama-hayat-a-s",
+    "oid": "1751"
+  },
+  {
+    "name": "GRUNDİG ELEKTRONİK A.Ş.",
+    "slug": "879-grundig-elektronik-a-s",
+    "oid": "879"
   },
   {
     "name": "GSD DENİZCİLİK GAYRİMENKUL İNŞAAT SANAYİ VE TİCARET A.Ş.",
@@ -2445,6 +3380,16 @@
     "oid": "974"
   },
   {
+    "name": "GÜÇBİR BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "117-gucbir-bagimsiz-denetim-a-s",
+    "oid": "117"
+  },
+  {
+    "name": "GÜLER GİRİŞİM SERMAYESİ YATIRIM ORTAKLIĞI A.Ş.",
+    "slug": "2036-guler-girisim-sermayesi-yatirim-ortakligi-a-s",
+    "oid": "2036"
+  },
+  {
     "name": "GÜLER YATIRIM HOLDİNG A.Ş.",
     "slug": "1428-guler-yatirim-holding-a-s",
     "oid": "1428"
@@ -2455,14 +3400,54 @@
     "oid": "3545"
   },
   {
+    "name": "GÜNCEL BAĞIMSIZ DENETİM DANIŞMANLIK A.Ş.",
+    "slug": "210-guncel-bagimsiz-denetim-danismanlik-a-s",
+    "oid": "210"
+  },
+  {
     "name": "GÜNDOĞDU GIDA SÜT ÜRÜNLERİ SANAYİ VE DIŞ TİCARET A.Ş.",
     "slug": "6011-gundogdu-gida-sut-urunleri-sanayi-ve-dis-ticaret-a-s",
     "oid": "6011"
   },
   {
+    "name": "GÜNEY BAĞIMSIZ DENETİM VE SERBEST MUHASEBECİ MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "118-guney-bagimsiz-denetim-ve-serbest-muhasebeci-mali-musavirlik-a-s",
+    "oid": "118"
+  },
+  {
+    "name": "GÜNEY MENKUL DEĞERLER TİCARETİ A.Ş.",
+    "slug": "1309-guney-menkul-degerler-ticareti-a-s",
+    "oid": "1309"
+  },
+  {
     "name": "GÜR-SEL TURİZM TAŞIMACILIK VE SERVİS TİCARET A.Ş.",
     "slug": "5553-gur-sel-turizm-tasimacilik-ve-servis-ticaret-a-s",
     "oid": "5553"
+  },
+  {
+    "name": "GÜRELİ YEMİNLİ MALİ MÜŞAVİRLİK VE BAĞIMSIZ DENETİM HİZMETLERİ A.Ş.",
+    "slug": "119-gureli-yeminli-mali-musavirlik-ve-bagimsiz-denetim-hizmetleri-a-s",
+    "oid": "119"
+  },
+  {
+    "name": "GÜRTEKS İPLİK SANAYİ VE TİCARET A.Ş.",
+    "slug": "2435-gurteks-iplik-sanayi-ve-ticaret-a-s",
+    "oid": "2435"
+  },
+  {
+    "name": "GÜVEN MENKUL DEĞERLER A.Ş.",
+    "slug": "1310-guven-menkul-degerler-a-s",
+    "oid": "1310"
+  },
+  {
+    "name": "GÜVEN VARLIK YÖNETİM A.Ş.",
+    "slug": "2529-guven-varlik-yonetim-a-s",
+    "oid": "2529"
+  },
+  {
+    "name": "GY VARLIK KİRALAMA A.Ş.",
+    "slug": "6217-gy-varlik-kiralama-a-s",
+    "oid": "6217"
   },
   {
     "name": "HACI ÖMER SABANCI HOLDİNG A.Ş.",
@@ -2485,12 +3470,27 @@
     "oid": "1701"
   },
   {
+    "name": "HALK HAYAT VE EMEKLİLİK A.Ş.",
+    "slug": "1893-halk-hayat-ve-emeklilik-a-s",
+    "oid": "1893"
+  },
+  {
+    "name": "HALK PORTFÖY YÖNETİMİ A.Ş.",
+    "slug": "2348-halk-portfoy-yonetimi-a-s",
+    "oid": "2348"
+  },
+  {
+    "name": "HALK SİGORTA A.Ş.",
+    "slug": "1593-halk-sigorta-a-s",
+    "oid": "1593"
+  },
+  {
     "name": "HALK VARLIK KİRALAMA A.Ş.",
     "slug": "4538-halk-varlik-kiralama-a-s",
     "oid": "4538"
   },
   {
-    "name": "HALKI HLY",
+    "name": "HALK YATIRIM MENKUL DEĞERLER A.Ş.",
     "slug": "1312-halk-yatirim-menkul-degerler-a-s",
     "oid": "1312"
   },
@@ -2510,14 +3510,19 @@
     "oid": "5610"
   },
   {
+    "name": "HAT-SAN GEMİ İNŞAA BAKIM ONARIM DENİZ NAKLİYAT SANAYİ VE TİCARET A.Ş.",
+    "slug": "5868-hat-san-gemi-insaa-bakim-onarim-deniz-nakliyat-sanayi-ve-ticaret-a-s",
+    "oid": "5868"
+  },
+  {
     "name": "HATEKS HATAY TEKSTİL İŞLETMELERİ A.Ş.",
     "slug": "1532-hateks-hatay-tekstil-isletmeleri-a-s",
     "oid": "1532"
   },
   {
-    "name": "HAT-SAN GEMİ İNŞAA BAKIM ONARIM DENİZ NAKLİYAT SANAYİ VE TİCARET A.Ş.",
-    "slug": "5868-hat-san-gemi-insaa-bakim-onarim-deniz-nakliyat-sanayi-ve-ticaret-a-s",
-    "oid": "5868"
+    "name": "HAVER FARMA İLAÇ A.Ş.",
+    "slug": "6278-haver-farma-ilac-a-s",
+    "oid": "6278"
   },
   {
     "name": "HAYAT FİNANS KATILIM BANKASI A.Ş.",
@@ -2528,6 +3533,16 @@
     "name": "HAYAT VARLIK KİRALAMA A.Ş.",
     "slug": "6104-hayat-varlik-kiralama-a-s",
     "oid": "6104"
+  },
+  {
+    "name": "HAYAT VARLIK YÖNETİM A.Ş.",
+    "slug": "4075-hayat-varlik-yonetim-a-s",
+    "oid": "4075"
+  },
+  {
+    "name": "HAZNEDAR REFRAKTER SANAYİİ A.Ş.",
+    "slug": "977-haznedar-refrakter-sanayii-a-s",
+    "oid": "977"
   },
   {
     "name": "HDI FİBA EMEKLİLİK VE HAYAT A.Ş.",
@@ -2560,7 +3575,7 @@
     "oid": "5940"
   },
   {
-    "name": "HDFYB HYB",
+    "name": "HEDEF YATIRIM BANKASI A.Ş.",
     "slug": "5926-hedef-yatirim-bankasi-a-s",
     "oid": "5926"
   },
@@ -2568,6 +3583,11 @@
     "name": "HEKTAŞ TİCARET T.A.Ş.",
     "slug": "978-hektas-ticaret-t-a-s",
     "oid": "978"
+  },
+  {
+    "name": "HEPSİ BANK A.Ş.",
+    "slug": "2507-hepsi-bank-a-s",
+    "oid": "2507"
   },
   {
     "name": "HEPSİ FİNANSMAN A.Ş.",
@@ -2590,12 +3610,22 @@
     "oid": "5499"
   },
   {
+    "name": "HİTİT HOLDİNG A.Ş.",
+    "slug": "1574-hitit-holding-a-s",
+    "oid": "1574"
+  },
+  {
+    "name": "HLB SAYGIN BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "211-hlb-saygin-bagimsiz-denetim-a-s",
+    "oid": "211"
+  },
+  {
     "name": "HOROZ LOJİSTİK KARGO HİZMETLERİ VE TİCARET A.Ş.",
     "slug": "5964-horoz-lojistik-kargo-hizmetleri-ve-ticaret-a-s",
     "oid": "5964"
   },
   {
-    "name": "HSB HSBCB",
+    "name": "HSBC BANK A.Ş.",
     "slug": "2034-hsbc-bank-a-s",
     "oid": "2034"
   },
@@ -2613,6 +3643,11 @@
     "name": "HST TARIM A.Ş.",
     "slug": "5740-hst-tarim-a-s",
     "oid": "5740"
+  },
+  {
+    "name": "HSY DANIŞMANLIK VE BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "194-hsy-danismanlik-ve-bagimsiz-denetim-a-s",
+    "oid": "194"
   },
   {
     "name": "HUB GİRİŞİM SERMAYESİ YATIRIM ORTAKLIĞI A.Ş.",
@@ -2640,7 +3675,12 @@
     "oid": "5943"
   },
   {
-    "name": "ICB ICBCT",
+    "name": "IC İÇTAŞ ENERJİ YATIRIM HOLDİNG A.Ş.",
+    "slug": "2533-ic-ictas-enerji-yatirim-holding-a-s",
+    "oid": "2533"
+  },
+  {
+    "name": "ICBC TURKEY BANK A.Ş.",
     "slug": "2420-icbc-turkey-bank-a-s",
     "oid": "2420"
   },
@@ -2655,9 +3695,19 @@
     "oid": "1359"
   },
   {
+    "name": "ICS BAĞIMSIZ DENETİM SERBEST MUHASEBECİ VE MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "193-ics-bagimsiz-denetim-serbest-muhasebeci-ve-mali-musavirlik-a-s",
+    "oid": "193"
+  },
+  {
     "name": "ICU GİRİŞİM SERMAYESİ YATIRIM ORTAKLIĞI A.Ş.",
     "slug": "1118-icu-girisim-sermayesi-yatirim-ortakligi-a-s",
     "oid": "1118"
+  },
+  {
+    "name": "IHY BAĞIMSIZ DENETİM VE YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "121-ihy-bagimsiz-denetim-ve-yeminli-mali-musavirlik-a-s",
+    "oid": "121"
   },
   {
     "name": "IKON MENKUL DEĞERLER A.Ş.",
@@ -2665,9 +3715,19 @@
     "oid": "1353"
   },
   {
-    "name": "GIN INGBN",
+    "name": "ING BANK A.Ş.",
     "slug": "2214-ing-bank-a-s",
     "oid": "2214"
+  },
+  {
+    "name": "ING FAKTORİNG A.Ş.",
+    "slug": "2925-ing-faktoring-a-s",
+    "oid": "2925"
+  },
+  {
+    "name": "ING PORTFÖY YÖNETİMİ A.Ş.",
+    "slug": "2338-ing-portfoy-yonetimi-a-s",
+    "oid": "2338"
   },
   {
     "name": "ING YATIRIM MENKUL DEĞERLER A.Ş.",
@@ -2680,6 +3740,11 @@
     "oid": "1435"
   },
   {
+    "name": "INVEO ARAÇ KİRALAMA HİZMETLERİ A.Ş.",
+    "slug": "6218-inveo-arac-kiralama-hizmetleri-a-s",
+    "oid": "6218"
+  },
+  {
     "name": "INVEO PORTFÖY YÖNETİMİ A.Ş.",
     "slug": "2343-inveo-portfoy-yonetimi-a-s",
     "oid": "2343"
@@ -2690,7 +3755,7 @@
     "oid": "962"
   },
   {
-    "name": "IAZ INVAZ",
+    "name": "INVEST-AZ YATIRIM MENKUL DEĞERLER A.Ş.",
     "slug": "2640-invest-az-yatirim-menkul-degerler-a-s",
     "oid": "2640"
   },
@@ -2710,14 +3775,34 @@
     "oid": "5254"
   },
   {
+    "name": "IŞIK YEMİNLİ MALİ MÜŞAVİRLİK VE BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "122-isik-yeminli-mali-musavirlik-ve-bagimsiz-denetim-a-s",
+    "oid": "122"
+  },
+  {
     "name": "IŞIKLAR ENERJİ VE YAPI HOLDİNG A.Ş.",
     "slug": "1031-isiklar-enerji-ve-yapi-holding-a-s",
     "oid": "1031"
   },
   {
+    "name": "IŞIKLAR YATIRIM HOLDİNG A.Ş.",
+    "slug": "990-isiklar-yatirim-holding-a-s",
+    "oid": "990"
+  },
+  {
+    "name": "IYAŞ ISPARTA GIDA SANAYİ VE TİCARET A.Ş.",
+    "slug": "1581-iyas-isparta-gida-sanayi-ve-ticaret-a-s",
+    "oid": "1581"
+  },
+  {
     "name": "İBD İSTANBUL BAĞIMSIZ DENETİM VE SMMM A.Ş.",
     "slug": "5634-ibd-istanbul-bagimsiz-denetim-ve-smmm-a-s",
     "oid": "5634"
+  },
+  {
+    "name": "İDA BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "4818-ida-bagimsiz-denetim-a-s",
+    "oid": "4818"
   },
   {
     "name": "İDEALİST GAYRİMENKUL VE GİRİŞİM SERMAYESİ PORTFÖY YÖNETİMİ A.Ş.",
@@ -2728,6 +3813,11 @@
     "name": "İDEALİST GAYRİMENKUL YATIRIM ORTAKLIĞI A.Ş.",
     "slug": "1506-idealist-gayrimenkul-yatirim-ortakligi-a-s",
     "oid": "1506"
+  },
+  {
+    "name": "İFM İSTANBUL FİNANS MERKEZİ İNŞAAT TAAHHÜT A.Ş.",
+    "slug": "2359-ifm-istanbul-finans-merkezi-insaat-taahhut-a-s",
+    "oid": "2359"
   },
   {
     "name": "İHLAS EV ALETLERİ İMALAT SANAYİ VE TİCARET A.Ş.",
@@ -2760,6 +3850,16 @@
     "oid": "1526"
   },
   {
+    "name": "İKTİSAT FİNANSAL KİRALAMA A.Ş.",
+    "slug": "984-iktisat-finansal-kiralama-a-s",
+    "oid": "984"
+  },
+  {
+    "name": "İLKE YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "123-ilke-yeminli-mali-musavirlik-a-s",
+    "oid": "123"
+  },
+  {
     "name": "İMAŞ MAKİNA SANAYİ A.Ş.",
     "slug": "5592-imas-makina-sanayi-a-s",
     "oid": "5592"
@@ -2768,6 +3868,11 @@
     "name": "İNALLAR OTOMOTİV SANAYİ VE TİCARET A.Ş.",
     "slug": "4840-inallar-otomotiv-sanayi-ve-ticaret-a-s",
     "oid": "4840"
+  },
+  {
+    "name": "İNANLAR İNŞAAT A.Ş.",
+    "slug": "2381-inanlar-insaat-a-s",
+    "oid": "2381"
   },
   {
     "name": "İNCİR PORTFÖY YÖNETİMİ A.Ş.",
@@ -2780,7 +3885,7 @@
     "oid": "1390"
   },
   {
-    "name": "INFO IYF",
+    "name": "İNFO YATIRIM MENKUL DEĞERLER A.Ş.",
     "slug": "1559-info-yatirim-menkul-degerler-a-s",
     "oid": "1559"
   },
@@ -2788,11 +3893,6 @@
     "name": "İNNOSA TEKNOLOJİ A.Ş.",
     "slug": "1587-innosa-teknoloji-a-s",
     "oid": "1587"
-  },
-  {
-    "name": "İNTEGRAL GİRİŞİM SERMAYESİ PORTFÖY YÖNETİMİ A.Ş.",
-    "slug": "5658-integral-girisim-sermayesi-portfoy-yonetimi-a-s",
-    "oid": "5658"
   },
   {
     "name": "İNTEGRAL YATIRIM MENKUL DEĞERLER A.Ş.",
@@ -2803,6 +3903,16 @@
     "name": "İNTEMA İNŞAAT VE TESİSAT MALZEMELERİ YATIRIM VE PAZARLAMA A.Ş.",
     "slug": "985-intema-insaat-ve-tesisat-malzemeleri-yatirim-ve-pazarlama-a-s",
     "oid": "985"
+  },
+  {
+    "name": "İNTETRA TEKNOLOJİ VE BİLİŞİM HİZMETLERİ A.Ş.",
+    "slug": "6280-intetra-teknoloji-ve-bilisim-hizmetleri-a-s",
+    "oid": "6280"
+  },
+  {
+    "name": "İRFAN BAĞIMSIZ DENETİM VE YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "124-irfan-bagimsiz-denetim-ve-yeminli-mali-musavirlik-a-s",
+    "oid": "124"
   },
   {
     "name": "İSKENDERUN DEMİR VE ÇELİK A.Ş.",
@@ -2825,6 +3935,11 @@
     "oid": "2340"
   },
   {
+    "name": "İSTANBUL TAKAS VE SAKLAMA BANKASI A.Ş.",
+    "slug": "19-istanbul-takas-ve-saklama-bankasi-a-s",
+    "oid": "19"
+  },
+  {
     "name": "İSTANBUL ULUSLARARASI DERECELENDİRME HİZMETLERİ A.Ş.",
     "slug": "2462-istanbul-uluslararasi-derecelendirme-hizmetleri-a-s",
     "oid": "2462"
@@ -2833,6 +3948,11 @@
     "name": "İSTANBUL VARLIK YÖNETİM A.Ş.",
     "slug": "3076-istanbul-varlik-yonetim-a-s",
     "oid": "3076"
+  },
+  {
+    "name": "İSVEA SERAMİK VE BANYO ÜRÜNLERİ SANAYİ A.Ş.",
+    "slug": "6235-isvea-seramik-ve-banyo-urunleri-sanayi-a-s",
+    "oid": "6235"
   },
   {
     "name": "İŞ FAKTORİNG A.Ş.",
@@ -2860,7 +3980,7 @@
     "oid": "2339"
   },
   {
-    "name": "ISMEN IYM",
+    "name": "İŞ YATIRIM MENKUL DEĞERLER A.Ş.",
     "slug": "1533-is-yatirim-menkul-degerler-a-s",
     "oid": "1533"
   },
@@ -2878,6 +3998,11 @@
     "name": "İŞBİR SENTETİK DOKUMA SANAYİ A.Ş.",
     "slug": "4135-isbir-sentetik-dokuma-sanayi-a-s",
     "oid": "4135"
+  },
+  {
+    "name": "İTİMAT BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "125-itimat-bagimsiz-denetim-a-s",
+    "oid": "125"
   },
   {
     "name": "İZ YATIRIM HOLDİNG A.Ş.",
@@ -2898,6 +4023,11 @@
     "name": "İZMİR FIRÇA SANAYİ VE TİCARET A.Ş.",
     "slug": "2273-izmir-firca-sanayi-ve-ticaret-a-s",
     "oid": "2273"
+  },
+  {
+    "name": "İZOCAM TİCARET VE SANAYİ A.Ş.",
+    "slug": "992-izocam-ticaret-ve-sanayi-a-s",
+    "oid": "992"
   },
   {
     "name": "J. P. MORGAN MENKUL DEĞERLER A.Ş.",
@@ -2925,9 +4055,9 @@
     "oid": "1320"
   },
   {
-    "name": "KARDEN PARTNERS BAĞIMSIZ DENETİM VE SMMM A.Ş.",
-    "slug": "181-karden-partners-bagimsiz-denetim-ve-smmm-a-s",
-    "oid": "181"
+    "name": "K2 FAKTORİNG A.Ş.",
+    "slug": "2270-k2-faktoring-a-s",
+    "oid": "2270"
   },
   {
     "name": "KAFEİN YAZILIM HİZMETLERİ TİCARET A.Ş.",
@@ -2935,9 +4065,19 @@
     "oid": "4320"
   },
   {
+    "name": "KAİZEN BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "5813-kaizen-bagimsiz-denetim-a-s",
+    "oid": "5813"
+  },
+  {
     "name": "KALEKİM KİMYEVİ MADDELER SANAYİ VE TİCARET A.Ş.",
     "slug": "3979-kalekim-kimyevi-maddeler-sanayi-ve-ticaret-a-s",
     "oid": "3979"
+  },
+  {
+    "name": "KALENDER GAYRİMENKUL PORTFÖY YÖNETİMİ A.Ş.",
+    "slug": "2523-kalender-gayrimenkul-portfoy-yonetimi-a-s",
+    "oid": "2523"
   },
   {
     "name": "KALESERAMİK ÇANAKKALE KALEBODUR SERAMİK SANAYİ A.Ş.",
@@ -2960,9 +4100,49 @@
     "oid": "6061"
   },
   {
+    "name": "KAMUYU AYDINLATMA PLATFORMU",
+    "slug": "51-kamuyu-aydinlatma-platformu",
+    "oid": "51"
+  },
+  {
+    "name": "KAP TEST A.Ş.",
+    "slug": "4229-kap-test-a-s",
+    "oid": "4229"
+  },
+  {
+    "name": "KAP TEST BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "220-kap-test-bagimsiz-denetim-a-s",
+    "oid": "220"
+  },
+  {
+    "name": "KAP TEST YATIRIM A.Ş.",
+    "slug": "4230-kap-test-yatirim-a-s",
+    "oid": "4230"
+  },
+  {
+    "name": "KAPEKS KİMYA SANAYİ A.Ş.",
+    "slug": "6272-kapeks-kimya-sanayi-a-s",
+    "oid": "6272"
+  },
+  {
+    "name": "KAPİTAL FAKTORİNG A.Ş.",
+    "slug": "1540-kapital-faktoring-a-s",
+    "oid": "1540"
+  },
+  {
     "name": "KAPİTAL GAYRİMENKUL YATIRIMI GELİŞTİRME VE İŞLETMECİLİK A.Ş.",
     "slug": "6155-kapital-gayrimenkul-yatirimi-gelistirme-ve-isletmecilik-a-s",
     "oid": "6155"
+  },
+  {
+    "name": "KAPİTAL MENKUL DEĞERLER A.Ş.",
+    "slug": "1334-kapital-menkul-degerler-a-s",
+    "oid": "1334"
+  },
+  {
+    "name": "KAPİTAL YATIRIM HOLDİNG A.Ş.",
+    "slug": "1409-kapital-yatirim-holding-a-s",
+    "oid": "1409"
   },
   {
     "name": "KAPLAMİN AMBALAJ SANAYİ VE TİCARET A.Ş.",
@@ -2970,9 +4150,29 @@
     "oid": "993"
   },
   {
-    "name": "KRDMA KRDMB KRDMD",
+    "name": "KARAKAŞ ATLANTİS KIYMETLİ MADENLER KUYUMCULUK TELEKOMÜNİKASYON SANAYİ VE TİCARET A.Ş.",
+    "slug": "1680-karakas-atlantis-kiymetli-madenler-kuyumculuk-telekomunikasyon-sanayi-ve-ticaret-a-s",
+    "oid": "1680"
+  },
+  {
+    "name": "KARAR BAĞIMSIZ DENETİM VE DANIŞMANLIK A.Ş.",
+    "slug": "229-karar-bagimsiz-denetim-ve-danismanlik-a-s",
+    "oid": "229"
+  },
+  {
+    "name": "KARDEMİR ÇELİK SANAYİ A.Ş.",
+    "slug": "3200-kardemir-celik-sanayi-a-s",
+    "oid": "3200"
+  },
+  {
+    "name": "KARDEMİR KARABÜK DEMİR ÇELİK SANAYİ VE TİCARET A.Ş.",
     "slug": "994-kardemir-karabuk-demir-celik-sanayi-ve-ticaret-a-s",
     "oid": "994"
+  },
+  {
+    "name": "KARDEN PARTNERS BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "181-karden-partners-bagimsiz-denetim-a-s",
+    "oid": "181"
   },
   {
     "name": "KARE PORTFÖY YÖNETİMİ A.Ş.",
@@ -2980,9 +4180,19 @@
     "oid": "2493"
   },
   {
+    "name": "KARE YATIRIM MENKUL DEĞERLER A.Ş.",
+    "slug": "1347-kare-yatirim-menkul-degerler-a-s",
+    "oid": "1347"
+  },
+  {
     "name": "KAREL ELEKTRONİK SANAYİ VE TİCARET A.Ş.",
     "slug": "1442-karel-elektronik-sanayi-ve-ticaret-a-s",
     "oid": "1442"
+  },
+  {
+    "name": "KARMA BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "190-karma-bagimsiz-denetim-a-s",
+    "oid": "190"
   },
   {
     "name": "KARSAN OTOMOTİV SANAYİİ VE TİCARET A.Ş.",
@@ -3020,14 +4230,19 @@
     "oid": "1528"
   },
   {
+    "name": "KAV DANIŞMANLIK PAZARLAMA VE TİCARET A.Ş.",
+    "slug": "998-kav-danismanlik-pazarlama-ve-ticaret-a-s",
+    "oid": "998"
+  },
+  {
+    "name": "KAVRAM BAĞIMSIZ DENETİM VE DANIŞMANLIK A.Ş.",
+    "slug": "127-kavram-bagimsiz-denetim-ve-danismanlik-a-s",
+    "oid": "127"
+  },
+  {
     "name": "KAYATUR FİLO KİRALAMA A.Ş.",
     "slug": "6132-kayatur-filo-kiralama-a-s",
     "oid": "6132"
-  },
-  {
-    "name": "ÖNDER BAĞIMSIZ DENETİM VE DANIŞMANLIK A.Ş.",
-    "slug": "133-onder-bagimsiz-denetim-ve-danismanlik-a-s",
-    "oid": "133"
   },
   {
     "name": "KAYSERİ ŞEKER FABRİKASI A.Ş.",
@@ -3045,6 +4260,16 @@
     "oid": "1000"
   },
   {
+    "name": "KENT YATIRIM MENKUL DEĞERLER A.Ş.",
+    "slug": "1322-kent-yatirim-menkul-degerler-a-s",
+    "oid": "1322"
+  },
+  {
+    "name": "KEPEZ ELEKTRİK T.A.Ş.",
+    "slug": "1001-kepez-elektrik-t-a-s",
+    "oid": "1001"
+  },
+  {
     "name": "KERVAN GIDA SANAYİ VE TİCARET A.Ş.",
     "slug": "3456-kervan-gida-sanayi-ve-ticaret-a-s",
     "oid": "3456"
@@ -3055,19 +4280,9 @@
     "oid": "897"
   },
   {
-    "name": "MEGA GLOBAL ULUSLARARASI BAĞIMSIZ DENETİM A.Ş.",
-    "slug": "197-mega-global-uluslararasi-bagimsiz-denetim-a-s",
-    "oid": "197"
-  },
-  {
     "name": "KIRAÇ GALVANİZ TELEKOMİNİKASYON METAL MAKİNE İNŞAAT ELEKTRİK SANAYİ VE TİCARET A.Ş.",
     "slug": "6010-kirac-galvaniz-telekominikasyon-metal-makine-insaat-elektrik-sanayi-ve-ticaret-a-s",
     "oid": "6010"
-  },
-  {
-    "name": "SER-BERKER BAĞIMSIZ DENETİM A.Ş.",
-    "slug": "186-ser-berker-bagimsiz-denetim-a-s",
-    "oid": "186"
   },
   {
     "name": "KIZILAY GAYRİMENKUL VE GİRİŞİM SERMAYESİ PORTFÖY YÖNETİMİ A.Ş.",
@@ -3078,6 +4293,11 @@
     "name": "KIZILBÜK GAYRİMENKUL YATIRIM ORTAKLIĞI A.Ş.",
     "slug": "5395-kizilbuk-gayrimenkul-yatirim-ortakligi-a-s",
     "oid": "5395"
+  },
+  {
+    "name": "KİLER ALIŞVERİŞ HİZMETLERİ GIDA SANAYİ VE TİCARET A.Ş.",
+    "slug": "1534-kiler-alisveris-hizmetleri-gida-sanayi-ve-ticaret-a-s",
+    "oid": "1534"
   },
   {
     "name": "KİLER GAYRİMENKUL YATIRIM ORTAKLIĞI A.Ş.",
@@ -3095,9 +4315,24 @@
     "oid": "5480"
   },
   {
+    "name": "KİPA TİCARET A.Ş.",
+    "slug": "1003-kipa-ticaret-a-s",
+    "oid": "1003"
+  },
+  {
+    "name": "KİSBU GAYRİMENKUL VE GİRİŞİM SERMAYESİ PORTFÖY YÖNETİMİ A.Ş.",
+    "slug": "6224-kisbu-gayrimenkul-ve-girisim-sermayesi-portfoy-yonetimi-a-s",
+    "oid": "6224"
+  },
+  {
     "name": "KLİMASAN KLİMA SANAYİ VE TİCARET A.Ş.",
     "slug": "1004-klimasan-klima-sanayi-ve-ticaret-a-s",
     "oid": "1004"
+  },
+  {
+    "name": "KOBİ GİRİŞİM SERMAYESİ YATIRIM ORTAKLIĞI A.Ş.",
+    "slug": "2019-kobi-girisim-sermayesi-yatirim-ortakligi-a-s",
+    "oid": "2019"
   },
   {
     "name": "KOCAER ÇELİK SANAYİ VE TİCARET A.Ş.",
@@ -3130,6 +4365,16 @@
     "oid": "1604"
   },
   {
+    "name": "KOÇ YATIRIM MENKUL DEĞERLER A.Ş.",
+    "slug": "1323-koc-yatirim-menkul-degerler-a-s",
+    "oid": "1323"
+  },
+  {
+    "name": "KOÇTAŞ YAPI MARKETLERİ TİCARET A.Ş.",
+    "slug": "2115-koctas-yapi-marketleri-ticaret-a-s",
+    "oid": "2115"
+  },
+  {
     "name": "KOLEKSİYON MOBİLYA SANAYİ A.Ş.",
     "slug": "3651-koleksiyon-mobilya-sanayi-a-s",
     "oid": "3651"
@@ -3138,6 +4383,11 @@
     "name": "KONFRUT TARIM A.Ş.",
     "slug": "1006-konfrut-tarim-a-s",
     "oid": "1006"
+  },
+  {
+    "name": "KONİTEKS KONFEKSİYON ENDÜSTRİ VE TİCARET A.Ş.",
+    "slug": "1007-koniteks-konfeksiyon-endustri-ve-ticaret-a-s",
+    "oid": "1007"
   },
   {
     "name": "KONTROLMATİK TEKNOLOJİ ENERJİ VE MÜHENDİSLİK A.Ş.",
@@ -3153,6 +4403,11 @@
     "name": "KONYA KAĞIT SANAYİ VE TİCARET A.Ş.",
     "slug": "3308-konya-kagit-sanayi-ve-ticaret-a-s",
     "oid": "3308"
+  },
+  {
+    "name": "KONYA ŞEKER SANAYİ VE TİCARET A.Ş.",
+    "slug": "2445-konya-seker-sanayi-ve-ticaret-a-s",
+    "oid": "2445"
   },
   {
     "name": "KORAY GAYRİMENKUL YATIRIM ORTAKLIĞI A.Ş.",
@@ -3195,14 +4450,19 @@
     "oid": "1610"
   },
   {
+    "name": "KPMG BAĞIMSIZ DENETİM VE SERBEST MUHASEBECİ MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "82-kpmg-bagimsiz-denetim-ve-serbest-muhasebeci-mali-musavirlik-a-s",
+    "oid": "82"
+  },
+  {
+    "name": "KREDİ FİNANS FAKTORİNG HİZMETLERİ A.Ş.",
+    "slug": "2314-kredi-finans-faktoring-hizmetleri-a-s",
+    "oid": "2314"
+  },
+  {
     "name": "KRİSTAL KOLA VE MEŞRUBAT SANAYİ TİCARET A.Ş.",
     "slug": "1011-kristal-kola-ve-mesrubat-sanayi-ticaret-a-s",
     "oid": "1011"
-  },
-  {
-    "name": "YORUM BAĞIMSIZ DENETİM A.Ş.",
-    "slug": "155-yorum-bagimsiz-denetim-a-s",
-    "oid": "155"
   },
   {
     "name": "KRON TEKNOLOJİ A.Ş.",
@@ -3220,9 +4480,24 @@
     "oid": "4409"
   },
   {
+    "name": "KULE HİZMET VE İŞLETMECİLİK A.Ş.",
+    "slug": "4216-kule-hizmet-ve-isletmecilik-a-s",
+    "oid": "4216"
+  },
+  {
+    "name": "KURUMSAL VİZYON BAĞIMSIZ DENETİM VE Y.M.M. A.Ş.",
+    "slug": "176-kurumsal-vizyon-bagimsiz-denetim-ve-y-m-m-a-s",
+    "oid": "176"
+  },
+  {
     "name": "KUŞTUR KUŞADASI TURİZM ENDÜSTRİSİ A.Ş.",
     "slug": "1588-kustur-kusadasi-turizm-endustrisi-a-s",
     "oid": "1588"
+  },
+  {
+    "name": "KUTAY SERBEST MUHASEBE MALİ MÜŞAVİRLİK VE DENETİM A.Ş.",
+    "slug": "128-kutay-serbest-muhasebe-mali-musavirlik-ve-denetim-a-s",
+    "oid": "128"
   },
   {
     "name": "KUVEYT TÜRK KATILIM BANKASI A.Ş.",
@@ -3245,11 +4520,6 @@
     "oid": "1070"
   },
   {
-    "name": "MERCEK BAĞIMSIZ DENETİM VE YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
-    "slug": "185-mercek-bagimsiz-denetim-ve-yeminli-mali-musavirlik-a-s",
-    "oid": "185"
-  },
-  {
     "name": "KUYAŞ YATIRIM A.Ş.",
     "slug": "1619-kuyas-yatirim-a-s",
     "oid": "1619"
@@ -3260,9 +4530,19 @@
     "oid": "5911"
   },
   {
+    "name": "KUZEY MENKUL DEĞERLER A.Ş.",
+    "slug": "5615-kuzey-menkul-degerler-a-s",
+    "oid": "5615"
+  },
+  {
     "name": "KUZUGRUP GAYRİMENKUL YATIRIM ORTAKLIĞI A.Ş.",
     "slug": "5857-kuzugrup-gayrimenkul-yatirim-ortakligi-a-s",
     "oid": "5857"
+  },
+  {
+    "name": "KUZUOĞLU SU ÜRÜNLERİ SANAYİ VE TİCARET A.Ş.",
+    "slug": "6266-kuzuoglu-su-urunleri-sanayi-ve-ticaret-a-s",
+    "oid": "6266"
   },
   {
     "name": "KÜTAHYA PORSELEN SANAYİ A.Ş.",
@@ -3275,9 +4555,19 @@
     "oid": "5365"
   },
   {
+    "name": "LATEK LOJİSTİK TİCARET A.Ş.",
+    "slug": "1503-latek-lojistik-ticaret-a-s",
+    "oid": "1503"
+  },
+  {
     "name": "LDR TURİZM A.Ş.",
     "slug": "4310-ldr-turizm-a-s",
     "oid": "4310"
+  },
+  {
+    "name": "LEGAL BAĞIMSIZ DENETİM YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "178-legal-bagimsiz-denetim-yeminli-mali-musavirlik-a-s",
+    "oid": "178"
   },
   {
     "name": "LETVEN CAPITAL GİRİŞİM SERMAYESİ PORTFÖY YÖNETİMİ A.Ş.",
@@ -3305,14 +4595,29 @@
     "oid": "5953"
   },
   {
+    "name": "LİMAK ÇİMENTO SANAYİ VE TİCARET A.Ş.",
+    "slug": "2578-limak-cimento-sanayi-ve-ticaret-a-s",
+    "oid": "2578"
+  },
+  {
     "name": "LİMAK DOĞU ANADOLU ÇİMENTO SANAYİ VE TİCARET A.Ş.",
     "slug": "5930-limak-dogu-anadolu-cimento-sanayi-ve-ticaret-a-s",
     "oid": "5930"
   },
   {
+    "name": "LİMAK YATIRIM ENERJİ ÜRETİM İŞLETME HİZMETLERİ VE İNŞAAT A.Ş.",
+    "slug": "2116-limak-yatirim-enerji-uretim-isletme-hizmetleri-ve-insaat-a-s",
+    "oid": "2116"
+  },
+  {
     "name": "LİNK BİLGİSAYAR SİSTEMLERİ YAZILIMI VE DONANIMI SANAYİ VE TİCARET A.Ş.",
     "slug": "1015-link-bilgisayar-sistemleri-yazilimi-ve-donanimi-sanayi-ve-ticaret-a-s",
     "oid": "1015"
+  },
+  {
+    "name": "LİO YAĞ SANAYİ VE TİCARET A.Ş.",
+    "slug": "1013-lio-yag-sanayi-ve-ticaret-a-s",
+    "oid": "1013"
   },
   {
     "name": "LİSANS BAĞIMSIZ DENETİM VE DANIŞMANLIK A.Ş.",
@@ -3365,6 +4670,11 @@
     "oid": "5679"
   },
   {
+    "name": "MAGNA CAPITAL PORTFÖY YÖNETİMİ A.Ş.",
+    "slug": "2344-magna-capital-portfoy-yonetimi-a-s",
+    "oid": "2344"
+  },
+  {
     "name": "MAKİM MAKİNA TEKNOLOJİLERİ SANAYİ VE TİCARET A.Ş.",
     "slug": "5562-makim-makina-teknolojileri-sanayi-ve-ticaret-a-s",
     "oid": "5562"
@@ -3380,14 +4690,19 @@
     "oid": "5357"
   },
   {
-    "name": "MAQASID GAYRİMENKUL VE GİRİŞİM SERMAYESİ PORTFÖY YÖNETİMİ A.Ş.",
-    "slug": "4606-maqasid-gayrimenkul-ve-girisim-sermayesi-portfoy-yonetimi-a-s",
-    "oid": "4606"
+    "name": "MANGO GIDA SANAYİ VE TİCARET A.Ş.",
+    "slug": "1504-mango-gida-sanayi-ve-ticaret-a-s",
+    "oid": "1504"
   },
   {
-    "name": "MRBAS MRS",
+    "name": "MARBAŞ MENKUL DEĞERLER A.Ş.",
     "slug": "1324-marbas-menkul-degerler-a-s",
     "oid": "1324"
+  },
+  {
+    "name": "MARET MARMARA BESİCİLİK VE ET SAN.VE TİC. A.Ş.",
+    "slug": "1020-maret-marmara-besicilik-ve-et-san-ve-tic-a-s",
+    "oid": "1020"
   },
   {
     "name": "MARGÜN ENERJİ ÜRETİM SANAYİ VE TİCARET A.Ş.",
@@ -3398,11 +4713,6 @@
     "name": "MARKA MAĞAZACILIK A.Ş.",
     "slug": "2698-marka-magazacilik-a-s",
     "oid": "2698"
-  },
-  {
-    "name": "MARKA YATIRIM HOLDİNG A.Ş.",
-    "slug": "1403-marka-yatirim-holding-a-s",
-    "oid": "1403"
   },
   {
     "name": "MARMARA CAPİTAL PORTFÖY YÖNETİMİ A.Ş.",
@@ -3435,6 +4745,11 @@
     "oid": "1022"
   },
   {
+    "name": "MASFEN ENERJİ A.Ş.",
+    "slug": "6260-masfen-enerji-a-s",
+    "oid": "6260"
+  },
+  {
     "name": "MATRİKS FİNANSAL TEKNOLOJİLER A.Ş.",
     "slug": "5280-matriks-finansal-teknolojiler-a-s",
     "oid": "5280"
@@ -3455,9 +4770,39 @@
     "oid": "1024"
   },
   {
+    "name": "MBK BAĞIMSIZ DENETİM VE SMMM A.Ş.",
+    "slug": "221-mbk-bagimsiz-denetim-ve-smmm-a-s",
+    "oid": "221"
+  },
+  {
+    "name": "MED MENKUL DEĞERLER A.Ş.",
+    "slug": "1325-med-menkul-degerler-a-s",
+    "oid": "1325"
+  },
+  {
+    "name": "MED YEMİNLİ MALİ MÜŞAVİRLİK VE BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "130-med-yeminli-mali-musavirlik-ve-bagimsiz-denetim-a-s",
+    "oid": "130"
+  },
+  {
+    "name": "MEDİAZZ YENİ MEDYA VE TEKNOLOJİ YATIRIMLARI A.Ş.",
+    "slug": "6215-mediazz-yeni-medya-ve-teknoloji-yatirimlari-a-s",
+    "oid": "6215"
+  },
+  {
     "name": "MEDİTERA TIBBİ MALZEME SANAYİ VE TİCARET A.Ş.",
     "slug": "5364-meditera-tibbi-malzeme-sanayi-ve-ticaret-a-s",
     "oid": "5364"
+  },
+  {
+    "name": "MEDYA HOLDİNG A.Ş.",
+    "slug": "1025-medya-holding-a-s",
+    "oid": "1025"
+  },
+  {
+    "name": "MEGA GLOBAL ULUSLARARASI BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "197-mega-global-uluslararasi-bagimsiz-denetim-a-s",
+    "oid": "197"
   },
   {
     "name": "MEGA METAL SANAYİ VE TİCARET A.Ş.",
@@ -3470,6 +4815,16 @@
     "oid": "1601"
   },
   {
+    "name": "MEGA VARLIK YÖNETİM A.Ş.",
+    "slug": "4100-mega-varlik-yonetim-a-s",
+    "oid": "4100"
+  },
+  {
+    "name": "MEGES BOYA SANAYİ VE TİCARET A.Ş.",
+    "slug": "1026-meges-boya-sanayi-ve-ticaret-a-s",
+    "oid": "1026"
+  },
+  {
     "name": "MEKA GLOBAL MAKİNE İMALAT SANAYİ VE TİCARET A.Ş.",
     "slug": "5875-meka-global-makine-imalat-sanayi-ve-ticaret-a-s",
     "oid": "5875"
@@ -3480,14 +4835,24 @@
     "oid": "2563"
   },
   {
-    "name": "MEKMD MSA",
+    "name": "MEKSA YATIRIM MENKUL DEĞERLER A.Ş.",
     "slug": "1326-meksa-yatirim-menkul-degerler-a-s",
     "oid": "1326"
+  },
+  {
+    "name": "MENBA HOLDİNG A.Ş.",
+    "slug": "1700-menba-holding-a-s",
+    "oid": "1700"
   },
   {
     "name": "MENDERES TEKSTİL SANAYİ VE TİCARET A.Ş.",
     "slug": "1027-menderes-tekstil-sanayi-ve-ticaret-a-s",
     "oid": "1027"
+  },
+  {
+    "name": "MENSA SINAİ TİCARİ VE MALİ YATIRIMLAR A.Ş.",
+    "slug": "1028-mensa-sinai-ticari-ve-mali-yatirimlar-a-s",
+    "oid": "1028"
   },
   {
     "name": "MEPET METRO PETROL VE TESİSLERİ SANAYİ TİCARET A.Ş.",
@@ -3510,9 +4875,19 @@
     "oid": "2119"
   },
   {
+    "name": "MERCEK BAĞIMSIZ DENETİM VE YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "185-mercek-bagimsiz-denetim-ve-yeminli-mali-musavirlik-a-s",
+    "oid": "185"
+  },
+  {
     "name": "MERİDYEN KURUMSAL ÇÖZÜM VE BAĞIMSIZ DENETİM A.Ş.",
     "slug": "235-meridyen-kurumsal-cozum-ve-bagimsiz-denetim-a-s",
     "oid": "235"
+  },
+  {
+    "name": "MERİNOS HALI SANAYİ VE TİCARET A.Ş.",
+    "slug": "1511-merinos-hali-sanayi-ve-ticaret-a-s",
+    "oid": "1511"
   },
   {
     "name": "MERİT TURİZM YATIRIM VE İŞLETME A.Ş.",
@@ -3520,9 +4895,54 @@
     "oid": "1594"
   },
   {
+    "name": "MERKEZ MENKUL DEĞERLER A.Ş.",
+    "slug": "1328-merkez-menkul-degerler-a-s",
+    "oid": "1328"
+  },
+  {
+    "name": "MERKEZİ KAYIT KURULUŞU A.Ş.",
+    "slug": "20-merkezi-kayit-kurulusu-a-s",
+    "oid": "20"
+  },
+  {
     "name": "MERKO GIDA SANAYİ VE TİCARET A.Ş.",
     "slug": "1029-merko-gida-sanayi-ve-ticaret-a-s",
     "oid": "1029"
+  },
+  {
+    "name": "MERRILL LYNCH MENKUL DEĞERLER A.Ş.",
+    "slug": "1356-merrill-lynch-menkul-degerler-a-s",
+    "oid": "1356"
+  },
+  {
+    "name": "MERT GIDA GİYİM SANAYİ VE TİCARET A.Ş.",
+    "slug": "1411-mert-gida-giyim-sanayi-ve-ticaret-a-s",
+    "oid": "1411"
+  },
+  {
+    "name": "METAG İNŞAAT TİCARET A.Ş.",
+    "slug": "2446-metag-insaat-ticaret-a-s",
+    "oid": "2446"
+  },
+  {
+    "name": "METAL GAYRİMENKUL A.Ş.",
+    "slug": "1429-metal-gayrimenkul-a-s",
+    "oid": "1429"
+  },
+  {
+    "name": "METAL OTO TİCARET A.Ş.",
+    "slug": "5903-metal-oto-ticaret-a-s",
+    "oid": "5903"
+  },
+  {
+    "name": "METAL YAPI KONUT A.Ş.",
+    "slug": "2198-metal-yapi-konut-a-s",
+    "oid": "2198"
+  },
+  {
+    "name": "METAŞ İZMİR METALURJİ FABRİKASI T.A.Ş.",
+    "slug": "1030-metas-izmir-metalurji-fabrikasi-t-a-s",
+    "oid": "1030"
   },
   {
     "name": "METGÜN ENERJİ YATIRIMLARI A.Ş.",
@@ -3570,6 +4990,11 @@
     "oid": "6175"
   },
   {
+    "name": "MGI BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "129-mgi-bagimsiz-denetim-a-s",
+    "oid": "129"
+  },
+  {
     "name": "MHR GAYRİMENKUL YATIRIM ORTAKLIĞI A.Ş.",
     "slug": "5877-mhr-gayrimenkul-yatirim-ortakligi-a-s",
     "oid": "5877"
@@ -3580,7 +5005,7 @@
     "oid": "5455"
   },
   {
-    "name": "MDASM MDS",
+    "name": "MİDAS MENKUL DEĞERLER A.Ş.",
     "slug": "5314-midas-menkul-degerler-a-s",
     "oid": "5314"
   },
@@ -3588,6 +5013,11 @@
     "name": "MİGROS TİCARET A.Ş.",
     "slug": "1494-migros-ticaret-a-s",
     "oid": "1494"
+  },
+  {
+    "name": "MİGROS TÜRK T.A.Ş.",
+    "slug": "1033-migros-turk-t-a-s",
+    "oid": "1033"
   },
   {
     "name": "MİLK ACADEMY SÜT ÜRÜNLERİ SANAYİ VE TİCARET A.Ş.",
@@ -3600,14 +5030,24 @@
     "oid": "6153"
   },
   {
+    "name": "MİSH DEKORASYON SANAYİ VE TİCARET A.Ş.",
+    "slug": "980-mish-dekorasyon-sanayi-ve-ticaret-a-s",
+    "oid": "980"
+  },
+  {
     "name": "MİSTRAL GAYRİMENKUL YATIRIM ORTAKLIĞI A.Ş.",
     "slug": "3695-mistral-gayrimenkul-yatirim-ortakligi-a-s",
     "oid": "3695"
   },
   {
-    "name": "MSY MSYBN",
+    "name": "MİSYON YATIRIM BANKASI A.Ş.",
     "slug": "5668-misyon-yatirim-bankasi-a-s",
     "oid": "5668"
+  },
+  {
+    "name": "MİTRA BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "238-mitra-bagimsiz-denetim-a-s",
+    "oid": "238"
   },
   {
     "name": "MLP SAĞLIK HİZMETLERİ A.Ş.",
@@ -3625,9 +5065,19 @@
     "oid": "3020"
   },
   {
+    "name": "MNG KARGO YURTİÇİ VE YURTDIŞI TAŞIMACILIK A.Ş.",
+    "slug": "3769-mng-kargo-yurtici-ve-yurtdisi-tasimacilik-a-s",
+    "oid": "3769"
+  },
+  {
     "name": "MOBİLTEL İLETİŞİM HİZMETLERİ SANAYİ VE TİCARET A.Ş.",
     "slug": "5462-mobiltel-iletisim-hizmetleri-sanayi-ve-ticaret-a-s",
     "oid": "5462"
+  },
+  {
+    "name": "MOD BAĞIMSIZ DENETİM SERBEST MUHASEBECİ MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "131-mod-bagimsiz-denetim-serbest-muhasebeci-mali-musavirlik-a-s",
+    "oid": "131"
   },
   {
     "name": "MODEL BAĞIMSIZ DENETİM A.Ş.",
@@ -3640,9 +5090,19 @@
     "oid": "5180"
   },
   {
+    "name": "MONDI OLMUKSAN KAĞIT VE AMBALAJ SANAYİ A.Ş.",
+    "slug": "1045-mondi-olmuksan-kagit-ve-ambalaj-sanayi-a-s",
+    "oid": "1045"
+  },
+  {
     "name": "MONDİ TURKEY OLUKLU MUKAVVA KAĞIT VE AMBALAJ SANAYİ A.Ş.",
     "slug": "1095-mondi-turkey-oluklu-mukavva-kagit-ve-ambalaj-sanayi-a-s",
     "oid": "1095"
+  },
+  {
+    "name": "MONETA PORTFÖY YÖNETİMİ A.Ş.",
+    "slug": "5188-moneta-portfoy-yonetimi-a-s",
+    "oid": "5188"
   },
   {
     "name": "MOPAŞ MARKETÇİLİK GIDA SANAYİ VE TİCARET A.Ş.",
@@ -3650,9 +5110,19 @@
     "oid": "6054"
   },
   {
+    "name": "MORGAN STANLEY MENKUL DEĞERLER A.Ş.",
+    "slug": "1265-morgan-stanley-menkul-degerler-a-s",
+    "oid": "1265"
+  },
+  {
     "name": "MT PORTFÖY YÖNETİMİ A.Ş.",
     "slug": "5980-mt-portfoy-yonetimi-a-s",
     "oid": "5980"
+  },
+  {
+    "name": "MUDO SATIŞ MAĞAZALARI A.Ş.",
+    "slug": "2443-mudo-satis-magazalari-a-s",
+    "oid": "2443"
   },
   {
     "name": "MUFG BANK TURKEY A.Ş.",
@@ -3660,9 +5130,24 @@
     "oid": "4389"
   },
   {
+    "name": "MUTLU AKÜ VE MALZEMELERİ SANAYİ A.Ş.",
+    "slug": "1037-mutlu-aku-ve-malzemeleri-sanayi-a-s",
+    "oid": "1037"
+  },
+  {
+    "name": "MUTLUCAN TUZ MADENCİLİK İNŞAAT TURİZM OTOMOTİV PETROL NAKLİYE SANAYİ VE TİCARET A.Ş.",
+    "slug": "2221-mutlucan-tuz-madencilik-insaat-turizm-otomotiv-petrol-nakliye-sanayi-ve-ticaret-a-s",
+    "oid": "2221"
+  },
+  {
     "name": "NASMED ÖZEL SAĞLIK HİZMETLERİ TİCARET A.Ş.",
     "slug": "5390-nasmed-ozel-saglik-hizmetleri-ticaret-a-s",
     "oid": "5390"
+  },
+  {
+    "name": "NATIONAL INVESTOR SERVICES DERECELENDİRME A.Ş.",
+    "slug": "5110-national-investor-services-derecelendirme-a-s",
+    "oid": "5110"
   },
   {
     "name": "NATURA GAYRİMENKUL VE GİRİŞİM SERMAYESİ PORTFÖY YÖNETİMİ A.Ş.",
@@ -3685,14 +5170,29 @@
     "oid": "1572"
   },
   {
+    "name": "NEO MENKUL DEĞERLER A.Ş.",
+    "slug": "5931-neo-menkul-degerler-a-s",
+    "oid": "5931"
+  },
+  {
     "name": "NEO PORTFÖY YÖNETİMİ A.Ş.",
     "slug": "4591-neo-portfoy-yonetimi-a-s",
     "oid": "4591"
   },
   {
+    "name": "NERGİS HOLDİNG A.Ş.",
+    "slug": "1038-nergis-holding-a-s",
+    "oid": "1038"
+  },
+  {
     "name": "NET HOLDİNG A.Ş.",
     "slug": "1039-net-holding-a-s",
     "oid": "1039"
+  },
+  {
+    "name": "NET TURİZM TİCARET VE SANAYİ A.Ş.",
+    "slug": "1040-net-turizm-ticaret-ve-sanayi-a-s",
+    "oid": "1040"
   },
   {
     "name": "NET VARLIK GAYRİMENKUL VE GİRİŞİM SERMAYESİ PORTFÖY YÖNETİMİ A.Ş.",
@@ -3705,11 +5205,6 @@
     "oid": "1301"
   },
   {
-    "name": "AG YEMİNLİ MALİ MÜŞAVİRLİK VE BAĞIMSIZ  DENETİM A.Ş.",
-    "slug": "234-ag-yeminli-mali-musavirlik-ve-bagimsiz-denetim-a-s",
-    "oid": "234"
-  },
-  {
     "name": "NETAŞ TELEKOMÜNİKASYON A.Ş.",
     "slug": "1041-netas-telekomunikasyon-a-s",
     "oid": "1041"
@@ -3720,9 +5215,34 @@
     "oid": "5577"
   },
   {
+    "name": "NETLOG LOJİSTİK HİZMETLERİ A.Ş.",
+    "slug": "2448-netlog-lojistik-hizmetleri-a-s",
+    "oid": "2448"
+  },
+  {
+    "name": "NEVADOS BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "5793-nevados-bagimsiz-denetim-a-s",
+    "oid": "5793"
+  },
+  {
     "name": "NİĞBAŞ NİĞDE BETON SANAYİ VE TİCARET A.Ş.",
     "slug": "1577-nigbas-nigde-beton-sanayi-ve-ticaret-a-s",
     "oid": "1577"
+  },
+  {
+    "name": "NN HAYAT VE EMEKLİLİK A.Ş.",
+    "slug": "1870-nn-hayat-ve-emeklilik-a-s",
+    "oid": "1870"
+  },
+  {
+    "name": "NOBEL İLAÇ SANAYİİ VE TİCARET A.Ş.",
+    "slug": "4285-nobel-ilac-sanayii-ve-ticaret-a-s",
+    "oid": "4285"
+  },
+  {
+    "name": "NOTE OFFİCE ULUSLARARASI BAĞIMSIZ DENETİM DANIŞMANLIK A.Ş.",
+    "slug": "4841-note-office-uluslararasi-bagimsiz-denetim-danismanlik-a-s",
+    "oid": "4841"
   },
   {
     "name": "NUH ÇİMENTO SANAYİ A.Ş.",
@@ -3745,6 +5265,11 @@
     "oid": "3904"
   },
   {
+    "name": "NUROL MENKUL KIYMETLER A.Ş.",
+    "slug": "1330-nurol-menkul-kiymetler-a-s",
+    "oid": "1330"
+  },
+  {
     "name": "NUROL PORTFÖY YÖNETİMİ A.Ş.",
     "slug": "5329-nurol-portfoy-yonetimi-a-s",
     "oid": "5329"
@@ -3755,7 +5280,7 @@
     "oid": "4512"
   },
   {
-    "name": "NRBNK NYB",
+    "name": "NUROL YATIRIM BANKASI A.Ş.",
     "slug": "2200-nurol-yatirim-bankasi-a-s",
     "oid": "2200"
   },
@@ -3775,7 +5300,7 @@
     "oid": "1887"
   },
   {
-    "name": "ODB ODEA",
+    "name": "ODEA BANK A.Ş.",
     "slug": "2259-odea-bank-a-s",
     "oid": "2259"
   },
@@ -3798,6 +5323,11 @@
     "name": "OKTAŞ OKKAOĞLU TAAHHÜT İNŞAAT TEKSTİL SANAYİ VE TİCARET A.Ş.",
     "slug": "6163-oktas-okkaoglu-taahhut-insaat-tekstil-sanayi-ve-ticaret-a-s",
     "oid": "6163"
+  },
+  {
+    "name": "OLUŞUM BAĞIMSIZ DIŞ DENETİM VE DANIŞMANLIK A.Ş.",
+    "slug": "132-olusum-bagimsiz-dis-denetim-ve-danismanlik-a-s",
+    "oid": "132"
   },
   {
     "name": "OMURGA GAYRİMENKUL VE GİRİŞİM SERMAYESİ PORTFÖY YÖNETİMİ A.Ş.",
@@ -3830,6 +5360,11 @@
     "oid": "2506"
   },
   {
+    "name": "OPTİMAL MENKUL DEĞERLER A.Ş.",
+    "slug": "1307-optimal-menkul-degerler-a-s",
+    "oid": "1307"
+  },
+  {
     "name": "ORAGON GAYRİMENKUL VE GİRİŞİM SERMAYESİ PORTFÖY YÖNETİMİ A.Ş.",
     "slug": "4751-oragon-gayrimenkul-ve-girisim-sermayesi-portfoy-yonetimi-a-s",
     "oid": "4751"
@@ -3860,6 +5395,11 @@
     "oid": "5305"
   },
   {
+    "name": "ORZAKS İLAÇ VE KİMYA SANAYİ TİCARET A.Ş.",
+    "slug": "6234-orzaks-ilac-ve-kimya-sanayi-ticaret-a-s",
+    "oid": "6234"
+  },
+  {
     "name": "OSMANLI PORTFÖY YÖNETİMİ A.Ş.",
     "slug": "2483-osmanli-portfoy-yonetimi-a-s",
     "oid": "2483"
@@ -3870,7 +5410,7 @@
     "oid": "6151"
   },
   {
-    "name": "OMD OSMEN",
+    "name": "OSMANLI YATIRIM MENKUL DEĞERLER A.Ş.",
     "slug": "1576-osmanli-yatirim-menkul-degerler-a-s",
     "oid": "1576"
   },
@@ -3905,12 +5445,17 @@
     "oid": "1019"
   },
   {
+    "name": "OYAK İNŞAAT A.Ş.",
+    "slug": "4783-oyak-insaat-a-s",
+    "oid": "4783"
+  },
+  {
     "name": "OYAK PORTFÖY YÖNETİMİ A.Ş.",
     "slug": "2346-oyak-portfoy-yonetimi-a-s",
     "oid": "2346"
   },
   {
-    "name": "OYA OYYAT",
+    "name": "OYAK YATIRIM MENKUL DEĞERLER A.Ş.",
     "slug": "2486-oyak-yatirim-menkul-degerler-a-s",
     "oid": "2486"
   },
@@ -3920,9 +5465,39 @@
     "oid": "1456"
   },
   {
+    "name": "OYKA KAĞIT AMBALAJ SANAYİİ VE TİCARET A.Ş.",
+    "slug": "4006-oyka-kagit-ambalaj-sanayii-ve-ticaret-a-s",
+    "oid": "4006"
+  },
+  {
     "name": "OYLUM SINAİ YATIRIMLAR A.Ş.",
     "slug": "1598-oylum-sinai-yatirimlar-a-s",
     "oid": "1598"
+  },
+  {
+    "name": "OYSA ÇİMENTO SANAYİİ VE TİCARET A.Ş.",
+    "slug": "1047-oysa-cimento-sanayii-ve-ticaret-a-s",
+    "oid": "1047"
+  },
+  {
+    "name": "ÖNCÜ GİRİŞİM SERMAYESİ YATIRIM ORTAKLIĞI A.Ş.",
+    "slug": "3526-oncu-girisim-sermayesi-yatirim-ortakligi-a-s",
+    "oid": "3526"
+  },
+  {
+    "name": "ÖNDER BAĞIMSIZ DENETİM VE DANIŞMANLIK A.Ş.",
+    "slug": "133-onder-bagimsiz-denetim-ve-danismanlik-a-s",
+    "oid": "133"
+  },
+  {
+    "name": "ÖNER MENKUL KIYMETLER A.Ş.",
+    "slug": "1333-oner-menkul-kiymetler-a-s",
+    "oid": "1333"
+  },
+  {
+    "name": "ÖZ DENETİM YEMİNLİ MALİ MÜŞAVİRLİK HİZMETLERİ LTD. ŞTİ.",
+    "slug": "134-oz-denetim-yeminli-mali-musavirlik-hizmetleri-ltd-sti",
+    "oid": "134"
   },
   {
     "name": "ÖZAK GAYRİMENKUL YATIRIM ORTAKLIĞI A.Ş.",
@@ -3933,6 +5508,16 @@
     "name": "ÖZATA DENİZCİLİK SANAYİ VE TİCARET A.Ş.",
     "slug": "6018-ozata-denizcilik-sanayi-ve-ticaret-a-s",
     "oid": "6018"
+  },
+  {
+    "name": "ÖZBAL ÇELİK BORU SANAYİ TİCARET VE TAAHHÜT A.Ş.",
+    "slug": "1555-ozbal-celik-boru-sanayi-ticaret-ve-taahhut-a-s",
+    "oid": "1555"
+  },
+  {
+    "name": "ÖZDEMİR YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "135-ozdemir-yeminli-mali-musavirlik-a-s",
+    "oid": "135"
   },
   {
     "name": "ÖZDERİCİ GAYRİMENKUL YATIRIM ORTAKLIĞI A.Ş.",
@@ -3953,6 +5538,21 @@
     "name": "ÖZYAŞAR TEL VE GALVANİZLEME SANAYİ A.Ş.",
     "slug": "5961-ozyasar-tel-ve-galvanizleme-sanayi-a-s",
     "oid": "5961"
+  },
+  {
+    "name": "PAAMCO MIREN PORTFÖY YÖNETİMİ A.Ş.",
+    "slug": "4314-paamco-miren-portfoy-yonetimi-a-s",
+    "oid": "4314"
+  },
+  {
+    "name": "PAKPEN PLASTİK BORU VE YAPI ELEMANLARI SAN. VE TİC. A.Ş.",
+    "slug": "1975-pakpen-plastik-boru-ve-yapi-elemanlari-san-ve-tic-a-s",
+    "oid": "1975"
+  },
+  {
+    "name": "PALEN ENERJİ DOĞALGAZ DAĞITIM ENDÜSTRİ VE TİCARET A.Ş.",
+    "slug": "2189-palen-enerji-dogalgaz-dagitim-endustri-ve-ticaret-a-s",
+    "oid": "2189"
   },
   {
     "name": "PALGAZ DOĞALGAZ DAĞITIM SANAYİ VE TİCARET A.Ş.",
@@ -4020,7 +5620,7 @@
     "oid": "1050"
   },
   {
-    "name": "PBT PBTR",
+    "name": "PASHA YATIRIM BANKASI A.Ş.",
     "slug": "2025-pasha-yatirim-bankasi-a-s",
     "oid": "2025"
   },
@@ -4043,6 +5643,11 @@
     "name": "PASİFİK TEKNOLOJİ A.Ş.",
     "slug": "5928-pasifik-teknoloji-a-s",
     "oid": "5928"
+  },
+  {
+    "name": "PASTAVİLLA MAKARNACILIK SANAYİ VE TİCARET A.Ş.",
+    "slug": "1051-pastavilla-makarnacilik-sanayi-ve-ticaret-a-s",
+    "oid": "1051"
   },
   {
     "name": "PAY MENKUL DEĞERLER A.Ş.",
@@ -4095,12 +5700,17 @@
     "oid": "1054"
   },
   {
+    "name": "PETROL OFİSİ A.Ş. (Eski Unvanı - OMV PETROL OFİSİ A.Ş.)",
+    "slug": "1055-petrol-ofisi-a-s-eski-unvan-omv-petrol-ofisi-a-s",
+    "oid": "1055"
+  },
+  {
     "name": "PHİLLİP PORTFÖY YÖNETİMİ A.Ş.",
     "slug": "5338-phillip-portfoy-yonetimi-a-s",
     "oid": "5338"
   },
   {
-    "name": "PHC PHLLP",
+    "name": "PHİLLİPCAPİTAL MENKUL DEĞERLER A.Ş.",
     "slug": "1311-phillipcapital-menkul-degerler-a-s",
     "oid": "1311"
   },
@@ -4120,6 +5730,11 @@
     "oid": "1059"
   },
   {
+    "name": "PİMAŞ PLASTİK İNŞAAT MALZEMELERİ A.Ş.",
+    "slug": "1056-pimas-plastik-insaat-malzemeleri-a-s",
+    "oid": "1056"
+  },
+  {
     "name": "PİRAMİT MENKUL KIYMETLER A.Ş.",
     "slug": "1337-piramit-menkul-kiymetler-a-s",
     "oid": "1337"
@@ -4128,6 +5743,16 @@
     "name": "PİRAMİT PORTFÖY YÖNETİMİ A.Ş.",
     "slug": "5902-piramit-portfoy-yonetimi-a-s",
     "oid": "5902"
+  },
+  {
+    "name": "PKF ADAY BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "227-pkf-aday-bagimsiz-denetim-a-s",
+    "oid": "227"
+  },
+  {
+    "name": "PLASPAK KİMYA SANAYİ VE TİCARET A.Ş.",
+    "slug": "2208-plaspak-kimya-sanayi-ve-ticaret-a-s",
+    "oid": "2208"
   },
   {
     "name": "PLASTİKKART AKILLI KART İLETİŞİM SİSTEMLERİ SANAYİ VE TİCARET A.Ş.",
@@ -4140,6 +5765,11 @@
     "oid": "3208"
   },
   {
+    "name": "POLİNAS PLASTİK SANAYİİ VE TİCARETİ A.Ş.",
+    "slug": "2627-polinas-plastik-sanayii-ve-ticareti-a-s",
+    "oid": "2627"
+  },
+  {
     "name": "POLİSAN HOLDİNG A.Ş.",
     "slug": "1608-polisan-holding-a-s",
     "oid": "1608"
@@ -4148,6 +5778,21 @@
     "name": "POLİTEKNİK METAL SANAYİ VE TİCARET A.Ş.",
     "slug": "2219-politeknik-metal-sanayi-ve-ticaret-a-s",
     "oid": "2219"
+  },
+  {
+    "name": "POLYLEN SENTETİK İPLİK SANAYİİ A.Ş.",
+    "slug": "1060-polylen-sentetik-iplik-sanayii-a-s",
+    "oid": "1060"
+  },
+  {
+    "name": "PRESTİJ MENKUL DEĞERLER A.Ş.",
+    "slug": "1339-prestij-menkul-degerler-a-s",
+    "oid": "1339"
+  },
+  {
+    "name": "PRIME FAKTORİNG HİZMETLERİ A.Ş.",
+    "slug": "2123-prime-faktoring-hizmetleri-a-s",
+    "oid": "2123"
   },
   {
     "name": "PRİM MENKUL DEĞERLER A.Ş.",
@@ -4170,9 +5815,19 @@
     "oid": "5913"
   },
   {
-    "name": "ALBMD ALM",
+    "name": "PUSULA YATIRIM MENKUL DEĞERLER A.Ş.",
     "slug": "1697-pusula-yatirim-menkul-degerler-a-s",
     "oid": "1697"
+  },
+  {
+    "name": "PÜR BAĞIMSIZ DENETİM YEMİNLİ MALİ MÜŞAVİRLİK  A.Ş.",
+    "slug": "174-pur-bagimsiz-denetim-yeminli-mali-musavirlik-a-s",
+    "oid": "174"
+  },
+  {
+    "name": "PwC BAĞIMSIZ DENETİM VE SERBEST MUHASEBECİ MALİ MÜŞAVİRLİK A.Ş",
+    "slug": "92-pwc-bagimsiz-denetim-ve-serbest-muhasebeci-mali-musavirlik-a-s",
+    "oid": "92"
   },
   {
     "name": "Q FİNANS FAKTORİNG A.Ş.",
@@ -4180,7 +5835,7 @@
     "oid": "5256"
   },
   {
-    "name": "QYATB YBQ",
+    "name": "Q YATIRIM BANKASI A.Ş.",
     "slug": "6002-q-yatirim-bankasi-a-s",
     "oid": "6002"
   },
@@ -4190,7 +5845,7 @@
     "oid": "5667"
   },
   {
-    "name": "FIN QNBTR",
+    "name": "QNB BANK A.Ş.",
     "slug": "2417-qnb-bank-a-s",
     "oid": "2417"
   },
@@ -4220,7 +5875,7 @@
     "oid": "4843"
   },
   {
-    "name": "FNY QNBIN",
+    "name": "QNB YATIRIM MENKUL DEĞERLER A.Ş.",
     "slug": "1302-qnb-yatirim-menkul-degerler-a-s",
     "oid": "1302"
   },
@@ -4235,9 +5890,9 @@
     "oid": "5613"
   },
   {
-    "name": "RABOBANK A.Ş.",
-    "slug": "2507-rabobank-a-s",
-    "oid": "2507"
+    "name": "QUİCK SİGORTA A.Ş.",
+    "slug": "6264-quick-sigorta-a-s",
+    "oid": "6264"
   },
   {
     "name": "RAİNBOW POLİKARBONAT SANAYİ TİCARET A.Ş.",
@@ -4245,9 +5900,39 @@
     "oid": "5418"
   },
   {
+    "name": "RAKS ELEKTRİKLİ EV ALETLERİ SANAYİ VE TİCARET A.Ş.",
+    "slug": "1061-raks-elektrikli-ev-aletleri-sanayi-ve-ticaret-a-s",
+    "oid": "1061"
+  },
+  {
+    "name": "RAKS ELEKTRONİK SANAYİ VE TİCARET A.Ş.",
+    "slug": "1062-raks-elektronik-sanayi-ve-ticaret-a-s",
+    "oid": "1062"
+  },
+  {
     "name": "RAL YATIRIM HOLDİNG A.Ş.",
     "slug": "883-ral-yatirim-holding-a-s",
     "oid": "883"
+  },
+  {
+    "name": "RAM BAĞIMSIZ DENETİM VE DANIŞMANLIK A.Ş.",
+    "slug": "5583-ram-bagimsiz-denetim-ve-danismanlik-a-s",
+    "oid": "5583"
+  },
+  {
+    "name": "RAN LOJİSTİK HİZMETLERİ A.Ş.",
+    "slug": "1497-ran-lojistik-hizmetleri-a-s",
+    "oid": "1497"
+  },
+  {
+    "name": "RANDIMAN DENETİM YEMİNLİ MALİ MÜŞAVİRLİK VE BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "137-randiman-denetim-yeminli-mali-musavirlik-ve-bagimsiz-denetim-a-s",
+    "oid": "137"
+  },
+  {
+    "name": "RASYONEL BAĞIMSIZ DENETİM VE YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "138-rasyonel-bagimsiz-denetim-ve-yeminli-mali-musavirlik-a-s",
+    "oid": "138"
   },
   {
     "name": "RAY SİGORTA A.Ş.",
@@ -4255,14 +5940,49 @@
     "oid": "1063"
   },
   {
-    "name": "REEDER TEKNOLOJİ SANAYİ VE TİCARET A.Ş.",
-    "slug": "5866-reeder-teknoloji-sanayi-ve-ticaret-a-s",
-    "oid": "5866"
+    "name": "RAYMOND JAMES YATIRIM MENKUL KIYMETLER A.Ş.",
+    "slug": "1335-raymond-james-yatirim-menkul-kiymetler-a-s",
+    "oid": "1335"
   },
   {
     "name": "RE-PIE PORTFÖY YÖNETİMİ A.Ş.",
     "slug": "2472-re-pie-portfoy-yonetimi-a-s",
     "oid": "2472"
+  },
+  {
+    "name": "REANDA AREN BAĞIMSIZ DENETİM VE SMMM A.Ş.",
+    "slug": "240-reanda-aren-bagimsiz-denetim-ve-smmm-a-s",
+    "oid": "240"
+  },
+  {
+    "name": "REEDER TEKNOLOJİ SANAYİ VE TİCARET A.Ş.",
+    "slug": "5866-reeder-teknoloji-sanayi-ve-ticaret-a-s",
+    "oid": "5866"
+  },
+  {
+    "name": "REFERANS MENKUL DEĞERLER A.Ş.",
+    "slug": "2295-referans-menkul-degerler-a-s",
+    "oid": "2295"
+  },
+  {
+    "name": "REFORM BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "4598-reform-bagimsiz-denetim-a-s",
+    "oid": "4598"
+  },
+  {
+    "name": "REHBER BAĞIMSIZ DENETİM VE YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "139-rehber-bagimsiz-denetim-ve-yeminli-mali-musavirlik-a-s",
+    "oid": "139"
+  },
+  {
+    "name": "RENAISSANCE CAPITAL MENKUL DEĞERLER A.Ş.",
+    "slug": "1332-renaissance-capital-menkul-degerler-a-s",
+    "oid": "1332"
+  },
+  {
+    "name": "REPORT BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "224-report-bagimsiz-denetim-a-s",
+    "oid": "224"
   },
   {
     "name": "REYSAŞ GAYRİMENKUL YATIRIM ORTAKLIĞI A.Ş.",
@@ -4273,6 +5993,16 @@
     "name": "REYSAŞ TAŞIMACILIK VE LOJİSTİK TİCARET A.Ş.",
     "slug": "1415-reysas-tasimacilik-ve-lojistik-ticaret-a-s",
     "oid": "1415"
+  },
+  {
+    "name": "RHEA PORTFÖY YÖNETİMİ A.Ş.",
+    "slug": "2347-rhea-portfoy-yonetimi-a-s",
+    "oid": "2347"
+  },
+  {
+    "name": "RİVA MENKUL DEĞERLER A.Ş.",
+    "slug": "1341-riva-menkul-degerler-a-s",
+    "oid": "1341"
   },
   {
     "name": "RODRİGO TEKSTİL SANAYİ VE TİCARET A.Ş.",
@@ -4300,6 +6030,16 @@
     "oid": "2133"
   },
   {
+    "name": "RSM TURKEY BAĞIMSIZ DENETİM VE YMM A.Ş.",
+    "slug": "126-rsm-turkey-bagimsiz-denetim-ve-ymm-a-s",
+    "oid": "126"
+  },
+  {
+    "name": "RSM TURKEY ULUSLARARASI BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "213-rsm-turkey-uluslararasi-bagimsiz-denetim-a-s",
+    "oid": "213"
+  },
+  {
     "name": "RTA LABORATUVARLARI BİYOLOJİK ÜRÜNLER İLAÇ VE MAKİNE SANAYİ TİCARET A.Ş.",
     "slug": "2258-rta-laboratuvarlari-biyolojik-urunler-ilac-ve-makine-sanayi-ticaret-a-s",
     "oid": "2258"
@@ -4315,6 +6055,26 @@
     "oid": "853"
   },
   {
+    "name": "SAAT VE SAAT SANAYİ VE TİCARET A.Ş.",
+    "slug": "4184-saat-ve-saat-sanayi-ve-ticaret-a-s",
+    "oid": "4184"
+  },
+  {
+    "name": "SABAH PAZARLAMA A.Ş.",
+    "slug": "1064-sabah-pazarlama-a-s",
+    "oid": "1064"
+  },
+  {
+    "name": "SABAH YAYINCILIK A.Ş.",
+    "slug": "1065-sabah-yayincilik-a-s",
+    "oid": "1065"
+  },
+  {
+    "name": "SAF GAYRİMENKUL YATIRIM ORTAKLIĞI A.Ş.",
+    "slug": "1453-saf-gayrimenkul-yatirim-ortakligi-a-s",
+    "oid": "1453"
+  },
+  {
     "name": "SAFKAR EGE SOĞUTMACILIK KLİMA SOĞUK HAVA TESİSLERİ İHRACAT İTHALAT SANAYİ VE TİCARET A.Ş.",
     "slug": "4550-safkar-ege-sogutmacilik-klima-soguk-hava-tesisleri-ihracat-ithalat-sanayi-ve-ticaret-a-s",
     "oid": "4550"
@@ -4323,6 +6083,21 @@
     "name": "SAHA KURUMSAL YÖNETİM VE KREDİ DERECELENDİRME HİZMETLERİ A.Ş.",
     "slug": "5937-saha-kurumsal-yonetim-ve-kredi-derecelendirme-hizmetleri-a-s",
     "oid": "5937"
+  },
+  {
+    "name": "SALİX YATIRIM HOLDİNG A.Ş.",
+    "slug": "1425-salix-yatirim-holding-a-s",
+    "oid": "1425"
+  },
+  {
+    "name": "SAMDEN SAMSUN BAĞIMSIZ DIŞ DENETİM VE SMMM A.Ş.",
+    "slug": "214-samden-samsun-bagimsiz-dis-denetim-ve-smmm-a-s",
+    "oid": "214"
+  },
+  {
+    "name": "SAMSUN YEM SANAYİ VE TİCARET A.Ş.",
+    "slug": "2520-samsun-yem-sanayi-ve-ticaret-a-s",
+    "oid": "2520"
   },
   {
     "name": "SAN-EL MÜHENDİSLİK ELEKTRİK TAAHHÜT SANAYİ VE TİCARET A.Ş.",
@@ -4343,6 +6118,11 @@
     "name": "SANKO PAZARLAMA İTHALAT İHRACAT A.Ş.",
     "slug": "1066-sanko-pazarlama-ithalat-ihracat-a-s",
     "oid": "1066"
+  },
+  {
+    "name": "SARAY HALI A.Ş.",
+    "slug": "1994-saray-hali-a-s",
+    "oid": "1994"
   },
   {
     "name": "SARAY MATBAACILIK KAĞITÇILIK KIRTASİYECİLİK TİCARET VE SANAYİ A.Ş.",
@@ -4370,14 +6150,39 @@
     "oid": "6198"
   },
   {
+    "name": "SAXO CAPITAL MARKETS MENKUL DEĞERLER A.Ş.",
+    "slug": "1284-saxo-capital-markets-menkul-degerler-a-s",
+    "oid": "1284"
+  },
+  {
     "name": "SAY YENİLENEBİLİR ENERJİ EKİPMANLARI SANAYİ VE TİCARET A.Ş.",
     "slug": "1983-say-yenilenebilir-enerji-ekipmanlari-sanayi-ve-ticaret-a-s",
     "oid": "1983"
   },
   {
+    "name": "SAYDAM YEMİNLİ MALİ MÜŞAVİRLİK VE DENETİM HİZMETLERİ A.Ş.",
+    "slug": "140-saydam-yeminli-mali-musavirlik-ve-denetim-hizmetleri-a-s",
+    "oid": "140"
+  },
+  {
+    "name": "SAYGIN YEMİNLİ MALİ MÜŞAVİRLİK VE DENETİM A.Ş.",
+    "slug": "141-saygin-yeminli-mali-musavirlik-ve-denetim-a-s",
+    "oid": "141"
+  },
+  {
+    "name": "SAYILGAN MENKUL DEĞERLER TİCARETİ A.Ş.",
+    "slug": "1344-sayilgan-menkul-degerler-ticareti-a-s",
+    "oid": "1344"
+  },
+  {
     "name": "SDT UZAY VE SAVUNMA TEKNOLOJİLERİ A.Ş.",
     "slug": "5686-sdt-uzay-ve-savunma-teknolojileri-a-s",
     "oid": "5686"
+  },
+  {
+    "name": "SEÇKİN YEMİNLİ MALİ MÜŞAVİRLİK ve BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "142-seckin-yeminli-mali-musavirlik-ve-bagimsiz-denetim-a-s",
+    "oid": "142"
   },
   {
     "name": "SEFİNE DENİZCİLİK TERSANECİLİK TURİZM SANAYİ VE TİCARET A.Ş.",
@@ -4400,14 +6205,34 @@
     "oid": "1420"
   },
   {
+    "name": "SELKİM SELÜLOZ KİMYA SANAYİİ VE TİCARET A.Ş.",
+    "slug": "1624-selkim-seluloz-kimya-sanayii-ve-ticaret-a-s",
+    "oid": "1624"
+  },
+  {
     "name": "SELVA GIDA SANAYİ A.Ş.",
     "slug": "5362-selva-gida-sanayi-a-s",
     "oid": "5362"
   },
   {
+    "name": "SENBE TURİZM SANAYİ VE TİCARET A.Ş.",
+    "slug": "1259-senbe-turizm-sanayi-ve-ticaret-a-s",
+    "oid": "1259"
+  },
+  {
+    "name": "SER-BERKER BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "186-ser-berker-bagimsiz-denetim-a-s",
+    "oid": "186"
+  },
+  {
     "name": "SERANİT GRANİT SERAMİK SANAYİ VE TİCARET A.Ş.",
     "slug": "6058-seranit-granit-seramik-sanayi-ve-ticaret-a-s",
     "oid": "6058"
+  },
+  {
+    "name": "SERMAYE PİYASASI KURULU",
+    "slug": "39-sermaye-piyasasi-kurulu",
+    "oid": "39"
   },
   {
     "name": "SERVET GAYRİMENKUL YATIRIM ORTAKLIĞI A.Ş.",
@@ -4420,6 +6245,11 @@
     "oid": "2154"
   },
   {
+    "name": "SEYİDOĞLU OTOMOTİV TAMİR BAKIM VE PARK İŞLETMECİLİĞİ MÜŞAVİRLİK HİZMETLERİ A.Ş.",
+    "slug": "6276-seyidoglu-otomotiv-tamir-bakim-ve-park-isletmeciligi-musavirlik-hizmetleri-a-s",
+    "oid": "6276"
+  },
+  {
     "name": "SEYİTLER KİMYA SANAYİ A.Ş.",
     "slug": "2500-seyitler-kimya-sanayi-a-s",
     "oid": "2500"
@@ -4430,9 +6260,14 @@
     "oid": "5178"
   },
   {
-    "name": "SHELL & TURCAS PETROL A.Ş.",
-    "slug": "3084-shell-turcas-petrol-a-s",
-    "oid": "3084"
+    "name": "SIRDAŞ BAĞIMSIZ DIŞ DENETLEME VE MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "143-sirdas-bagimsiz-dis-denetleme-ve-mali-musavirlik-a-s",
+    "oid": "143"
+  },
+  {
+    "name": "SİFAŞ SENTETİK İPLİK FABRİKALARI A.Ş.",
+    "slug": "1071-sifas-sentetik-iplik-fabrikalari-a-s",
+    "oid": "1071"
   },
   {
     "name": "SİLVERLİNE ENDÜSTRİ VE TİCARET A.Ş.",
@@ -4443,6 +6278,11 @@
     "name": "SİNPAŞ GAYRİMENKUL YATIRIM ORTAKLIĞI A.Ş.",
     "slug": "1459-sinpas-gayrimenkul-yatirim-ortakligi-a-s",
     "oid": "1459"
+  },
+  {
+    "name": "SİTE YATIRIM MENKUL DEĞERLER A.Ş.",
+    "slug": "1345-site-yatirim-menkul-degerler-a-s",
+    "oid": "1345"
   },
   {
     "name": "SKYALP FİNANSAL TEKNOLOJİLER VE DANIŞMANLIK A.Ş.",
@@ -4460,14 +6300,39 @@
     "oid": "4872"
   },
   {
+    "name": "SNK GİRİŞİM SERMAYESİ YATIRIM ORTAKLIĞI A.Ş.",
+    "slug": "2631-snk-girisim-sermayesi-yatirim-ortakligi-a-s",
+    "oid": "2631"
+  },
+  {
     "name": "SOCIETE GENERALE  S.A. PARİS MERKEZİ FRANSA İSTANBUL TÜRKİYE MERKEZ ŞUBESİ",
     "slug": "2049-societe-generale-s-a-paris-merkezi-fransa-istanbul-turkiye-merkez-subesi",
     "oid": "2049"
   },
   {
+    "name": "SODA SANAYİİ A.Ş.",
+    "slug": "1072-soda-sanayii-a-s",
+    "oid": "1072"
+  },
+  {
     "name": "SODAŞ SODYUM SANAYİİ A.Ş.",
     "slug": "1583-sodas-sodyum-sanayii-a-s",
     "oid": "1583"
+  },
+  {
+    "name": "SOHO GİYİM VE ENERJİ A.Ş.",
+    "slug": "6233-soho-giyim-ve-enerji-a-s",
+    "oid": "6233"
+  },
+  {
+    "name": "SOMAY SERBEST MUHASEBECİ MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "144-somay-serbest-muhasebeci-mali-musavirlik-a-s",
+    "oid": "144"
+  },
+  {
+    "name": "SOYMEN MENKUL KIYMETLER A.Ş.",
+    "slug": "1346-soymen-menkul-kiymetler-a-s",
+    "oid": "1346"
   },
   {
     "name": "SÖKE DEĞİRMENCİLİK SANAYİ VE TİCARET A.Ş.",
@@ -4495,9 +6360,34 @@
     "oid": "6050"
   },
   {
+    "name": "SPEKTRA JEOTEK SANAYİ VE TİCARET A.Ş.",
+    "slug": "2581-spektra-jeotek-sanayi-ve-ticaret-a-s",
+    "oid": "2581"
+  },
+  {
+    "name": "STANDARD CHARTERED YATIRIM BANKASI TÜRK A.Ş.",
+    "slug": "2033-standard-chartered-yatirim-bankasi-turk-a-s",
+    "oid": "2033"
+  },
+  {
+    "name": "STANDART SERBEST MALİ MÜŞAVİRLİK VE DENETİM A.Ş.",
+    "slug": "145-standart-serbest-mali-musavirlik-ve-denetim-a-s",
+    "oid": "145"
+  },
+  {
     "name": "STATECH PORTFÖY YÖNETİMİ A.Ş.",
     "slug": "5537-statech-portfoy-yonetimi-a-s",
     "oid": "5537"
+  },
+  {
+    "name": "STFA YATIRIM HOLDİNG A.Ş.",
+    "slug": "2531-stfa-yatirim-holding-a-s",
+    "oid": "2531"
+  },
+  {
+    "name": "STRATEJİ FAKTORİNG A.Ş.",
+    "slug": "2302-strateji-faktoring-a-s",
+    "oid": "2302"
   },
   {
     "name": "STRATEJİ MENKUL DEĞERLER A.Ş.",
@@ -4518,6 +6408,11 @@
     "name": "SUMAŞ SUNİ TAHTA VE MOBİLYA SANAYİİ A.Ş.",
     "slug": "2801-sumas-suni-tahta-ve-mobilya-sanayii-a-s",
     "oid": "2801"
+  },
+  {
+    "name": "SUN BAĞIMSIZ DENETİM VE YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "146-sun-bagimsiz-denetim-ve-yeminli-mali-musavirlik-a-s",
+    "oid": "146"
   },
   {
     "name": "SUN TEKSTİL SANAYİ VE TİCARET A.Ş.",
@@ -4555,6 +6450,16 @@
     "oid": "3660"
   },
   {
+    "name": "SÜMER YATIRIM MENKUL DEĞERLER A.Ş.",
+    "slug": "1350-sumer-yatirim-menkul-degerler-a-s",
+    "oid": "1350"
+  },
+  {
+    "name": "ŞA-RA ENERJİ İNŞAAT TİCARET VE SANAYİ A.Ş.",
+    "slug": "6246-sa-ra-enerji-insaat-ticaret-ve-sanayi-a-s",
+    "oid": "6246"
+  },
+  {
     "name": "ŞEKER FAKTORİNG A.Ş.",
     "slug": "2583-seker-faktoring-a-s",
     "oid": "2583"
@@ -4565,17 +6470,27 @@
     "oid": "1392"
   },
   {
+    "name": "ŞEKER FİNANSMAN A.Ş.",
+    "slug": "1888-seker-finansman-a-s",
+    "oid": "1888"
+  },
+  {
     "name": "ŞEKER GAYRİMENKUL YATIRIM ORTAKLIĞI A.Ş.",
     "slug": "5071-seker-gayrimenkul-yatirim-ortakligi-a-s",
     "oid": "5071"
   },
   {
-    "name": "SKY SKYMD",
+    "name": "ŞEKER PİLİÇ VE YEM SANAYİ TİCARET A.Ş.",
+    "slug": "1077-seker-pilic-ve-yem-sanayi-ticaret-a-s",
+    "oid": "1077"
+  },
+  {
+    "name": "ŞEKER YATIRIM MENKUL DEĞERLER A.Ş.",
     "slug": "1351-seker-yatirim-menkul-degerler-a-s",
     "oid": "1351"
   },
   {
-    "name": "SEK SKBNK",
+    "name": "ŞEKERBANK T.A.Ş.",
     "slug": "2418-sekerbank-t-a-s",
     "oid": "2418"
   },
@@ -4583,6 +6498,31 @@
     "name": "ŞOK MARKETLER TİCARET A.Ş.",
     "slug": "3913-sok-marketler-ticaret-a-s",
     "oid": "3913"
+  },
+  {
+    "name": "T.C. HAZİNE VE MALİYE BAKANLIĞI DARPHANE VE DAMGA MATBAASI GENEL MÜDÜRLÜĞÜ",
+    "slug": "5665-t-c-hazine-ve-maliye-bakanligi-darphane-ve-damga-matbaasi-genel-mudurlugu",
+    "oid": "5665"
+  },
+  {
+    "name": "T.C. TOPLU KONUT İDARESİ BAŞKANLIĞI",
+    "slug": "4408-t-c-toplu-konut-idaresi-baskanligi",
+    "oid": "4408"
+  },
+  {
+    "name": "T.C. TOPLU KONUT İDARESİ BAŞKANLIĞI (PARK MAVERA III PROJESİ)",
+    "slug": "4423-t-c-toplu-konut-idaresi-baskanligi-park-mavera-iii-projesi",
+    "oid": "4423"
+  },
+  {
+    "name": "T.C. ZİRAAT BANKASI A.Ş.",
+    "slug": "2419-t-c-ziraat-bankasi-a-s",
+    "oid": "2419"
+  },
+  {
+    "name": "T.O.M. KATILIM BANKASI A.Ş.",
+    "slug": "6048-t-o-m-katilim-bankasi-a-s",
+    "oid": "6048"
   },
   {
     "name": "TAB GIDA SANAYİ VE TİCARET A.Ş.",
@@ -4595,9 +6535,14 @@
     "oid": "2350"
   },
   {
-    "name": "TAC TCRYT",
+    "name": "TACİRLER YATIRIM MENKUL DEĞERLER A.Ş.",
     "slug": "2522-tacirler-yatirim-menkul-degerler-a-s",
     "oid": "2522"
+  },
+  {
+    "name": "TAKSİM YATIRIM A.Ş.",
+    "slug": "1354-taksim-yatirim-a-s",
+    "oid": "1354"
   },
   {
     "name": "TAM FİNANS FAKTORİNG A.Ş.",
@@ -4605,14 +6550,29 @@
     "oid": "2188"
   },
   {
+    "name": "TANSAŞ PERAKENDE MAĞAZACILIK TİCARET A.Ş.",
+    "slug": "1090-tansas-perakende-magazacilik-ticaret-a-s",
+    "oid": "1090"
+  },
+  {
     "name": "TAPDİ OKSİJEN ÖZEL SAĞLIK VE EĞİTİM HİZMETLERİ SANAYİ TİCARET A.Ş.",
     "slug": "5261-tapdi-oksijen-ozel-saglik-ve-egitim-hizmetleri-sanayi-ticaret-a-s",
     "oid": "5261"
   },
   {
+    "name": "TARAF GAZETECİLİK SANAYİ VE TİCARET A.Ş.",
+    "slug": "1566-taraf-gazetecilik-sanayi-ve-ticaret-a-s",
+    "oid": "1566"
+  },
+  {
     "name": "TARFİN TARIM A.Ş.",
     "slug": "6030-tarfin-tarim-a-s",
     "oid": "6030"
+  },
+  {
+    "name": "TARIM KREDİ HOLDİNG A.Ş.",
+    "slug": "5012-tarim-kredi-holding-a-s",
+    "oid": "5012"
   },
   {
     "name": "TARIM KREDİ TEDARİK VE ÜRETİM A.Ş.",
@@ -4635,6 +6595,16 @@
     "oid": "5023"
   },
   {
+    "name": "TASFİYE HALİNDE KALKINMA YATIRIM MENKUL DEĞERLER A.Ş.",
+    "slug": "1321-tasfiye-halinde-kalkinma-yatirim-menkul-degerler-a-s",
+    "oid": "1321"
+  },
+  {
+    "name": "TASFİYE HALİNDE THE ROYAL BANK OF SCOTLAND PLC MERKEZİ EDINBURGH İSTANBUL MERKEZ ŞUBESİ",
+    "slug": "2007-tasfiye-halinde-the-royal-bank-of-scotland-plc-merkezi-edinburgh-istanbul-merkez-subesi",
+    "oid": "2007"
+  },
+  {
     "name": "TAT GIDA SANAYİ A.Ş.",
     "slug": "1091-tat-gida-sanayi-a-s",
     "oid": "1091"
@@ -4648,21 +6618,6 @@
     "name": "TAV HAVALİMANLARI HOLDİNG A.Ş.",
     "slug": "1452-tav-havalimanlari-holding-a-s",
     "oid": "1452"
-  },
-  {
-    "name": "T.C. HAZİNE VE MALİYE BAKANLIĞI DARPHANE VE DAMGA MATBAASI GENEL MÜDÜRLÜĞÜ",
-    "slug": "5665-t-c-hazine-ve-maliye-bakanligi-darphane-ve-damga-matbaasi-genel-mudurlugu",
-    "oid": "5665"
-  },
-  {
-    "name": "T.C. TOPLU KONUT İDARESİ BAŞKANLIĞI",
-    "slug": "4408-t-c-toplu-konut-idaresi-baskanligi",
-    "oid": "4408"
-  },
-  {
-    "name": "TCZ TCZB",
-    "slug": "2419-t-c-ziraat-bankasi-a-s",
-    "oid": "2419"
   },
   {
     "name": "TEB ARVAL ARAÇ FİLO KİRALAMA A.Ş.",
@@ -4685,7 +6640,7 @@
     "oid": "2315"
   },
   {
-    "name": "TBY TEBYT",
+    "name": "TEB YATIRIM MENKUL DEĞERLER A.Ş.",
     "slug": "1357-teb-yatirim-menkul-degerler-a-s",
     "oid": "1357"
   },
@@ -4695,9 +6650,29 @@
     "oid": "1092"
   },
   {
+    "name": "TEK-ART İNŞAAT TİCARET VE SANAYİ A.Ş.",
+    "slug": "1441-tek-art-insaat-ticaret-ve-sanayi-a-s",
+    "oid": "1441"
+  },
+  {
     "name": "TEKFEN HOLDİNG A.Ş.",
     "slug": "1470-tekfen-holding-a-s",
     "oid": "1470"
+  },
+  {
+    "name": "TEKFEN MENKUL KIYMETLER A.Ş.",
+    "slug": "1358-tekfen-menkul-kiymetler-a-s",
+    "oid": "1358"
+  },
+  {
+    "name": "TEKNİK YAPI TEKNİK YAPILAR SANAYİ VE TİCARET A.Ş.",
+    "slug": "2996-teknik-yapi-teknik-yapilar-sanayi-ve-ticaret-a-s",
+    "oid": "2996"
+  },
+  {
+    "name": "TEKNİKA PLAST TEKNİK KALIP PLASTİK SANAYİ VE TİCARET A.Ş.",
+    "slug": "6274-teknika-plast-teknik-kalip-plastik-sanayi-ve-ticaret-a-s",
+    "oid": "6274"
   },
   {
     "name": "TEKNOSA İÇ VE DIŞ TİCARET A.Ş.",
@@ -4708,6 +6683,11 @@
     "name": "TEMAPOL POLİMER PLASTİK VE İNŞAAT SANAYİ TİCARET A.Ş.",
     "slug": "2075-temapol-polimer-plastik-ve-insaat-sanayi-ticaret-a-s",
     "oid": "2075"
+  },
+  {
+    "name": "TENET BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "6112-tenet-bagimsiz-denetim-a-s",
+    "oid": "6112"
   },
   {
     "name": "TERA FİNANS FAKTORİNG A.Ş.",
@@ -4730,12 +6710,17 @@
     "oid": "6193"
   },
   {
-    "name": "TAE TRBNK",
+    "name": "TERA VARLIK KİRALAMA A.Ş. (TERKİN)",
+    "slug": "2504-tera-varlik-kiralama-a-s-terkin",
+    "oid": "2504"
+  },
+  {
+    "name": "TERA YATIRIM BANKASI A.Ş.",
     "slug": "5886-tera-yatirim-bankasi-a-s",
     "oid": "5886"
   },
   {
-    "name": "TERA TRA",
+    "name": "TERA YATIRIM MENKUL DEĞERLER A.Ş.",
     "slug": "2464-tera-yatirim-menkul-degerler-a-s",
     "oid": "2464"
   },
@@ -4743,6 +6728,16 @@
     "name": "TERA YATIRIM TEKNOLOJİ HOLDİNG A.Ş.",
     "slug": "968-tera-yatirim-teknoloji-holding-a-s",
     "oid": "968"
+  },
+  {
+    "name": "TESLA BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "6229-tesla-bagimsiz-denetim-a-s",
+    "oid": "6229"
+  },
+  {
+    "name": "TEZAL MENKUL DEĞERLER A.Ş.",
+    "slug": "1360-tezal-menkul-degerler-a-s",
+    "oid": "1360"
   },
   {
     "name": "TF VARLIK KİRALAMA A.Ş.",
@@ -4755,9 +6750,24 @@
     "oid": "1293"
   },
   {
+    "name": "TFKB VARLIK KİRALAMA A.Ş.",
+    "slug": "2383-tfkb-varlik-kiralama-a-s",
+    "oid": "2383"
+  },
+  {
     "name": "TGS DIŞ TİCARET A.Ş.",
     "slug": "1613-tgs-dis-ticaret-a-s",
     "oid": "1613"
+  },
+  {
+    "name": "THE HOUSE CAFE TURİZM VE TİCARET A.Ş.",
+    "slug": "2148-the-house-cafe-turizm-ve-ticaret-a-s",
+    "oid": "2148"
+  },
+  {
+    "name": "TİCARET MENKUL DEĞERLER A.Ş.",
+    "slug": "1361-ticaret-menkul-degerler-a-s",
+    "oid": "1361"
   },
   {
     "name": "TİMUR GAYRİMENKUL GELİŞTİRME YAPI VE YATIRIM A.Ş.",
@@ -4770,6 +6780,11 @@
     "oid": "2433"
   },
   {
+    "name": "TİTANYUM BAĞIMSIZ DENETİM HİZMETLERİ A.Ş.",
+    "slug": "6024-titanyum-bagimsiz-denetim-hizmetleri-a-s",
+    "oid": "6024"
+  },
+  {
     "name": "TK TARIM KREDİ PAZARLAMA VE MARKETÇİLİK A.Ş.",
     "slug": "6029-tk-tarim-kredi-pazarlama-ve-marketcilik-a-s",
     "oid": "6029"
@@ -4780,14 +6795,19 @@
     "oid": "1096"
   },
   {
-    "name": "T.O.M. KATILIM BANKASI A.Ş.",
-    "slug": "6048-t-o-m-katilim-bankasi-a-s",
-    "oid": "6048"
+    "name": "TOPRAK FİNANSAL KİRALAMA A.Ş.",
+    "slug": "1098-toprak-finansal-kiralama-a-s",
+    "oid": "1098"
   },
   {
     "name": "TOPRAK MAHSULLERİ OFİSİ A.Ş.",
     "slug": "5698-toprak-mahsulleri-ofisi-a-s",
     "oid": "5698"
+  },
+  {
+    "name": "TOROS MENKUL KIYMETLER TİCARET A.Ş.",
+    "slug": "1363-toros-menkul-kiymetler-ticaret-a-s",
+    "oid": "1363"
   },
   {
     "name": "TORUNLAR GAYRİMENKUL YATIRIM ORTAKLIĞI A.Ş.",
@@ -4815,6 +6835,21 @@
     "oid": "1400"
   },
   {
+    "name": "TRAKYA CAM SANAYİİ A.Ş.",
+    "slug": "1099-trakya-cam-sanayii-a-s",
+    "oid": "1099"
+  },
+  {
+    "name": "TRANSTÜRK HOLDİNG A.Ş.",
+    "slug": "1100-transturk-holding-a-s",
+    "oid": "1100"
+  },
+  {
+    "name": "TREND BAĞIMSIZ DENETİM VE YMM A.Ş.",
+    "slug": "147-trend-bagimsiz-denetim-ve-ymm-a-s",
+    "oid": "147"
+  },
+  {
     "name": "TREND GAYRİMENKUL YATIRIM ORTAKLIĞI A.Ş.",
     "slug": "4580-trend-gayrimenkul-yatirim-ortakligi-a-s",
     "oid": "4580"
@@ -4825,7 +6860,7 @@
     "oid": "5594"
   },
   {
-    "name": "TRMEN TVM",
+    "name": "TRIVE YATIRIM MENKUL DEĞERLER A.Ş.",
     "slug": "1296-trive-yatirim-menkul-degerler-a-s",
     "oid": "1296"
   },
@@ -4835,9 +6870,24 @@
     "oid": "1502"
   },
   {
+    "name": "TSKB MENKUL DEĞERLER A.Ş.",
+    "slug": "1364-tskb-menkul-degerler-a-s",
+    "oid": "1364"
+  },
+  {
+    "name": "TSKB YATIRIM ORTAKLIĞI A.Ş.",
+    "slug": "1076-tskb-yatirim-ortakligi-a-s",
+    "oid": "1076"
+  },
+  {
     "name": "TT FİNANSMAN A.Ş.",
     "slug": "5786-tt-finansman-a-s",
     "oid": "5786"
+  },
+  {
+    "name": "TTK BAĞIMSIZ DENETİM VE YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "5310-ttk-bagimsiz-denetim-ve-yeminli-mali-musavirlik-a-s",
+    "oid": "5310"
   },
   {
     "name": "TUĞÇELİK ALÜMİNYUM VE METAL MAMÜLLERİ SANAYİ VE TİCARET A.Ş.",
@@ -4848,6 +6898,16 @@
     "name": "TUKAŞ GIDA SANAYİ VE TİCARET A.Ş.",
     "slug": "1101-tukas-gida-sanayi-ve-ticaret-a-s",
     "oid": "1101"
+  },
+  {
+    "name": "TUNA GAYRİMENKUL YATIRIM ORTAKLIĞI A.Ş.",
+    "slug": "2056-tuna-gayrimenkul-yatirim-ortakligi-a-s",
+    "oid": "2056"
+  },
+  {
+    "name": "TUNA PORTFÖY YÖNETİMİ A.Ş.",
+    "slug": "6253-tuna-portfoy-yonetimi-a-s",
+    "oid": "6253"
   },
   {
     "name": "TURCAS HOLDİNG A.Ş.",
@@ -4875,6 +6935,11 @@
     "oid": "5263"
   },
   {
+    "name": "TURKASSET VARLIK YÖNETİM A.Ş.",
+    "slug": "2117-turkasset-varlik-yonetim-a-s",
+    "oid": "2117"
+  },
+  {
     "name": "TURKCELL FİNANSMAN A.Ş.",
     "slug": "4112-turkcell-finansman-a-s",
     "oid": "4112"
@@ -4890,12 +6955,12 @@
     "oid": "4124"
   },
   {
-    "name": "TBA TRKSH",
-    "slug": "2201-turkish-bank-a-s",
-    "oid": "2201"
+    "name": "TURKISH FAKTORİNG A.Ş.",
+    "slug": "2168-turkish-faktoring-a-s",
+    "oid": "2168"
   },
   {
-    "name": "TKY TKYAT",
+    "name": "TURKİSH MENKUL DEĞERLER A.Ş.",
     "slug": "1365-turkish-menkul-degerler-a-s",
     "oid": "1365"
   },
@@ -4915,6 +6980,11 @@
     "oid": "1694"
   },
   {
+    "name": "TÜMTEKS TEKSTİL SANAYİ VE TİCARET A.Ş.",
+    "slug": "1104-tumteks-tekstil-sanayi-ve-ticaret-a-s",
+    "oid": "1104"
+  },
+  {
     "name": "TÜPRAŞ-TÜRKİYE PETROL RAFİNERİLERİ A.Ş.",
     "slug": "1105-tupras-turkiye-petrol-rafinerileri-a-s",
     "oid": "1105"
@@ -4925,9 +6995,19 @@
     "oid": "1500"
   },
   {
-    "name": "TEB TEBNK",
+    "name": "TÜRK DEMİR DÖKÜM FABRİKALARI A.Ş.",
+    "slug": "1079-turk-demir-dokum-fabrikalari-a-s",
+    "oid": "1079"
+  },
+  {
+    "name": "TÜRK EKONOMİ BANKASI A.Ş.",
     "slug": "2421-turk-ekonomi-bankasi-a-s",
     "oid": "2421"
+  },
+  {
+    "name": "TÜRK ELEKTRONİK PARA A.Ş.",
+    "slug": "3125-turk-elektronik-para-a-s",
+    "oid": "3125"
   },
   {
     "name": "TÜRK HAVA YOLLARI A.O.",
@@ -4965,6 +7045,21 @@
     "oid": "1996"
   },
   {
+    "name": "TÜRKER VANGÖLÜ ENERJİ YATIRIM A.Ş.",
+    "slug": "6273-turker-vangolu-enerji-yatirim-a-s",
+    "oid": "6273"
+  },
+  {
+    "name": "TÜRKERLER BAĞIMSIZ DENETİM YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "148-turkerler-bagimsiz-denetim-yeminli-mali-musavirlik-a-s",
+    "oid": "148"
+  },
+  {
+    "name": "TÜRKERLER İNŞAAT TURİZM MADENCİLİK ENERJİ ÜRETİM TİCARET VE SANAYİ A.Ş.",
+    "slug": "2436-turkerler-insaat-turizm-madencilik-enerji-uretim-ticaret-ve-sanayi-a-s",
+    "oid": "2436"
+  },
+  {
     "name": "TÜRKİYE EMLAK KATILIM BANKASI A.Ş.",
     "slug": "4922-turkiye-emlak-katilim-bankasi-a-s",
     "oid": "4922"
@@ -4975,12 +7070,12 @@
     "oid": "2029"
   },
   {
-    "name": "GARAN TGB",
+    "name": "TÜRKİYE GARANTİ BANKASI A.Ş.",
     "slug": "2422-turkiye-garanti-bankasi-a-s",
     "oid": "2422"
   },
   {
-    "name": "HALKB THL",
+    "name": "TÜRKİYE HALK BANKASI A.Ş.",
     "slug": "2423-turkiye-halk-bankasi-a-s",
     "oid": "2423"
   },
@@ -4990,22 +7085,27 @@
     "oid": "1935"
   },
   {
-    "name": "EXIMB THR",
+    "name": "TÜRKİYE İHRACAT KREDİ BANKASI A.Ş.",
     "slug": "2424-turkiye-ihracat-kredi-bankasi-a-s",
     "oid": "2424"
   },
   {
-    "name": "ISATR ISBTR ISCTR ISKUR TIB",
+    "name": "TÜRKİYE İŞ BANKASI A.Ş.",
     "slug": "2425-turkiye-is-bankasi-a-s",
     "oid": "2425"
   },
   {
-    "name": "KLN KLNMA",
+    "name": "TÜRKİYE KALKINMA VE YATIRIM BANKASI A.Ş.",
     "slug": "2426-turkiye-kalkinma-ve-yatirim-bankasi-a-s",
     "oid": "2426"
   },
   {
-    "name": "TSK TSKB",
+    "name": "TÜRKİYE SERMAYE PİYASALARI BİRLİĞİ",
+    "slug": "21-turkiye-sermaye-piyasalari-birligi",
+    "oid": "21"
+  },
+  {
+    "name": "TÜRKİYE SINAİ KALKINMA BANKASI A.Ş.",
     "slug": "2427-turkiye-sinai-kalkinma-bankasi-a-s",
     "oid": "2427"
   },
@@ -5020,9 +7120,14 @@
     "oid": "1087"
   },
   {
-    "name": "TVB VAKBN",
+    "name": "TÜRKİYE VAKIFLAR BANKASI T.A.O.",
     "slug": "2428-turkiye-vakiflar-bankasi-t-a-o",
     "oid": "2428"
+  },
+  {
+    "name": "TÜRKMEN BAĞIMSIZ DENETİM VE YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "195-turkmen-bagimsiz-denetim-ve-yeminli-mali-musavirlik-a-s",
+    "oid": "195"
   },
   {
     "name": "TV8 TV YAYINCILIK A.Ş.",
@@ -5030,9 +7135,19 @@
     "oid": "3548"
   },
   {
+    "name": "UBS MENKUL DEĞERLER A.Ş.",
+    "slug": "1264-ubs-menkul-degerler-a-s",
+    "oid": "1264"
+  },
+  {
     "name": "UFUK YATIRIM YÖNETİM VE GAYRİMENKUL A.Ş.",
     "slug": "1444-ufuk-yatirim-yonetim-ve-gayrimenkul-a-s",
     "oid": "1444"
+  },
+  {
+    "name": "UKİ ULUSLARARASI KONFEKSİYON İMALAT VE TİC. A.Ş.",
+    "slug": "1109-uki-uluslararasi-konfeksiyon-imalat-ve-tic-a-s",
+    "oid": "1109"
   },
   {
     "name": "ULAŞLAR TURİZM ENERJİ TARIM GIDA VE İNŞAAT YATIRIMLARI A.Ş.",
@@ -5045,9 +7160,34 @@
     "oid": "3364"
   },
   {
+    "name": "ULUKARTAL KAPİTAL MENKUL DEĞERLER A.Ş.",
+    "slug": "2013-ulukartal-kapital-menkul-degerler-a-s",
+    "oid": "2013"
+  },
+  {
+    "name": "ULUS MENKUL DEĞERLER A.Ş.",
+    "slug": "1366-ulus-menkul-degerler-a-s",
+    "oid": "1366"
+  },
+  {
+    "name": "ULUS YEMİNLİ MALİ MÜŞAVİRLİK VE BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "215-ulus-yeminli-mali-musavirlik-ve-bagimsiz-denetim-a-s",
+    "oid": "215"
+  },
+  {
+    "name": "ULUSAL BAĞIMSIZ DENETİM VE YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "149-ulusal-bagimsiz-denetim-ve-yeminli-mali-musavirlik-a-s",
+    "oid": "149"
+  },
+  {
     "name": "ULUSAL FAKTORİNG A.Ş.",
     "slug": "2149-ulusal-faktoring-a-s",
     "oid": "2149"
+  },
+  {
+    "name": "ULUSLARARASI BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "233-uluslararasi-bagimsiz-denetim-a-s",
+    "oid": "233"
   },
   {
     "name": "ULUSOY ELEKTRİK İMALAT TAAHHÜT VE TİCARET A.Ş.",
@@ -5065,9 +7205,64 @@
     "oid": "2065"
   },
   {
+    "name": "UMUR BASIM SANAYİ VE TİCARET A.Ş.",
+    "slug": "2360-umur-basim-sanayi-ve-ticaret-a-s",
+    "oid": "2360"
+  },
+  {
+    "name": "UNAN PORTFÖY YÖNETİMİ A.Ş.",
+    "slug": "2313-unan-portfoy-yonetimi-a-s",
+    "oid": "2313"
+  },
+  {
+    "name": "UNICO SİGORTA A.Ş.",
+    "slug": "899-unico-sigorta-a-s",
+    "oid": "899"
+  },
+  {
+    "name": "UNICREDIT BANK AG",
+    "slug": "1562-unicredit-bank-ag",
+    "oid": "1562"
+  },
+  {
+    "name": "UNICREDIT MENKUL DEĞERLER A.Ş.",
+    "slug": "1342-unicredit-menkul-degerler-a-s",
+    "oid": "1342"
+  },
+  {
+    "name": "US YATIRIM HOLDİNG A.Ş.",
+    "slug": "1403-us-yatirim-holding-a-s",
+    "oid": "1403"
+  },
+  {
+    "name": "USAŞ YATIRIMLAR HOLDİNG A.Ş.",
+    "slug": "1110-usas-yatirimlar-holding-a-s",
+    "oid": "1110"
+  },
+  {
     "name": "UŞAK SERAMİK SANAYİ A.Ş.",
     "slug": "1111-usak-seramik-sanayi-a-s",
     "oid": "1111"
+  },
+  {
+    "name": "UYUM GIDA VE İHTİYAÇ MADDELERİ SANAYİ VE TİCARET A.Ş.",
+    "slug": "1527-uyum-gida-ve-ihtiyac-maddeleri-sanayi-ve-ticaret-a-s",
+    "oid": "1527"
+  },
+  {
+    "name": "UYUM YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "150-uyum-yeminli-mali-musavirlik-a-s",
+    "oid": "150"
+  },
+  {
+    "name": "UZEL MAKİNA SANAYİİ A.Ş.",
+    "slug": "1112-uzel-makina-sanayii-a-s",
+    "oid": "1112"
+  },
+  {
+    "name": "UZMAN YEMİNLİ MALİ MÜŞAVİRLİK VE BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "151-uzman-yeminli-mali-musavirlik-ve-bagimsiz-denetim-a-s",
+    "oid": "151"
   },
   {
     "name": "ÜÇAY MÜHENDİSLİK ENERJİ VE İKLİMLENDİRME TEKNOLOJİLERİ A.Ş.",
@@ -5080,7 +7275,12 @@
     "oid": "859"
   },
   {
-    "name": "UNLUS UNS",
+    "name": "ÜNAL TARIM ÜRÜNLERİ İHRACAT VE SANAYİ A.Ş.",
+    "slug": "1113-unal-tarim-urunleri-ihracat-ve-sanayi-a-s",
+    "oid": "1113"
+  },
+  {
+    "name": "ÜNLÜ MENKUL DEĞERLER A.Ş.",
     "slug": "1289-unlu-menkul-degerler-a-s",
     "oid": "1289"
   },
@@ -5093,6 +7293,11 @@
     "name": "ÜNLÜ YATIRIM HOLDİNG A.Ş.",
     "slug": "2474-unlu-yatirim-holding-a-s",
     "oid": "2474"
+  },
+  {
+    "name": "ÜNYE ÇİMENTO SANAYİ VE TİCARET A.Ş.",
+    "slug": "1114-unye-cimento-sanayi-ve-ticaret-a-s",
+    "oid": "1114"
   },
   {
     "name": "V PORTFÖY YÖNETİMİ A.Ş.",
@@ -5130,6 +7335,11 @@
     "oid": "1117"
   },
   {
+    "name": "VAKIF PORTFÖY YÖNETİMİ A.Ş.",
+    "slug": "2306-vakif-portfoy-yonetimi-a-s",
+    "oid": "2306"
+  },
+  {
     "name": "VAKIF VARLIK KİRALAMA A.Ş.",
     "slug": "4329-vakif-varlik-kiralama-a-s",
     "oid": "4329"
@@ -5148,6 +7358,16 @@
     "name": "VANET GIDA SANAYİ İÇ VE DIŞ TİCARET A.Ş.",
     "slug": "1558-vanet-gida-sanayi-ic-ve-dis-ticaret-a-s",
     "oid": "1558"
+  },
+  {
+    "name": "VARLIK GLOBAL BAĞIMSIZ DENETİM VE SERBEST MUHASEBECİ MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "5811-varlik-global-bagimsiz-denetim-ve-serbest-muhasebeci-mali-musavirlik-a-s",
+    "oid": "5811"
+  },
+  {
+    "name": "VARYAP VARLIBAŞLAR YAPI SANAYİ TURİZM YATIRIMLARI TİCARET VE ELEKTRİK ÜRETİM A.Ş.",
+    "slug": "2220-varyap-varlibaslar-yapi-sanayi-turizm-yatirimlari-ticaret-ve-elektrik-uretim-a-s",
+    "oid": "2220"
   },
   {
     "name": "VBT YAZILIM A.Ş.",
@@ -5175,9 +7395,24 @@
     "oid": "2475"
   },
   {
+    "name": "VENTERA BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "5805-ventera-bagimsiz-denetim-a-s",
+    "oid": "5805"
+  },
+  {
     "name": "VERA KONSEPT GAYRİMENKUL YATIRIM ORTAKLIĞI A.Ş.",
     "slug": "5885-vera-konsept-gayrimenkul-yatirim-ortakligi-a-s",
     "oid": "5885"
+  },
+  {
+    "name": "VERA VARLIK YÖNETİM A.Ş.",
+    "slug": "2190-vera-varlik-yonetim-a-s",
+    "oid": "2190"
+  },
+  {
+    "name": "VERİM MENKUL DEĞERLER A.Ş.",
+    "slug": "1713-verim-menkul-degerler-a-s",
+    "oid": "1713"
   },
   {
     "name": "VERUSA HOLDİNG A.Ş.",
@@ -5190,6 +7425,11 @@
     "oid": "2048"
   },
   {
+    "name": "VESTA MENKUL DEĞERLER A.Ş.",
+    "slug": "1267-vesta-menkul-degerler-a-s",
+    "oid": "1267"
+  },
+  {
     "name": "VESTEL BEYAZ EŞYA SANAYİ VE TİCARET A.Ş.",
     "slug": "1419-vestel-beyaz-esya-sanayi-ve-ticaret-a-s",
     "oid": "1419"
@@ -5200,9 +7440,19 @@
     "oid": "1122"
   },
   {
+    "name": "VEZİN BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "239-vezin-bagimsiz-denetim-a-s",
+    "oid": "239"
+  },
+  {
     "name": "VIENNALIFE EMEKLİLİK VE HAYAT A.Ş.",
     "slug": "1901-viennalife-emeklilik-ve-hayat-a-s",
     "oid": "1901"
+  },
+  {
+    "name": "VİA GAYRİMENKUL YATIRIM ORTAKLIĞI A.Ş.",
+    "slug": "2590-via-gayrimenkul-yatirim-ortakligi-a-s",
+    "oid": "2590"
   },
   {
     "name": "VİKİNG KAĞIT VE SELÜLOZ A.Ş.",
@@ -5215,9 +7465,19 @@
     "oid": "6060"
   },
   {
+    "name": "VİZYON GRUP BAĞIMSIZ DENETİM.A.Ş.",
+    "slug": "4660-vizyon-grup-bagimsiz-denetim-a-s",
+    "oid": "4660"
+  },
+  {
     "name": "VOLKSWAGEN DOĞUŞ FİNANSMAN A.Ş.",
     "slug": "2153-volkswagen-dogus-finansman-a-s",
     "oid": "2153"
+  },
+  {
+    "name": "VTB CAPITAL PLC",
+    "slug": "2202-vtb-capital-plc",
+    "oid": "2202"
   },
   {
     "name": "WAM GAYRİMENKUL VE GİRİŞİM SERMAYESİ PORTFÖY YÖNETİMİ A.Ş.",
@@ -5225,9 +7485,19 @@
     "oid": "5808"
   },
   {
+    "name": "X TRADE BROKERS MENKUL DEĞERLER A.Ş.",
+    "slug": "1314-x-trade-brokers-menkul-degerler-a-s",
+    "oid": "1314"
+  },
+  {
     "name": "YAFA MÜHENDİSLİK MÜŞAVİRLİK İNŞAAT SANAYİ VE TİCARET A.Ş.",
     "slug": "6204-yafa-muhendislik-musavirlik-insaat-sanayi-ve-ticaret-a-s",
     "oid": "6204"
+  },
+  {
+    "name": "YAPI KREDİ B TİPİ YATIRIM ORTAKLIĞI A.Ş.",
+    "slug": "1127-yapi-kredi-b-tipi-yatirim-ortakligi-a-s",
+    "oid": "1127"
   },
   {
     "name": "YAPI KREDİ FAKTORİNG A.Ş.",
@@ -5245,12 +7515,17 @@
     "oid": "2318"
   },
   {
-    "name": "YKR YKYAT",
+    "name": "YAPI KREDİ SİGORTA A.Ş.",
+    "slug": "1126-yapi-kredi-sigorta-a-s",
+    "oid": "1126"
+  },
+  {
+    "name": "YAPI KREDİ YATIRIM MENKUL DEĞERLER A.Ş.",
     "slug": "2532-yapi-kredi-yatirim-menkul-degerler-a-s",
     "oid": "2532"
   },
   {
-    "name": "YKB YKBNK",
+    "name": "YAPI VE KREDİ BANKASI A.Ş.",
     "slug": "2429-yapi-ve-kredi-bankasi-a-s",
     "oid": "2429"
   },
@@ -5260,14 +7535,24 @@
     "oid": "2920"
   },
   {
+    "name": "YAŞAR FAKTORİNG A.Ş.",
+    "slug": "2779-yasar-faktoring-a-s",
+    "oid": "2779"
+  },
+  {
     "name": "YATAŞ YATAK VE YORGAN SANAYİ TİCARET A.Ş.",
     "slug": "1129-yatas-yatak-ve-yorgan-sanayi-ticaret-a-s",
     "oid": "1129"
   },
   {
-    "name": "YAT YFMEN",
+    "name": "YATIRIM FİNANSMAN MENKUL DEĞERLER A.Ş.",
     "slug": "1370-yatirim-finansman-menkul-degerler-a-s",
     "oid": "1370"
+  },
+  {
+    "name": "YATIRIM FİNANSMAN YATIRIM ORTAKLIĞI A.Ş.",
+    "slug": "1130-yatirim-finansman-yatirim-ortakligi-a-s",
+    "oid": "1130"
   },
   {
     "name": "YATIRIM VARLIK KİRALAMA A.Ş.",
@@ -5285,6 +7570,21 @@
     "oid": "2061"
   },
   {
+    "name": "YDA İNŞAAT SANAYİ VE TİCARET A.Ş.",
+    "slug": "2275-yda-insaat-sanayi-ve-ticaret-a-s",
+    "oid": "2275"
+  },
+  {
+    "name": "YEDİTEPE BAĞIMSIZ DENETİM VE YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "216-yeditepe-bagimsiz-denetim-ve-yeminli-mali-musavirlik-a-s",
+    "oid": "216"
+  },
+  {
+    "name": "YEDİTEPE FAKTORİNG A.Ş.",
+    "slug": "2442-yeditepe-faktoring-a-s",
+    "oid": "2442"
+  },
+  {
     "name": "YENİ GİMAT GAYRİMENKUL YATIRIM ORTAKLIĞI A.Ş.",
     "slug": "2012-yeni-gimat-gayrimenkul-yatirim-ortakligi-a-s",
     "oid": "2012"
@@ -5300,6 +7600,11 @@
     "oid": "5892"
   },
   {
+    "name": "YEŞİL GAYRİMENKUL YATIRIM ORTAKLIĞI A.Ş.",
+    "slug": "982-yesil-gayrimenkul-yatirim-ortakligi-a-s",
+    "oid": "982"
+  },
+  {
     "name": "YEŞİL YAPI ENDÜSTRİSİ A.Ş.",
     "slug": "885-yesil-yapi-endustrisi-a-s",
     "oid": "885"
@@ -5310,9 +7615,24 @@
     "oid": "1386"
   },
   {
+    "name": "YETKİN DENETİM TASDİKVE YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "153-yetkin-denetim-tasdikve-yeminli-mali-musavirlik-a-s",
+    "oid": "153"
+  },
+  {
+    "name": "YILDIZLAR BAĞIMSIZ DENETİM VE YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "225-yildizlar-bagimsiz-denetim-ve-yeminli-mali-musavirlik-a-s",
+    "oid": "225"
+  },
+  {
     "name": "YILDIZLAR İNŞAAT VE TİCARET A.Ş.",
     "slug": "3938-yildizlar-insaat-ve-ticaret-a-s",
     "oid": "3938"
+  },
+  {
+    "name": "YILMAZ HOLDİNG A.Ş.",
+    "slug": "2657-yilmaz-holding-a-s",
+    "oid": "2657"
   },
   {
     "name": "YİBİTAŞ YOZGAT İŞÇİ BİRLİĞİ İNŞAAT MALZEMELERİ TİCARET VE SANAYİ A.Ş.",
@@ -5325,9 +7645,34 @@
     "oid": "5965"
   },
   {
+    "name": "YKY BAĞIMSIZ DENETİM VE YEMİNLİ MALİ MÜŞAVİRLİK A.Ş.",
+    "slug": "154-yky-bagimsiz-denetim-ve-yeminli-mali-musavirlik-a-s",
+    "oid": "154"
+  },
+  {
     "name": "YONGA MOBİLYA SANAYİ VE TİCARET A.Ş.",
     "slug": "1585-yonga-mobilya-sanayi-ve-ticaret-a-s",
     "oid": "1585"
+  },
+  {
+    "name": "YORUM BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "155-yorum-bagimsiz-denetim-a-s",
+    "oid": "155"
+  },
+  {
+    "name": "YÖNET YEMİNLİ MALİ MÜŞAVİRLİK VE BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "156-yonet-yeminli-mali-musavirlik-ve-bagimsiz-denetim-a-s",
+    "oid": "156"
+  },
+  {
+    "name": "YÖNTEM YEMİNLİ MALİ MÜŞAVİRLİK VE BAĞIMSIZ DENETİM A.Ş.",
+    "slug": "157-yontem-yeminli-mali-musavirlik-ve-bagimsiz-denetim-a-s",
+    "oid": "157"
+  },
+  {
+    "name": "YÜKSEL İNŞAAT A.Ş.",
+    "slug": "2431-yuksel-insaat-a-s",
+    "oid": "2431"
   },
   {
     "name": "YÜKSELEN ÇELİK A.Ş.",
@@ -5365,9 +7710,19 @@
     "oid": "6081"
   },
   {
+    "name": "ZİRAAT FİNANSAL KİRALAMA A.Ş.",
+    "slug": "1702-ziraat-finansal-kiralama-a-s",
+    "oid": "1702"
+  },
+  {
     "name": "ZİRAAT GAYRİMENKUL YATIRIM ORTAKLIĞI A.Ş.",
     "slug": "4337-ziraat-gayrimenkul-yatirim-ortakligi-a-s",
     "oid": "4337"
+  },
+  {
+    "name": "ZİRAAT HAYAT VE EMEKLİLİK A.Ş.",
+    "slug": "1924-ziraat-hayat-ve-emeklilik-a-s",
+    "oid": "1924"
   },
   {
     "name": "ZİRAAT KATILIM BANKASI A.Ş.",
@@ -5400,18 +7755,13 @@
     "oid": "1133"
   },
   {
+    "name": "ZORLU OSMANGAZİ ENERJİ SANAYİ VE TİCARET A.Ş.",
+    "slug": "4510-zorlu-osmangazi-enerji-sanayi-ve-ticaret-a-s",
+    "oid": "4510"
+  },
+  {
     "name": "ZURİCH YAŞAM VE EMEKLİLİK A.Ş.",
     "slug": "5116-zurich-yasam-ve-emeklilik-a-s",
     "oid": "5116"
-  },
-  {
-    "name": "1000 YATIRIMLAR HOLDİNG A.Ş.",
-    "slug": "5900-1000-yatirimlar-holding-a-s",
-    "oid": "5900"
-  },
-  {
-    "name": "24 GAYRİMENKUL VE GİRİŞİM SERMAYESİ PORTFÖY YÖNETİMİ A.Ş.",
-    "slug": "2501-24-gayrimenkul-ve-girisim-sermayesi-portfoy-yonetimi-a-s",
-    "oid": "2501"
   }
 ]
