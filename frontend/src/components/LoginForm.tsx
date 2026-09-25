@@ -23,11 +23,11 @@ export default function LoginForm() {
   return (
     <div style={{
       minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
-      background: 'var(--bg)', padding: 20,
+      background: 'linear-gradient(135deg, var(--brand-900) 0%, var(--brand-700) 55%, var(--brand-600) 100%)', padding: 20,
     }}>
       <form onSubmit={handleSubmit} style={{
         width: 380, background: 'var(--bg-surface)', border: '1px solid var(--border)',
-        borderRadius: 8, padding: '42px 34px', boxShadow: 'var(--shadow-md)',
+        borderRadius: 12, padding: '42px 34px', boxShadow: '0 24px 60px rgba(0, 18, 51, 0.35)',
       }}>
         <div style={{ textAlign: 'center', marginBottom: 32 }}>
           <div style={{
