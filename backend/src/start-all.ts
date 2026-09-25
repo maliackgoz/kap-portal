@@ -49,8 +49,8 @@ if (startRatingService) {
   }, ratingDir);
 }
 
-console.log(`Starting Finansal Portal on http://0.0.0.0:${portalPort}`);
-console.log(`Starting Finansal Portal MCP on http://0.0.0.0:${mcpPort}${mcpPath}`);
+console.log(`Starting KAP Portal on http://0.0.0.0:${portalPort}`);
+console.log(`Starting KAP Portal MCP on http://0.0.0.0:${mcpPort}${mcpPath}`);
 console.log(`MCP will read portal API from ${portalUrl}`);
 
 start('kap-portal', process.execPath, [path.join(__dirname, 'index.js')], {

@@ -121,7 +121,7 @@ async function start() {
   }
 
   app.listen(config.port, '0.0.0.0', () => {
-    console.log(`\nFinansal Portal: http://localhost:${config.port}`);
+    console.log(`\nKAP Portal: http://localhost:${config.port}`);
     console.log(`Şirket sayısı: ${count}`);
   });
 }

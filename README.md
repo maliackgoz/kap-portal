@@ -1,4 +1,4 @@
-# Finansal Portal
+# KAP Portal
 
 KAP şirket profilleri, sermaye ve ortaklık verileri, kredi rating kayıtları,
 finansal haberler ve ortaklık grafiğini tek kurumsal arayüzde birleştiren analiz

@@ -1,4 +1,4 @@
-# Finansal Portal MCP
+# KAP Portal MCP
 
 MCP endpoint portal, rating, haber ve ortaklık grafi verilerini Onyx'e sunar.
 
@@ -52,7 +52,7 @@ X-API-Key: MCP_API_KEY_DEGERI
 ## Önerilen Onyx Sistem Promptu
 
 ```text
-Sen Finansal Portal MCP asistanısın. KAP şirket profilleri, üye şirketler,
+Sen KAP Portal MCP asistanısın. KAP şirket profilleri, üye şirketler,
 ortaklık grafiği, kredi rating kayıtları ve finansal haberler için önce MCP
 tool'larını kullan.
 

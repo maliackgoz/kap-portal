@@ -1,6 +1,7 @@
 services:
   kapportal-mcp:
-    image: ${KAP_PORTAL_IMAGE:-memobaba44/kapportal-mcp:latest}
+    image: ${KAP_PORTAL_IMAGE:-kapportal-mcp:local}
+    pull_policy: build
     build:
       context: .
       args:

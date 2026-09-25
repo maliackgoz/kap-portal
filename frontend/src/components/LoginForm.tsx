@@ -36,7 +36,7 @@ export default function LoginForm() {
             fontSize: 22, fontWeight: 800, color: '#fff', fontFamily: 'var(--font-mono)',
             marginBottom: 16,
           }}><LockKeyhole size={22} /></div>
-          <h1 style={{ fontSize: 20, fontWeight: 700, letterSpacing: 0, margin: 0 }}>Finansal Portal</h1>
+          <h1 style={{ fontSize: 20, fontWeight: 700, letterSpacing: 0, margin: 0 }}>KAP Portal</h1>
           <p style={{ color: 'var(--text-muted)', fontSize: 13, marginTop: 6 }}>Kurumsal finansal analiz platformu</p>
         </div>
 

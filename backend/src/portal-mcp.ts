@@ -603,7 +603,7 @@ export function createPortalMcpServer(client: PortalClient) {
     'kap_get_rating_sources',
     {
       title: 'Get Rating and News Sources',
-      description: 'Return Finansal Portal rating/news source status, record counts, refresh status, and source errors.',
+      description: 'Return KAP Portal rating/news source status, record counts, refresh status, and source errors.',
       inputSchema: {
         type: z.enum(['rating', 'news']).optional(),
       },
@@ -632,7 +632,7 @@ export function createPortalMcpServer(client: PortalClient) {
     'kap_get_company_news',
     {
       title: 'Get Company News',
-      description: 'Return Finansal Portal news records for a company, including source, title, date, risk level, event type, matched keywords, and URLs.',
+      description: 'Return KAP Portal news records for a company, including source, title, date, risk level, event type, matched keywords, and URLs.',
       inputSchema: {
         company: z.string().min(1),
         source: z.string().optional(),
@@ -649,7 +649,7 @@ export function createPortalMcpServer(client: PortalClient) {
     'kap_search_rating_news',
     {
       title: 'Search Rating News',
-      description: 'Search live/configured Finansal Portal news sources for rating, credit, debt, risk, company, or market news.',
+      description: 'Search live/configured KAP Portal news sources for rating, credit, debt, risk, company, or market news.',
       inputSchema: {
         query: z.string().min(1),
         sources: z.array(z.string()).optional(),

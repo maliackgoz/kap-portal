@@ -178,53 +178,6 @@ Haber CSV:
 company,source_name,title,url,published_at,summary
 ```
 
-## DockerHub ile Şirket Kurulumu
-
-Image:
-
-```bash
-docker pull memobaba44/rating-mcp:latest
-```
-
-Sabit sürüm istersen:
-
-```bash
-docker pull memobaba44/rating-mcp:2026-06-10
-```
-
-Sunucuda aynı klasöre `docker-compose.pull.yml` ve `.env.company.example` dosyalarını koy. Sonra:
-
-```bash
-cp .env.company.example .env
-mkdir -p data
-docker compose -f docker-compose.pull.yml --env-file .env up -d
-```
-
-Kontrol:
-
-```bash
-curl http://localhost:8787/health
-```
-
-Onyx tarafında MCP URL:
-
-```text
-http://<onyx-in-erisebildigi-host>:8787/mcp/
-```
-
-Auth:
-
-- `.env` içinde `RATING_MCP_API_KEY` boşsa Onyx'te `No Auth`.
-- `RATING_MCP_API_KEY` doluysa Onyx'te `API Key` / bearer token.
-
-İlk veri çekimi:
-
-```bash
-curl -X POST http://localhost:8787/api/refresh \
-  -H "Content-Type: application/json" \
-  -d '{"sources":["turkrating"],"force":true}'
-```
-
 ## Test ve Lint
 
 ```bash
