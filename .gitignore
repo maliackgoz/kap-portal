@@ -6,12 +6,20 @@ frontend/dist/
 backend/data/*.db
 backend/data/*.db-shm
 backend/data/*.db-wal
+backend/data/companies.json.bak-*
 rating-service/.venv/
 rating-service/*.egg-info/
 rating-service/**/__pycache__/
 rating-service/data/raw/
 rating-service/data/pdfs/
 rating-service/data/imports/
+# Scrape edilmis DATA -- config degil (data/config/*.yaml ayri, o tracked kalir).
+# Her yeni kurulum "az once cekilmis gibi" gorunen eski veriyle baslamasin diye.
+rating-service/data/ratings.jsonl
+rating-service/data/news.jsonl
+rating-service/data/run_log.jsonl
+rating-service/data/exports/*.csv
+rating-service/data/exports/*.md
 .superpowers/
 .env
 *.log

@@ -54,15 +54,17 @@ COPY --from=portal-builder /app/backend/public backend/public
 COPY --from=rating-builder /opt/rating-venv /opt/rating-venv
 
 COPY backend/data/companies.json backend/data/companies.json
+COPY backend/data/company-aliases.json backend/data/company-aliases.json
 COPY rating-service/pyproject.toml rating-service/README.md rating-service/
 COPY rating-service/app rating-service/app
+COPY rating-service/sync_companies.py rating-service/sync_companies.py
 COPY rating-service/data/config rating-service/data/config
-COPY rating-service/data/exports rating-service/data/exports
-COPY rating-service/data/ratings.jsonl rating-service/data/ratings.jsonl
-COPY rating-service/data/news.jsonl rating-service/data/news.jsonl
-COPY rating-service/data/run_log.jsonl rating-service/data/run_log.jsonl
 
-RUN mkdir -p backend/seed-data rating-service/data/raw rating-service/data/pdfs rating-service/data/imports \
+# ratings.jsonl/news.jsonl/run_log.jsonl/exports/* BILEREK kopyalanmiyor -- bunlar
+# scrape edilmis DATA, statik config degil. Eski bir gelistirme anindan kalma
+# veriyi her yeni kuruluma "az once cekilmis gibi" sunmamak icin bos baslamali;
+# app/config.py ensure_data_dirs() zaten bunlari ilk calistirmada bos olusturuyor.
+RUN mkdir -p backend/seed-data rating-service/data/raw rating-service/data/pdfs rating-service/data/imports rating-service/data/exports \
   && cp backend/data/companies.json backend/seed-data/companies.json \
   && chown -R node:node backend rating-service
 
