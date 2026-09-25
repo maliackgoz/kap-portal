@@ -30,6 +30,9 @@ export const config = Object.freeze({
   jwtExpiresIn: process.env.JWT_EXPIRES_IN?.trim() || '8h',
   adminUsername: process.env.ADMIN_USER?.trim() || 'admin',
   adminPassword: secret('ADMIN_PASS', 'kap2024'),
+  // Salt okunur kullanici; ikisi de tanimli degilse viewer girisi kapali
+  viewerUsername: process.env.VIEWER_USER?.trim() || '',
+  viewerPassword: process.env.VIEWER_PASS || '',
   loginMaxAttempts: parsePositiveInt(process.env.LOGIN_MAX_ATTEMPTS, 8),
   loginWindowMs: parsePositiveInt(process.env.LOGIN_WINDOW_MS, 15 * 60 * 1000),
   allowedOrigins: parseList(

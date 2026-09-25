@@ -29,6 +29,20 @@ function currentAttempt(key: string) {
   return undefined;
 }
 
+export type Role = 'admin' | 'viewer';
+
+function matchUser(username: string, password: string): Role | null {
+  // Iki hesabi da her seferinde kontrol et (zamanlama farki olusmasin)
+  const admin = sameValue(username, config.adminUsername) && sameValue(password, config.adminPassword);
+  const viewerEnabled = Boolean(config.viewerUsername && config.viewerPassword);
+  const viewer = viewerEnabled
+    && sameValue(username, config.viewerUsername)
+    && sameValue(password, config.viewerPassword);
+  if (admin) return 'admin';
+  if (viewer) return 'viewer';
+  return null;
+}
+
 router.post('/login', (req: Request, res: Response) => {
   res.setHeader('Cache-Control', 'no-store');
   const username = typeof req.body?.username === 'string' ? req.body.username.trim() : '';
@@ -47,9 +61,8 @@ router.post('/login', (req: Request, res: Response) => {
     return;
   }
 
-  const validUser = sameValue(username, config.adminUsername);
-  const validPassword = sameValue(password, config.adminPassword);
-  if (!validUser || !validPassword) {
+  const role = matchUser(username, password);
+  if (!role) {
     loginAttempts.set(key, {
       failures: (attempt?.failures || 0) + 1,
       resetAt: attempt?.resetAt || Date.now() + config.loginWindowMs,
@@ -60,11 +73,11 @@ router.post('/login', (req: Request, res: Response) => {
 
   loginAttempts.delete(key);
   const token = jwt.sign(
-    { username, role: 'admin' },
+    { username, role },
     config.jwtSecret,
     { expiresIn: config.jwtExpiresIn as jwt.SignOptions['expiresIn'], issuer: 'finansal-portal' },
   );
-  res.json({ token, username });
+  res.json({ token, username, role });
 });
 
 export function authMiddleware(req: Request, res: Response, next: NextFunction) {
@@ -76,10 +89,33 @@ export function authMiddleware(req: Request, res: Response, next: NextFunction) 
   try {
     const payload = jwt.verify(header.slice(7), config.jwtSecret, { issuer: 'finansal-portal' });
     (req as any).user = payload;
-    next();
   } catch {
     res.status(401).json({ error: 'Geçersiz token' });
+    return;
   }
+  // Viewer salt okunur: veri degistiren/tetikleyen hicbir istegi yapamaz
+  if (!isAdmin(req) && req.method !== 'GET') {
+    res.status(403).json({ error: 'Bu işlem için yetkiniz yok' });
+    return;
+  }
+  next();
+}
+
+// Eski token'larda role alani yok; hepsi admin olarak uretilmisti
+export function tokenRole(payload: unknown): Role {
+  return (payload as { role?: string } | null)?.role === 'viewer' ? 'viewer' : 'admin';
+}
+
+function isAdmin(req: Request) {
+  return tokenRole((req as any).user) === 'admin';
+}
+
+export function adminOnly(req: Request, res: Response, next: NextFunction) {
+  if (!isAdmin(req)) {
+    res.status(403).json({ error: 'Bu sayfa için yetkiniz yok' });
+    return;
+  }
+  next();
 }
 
 export default router;

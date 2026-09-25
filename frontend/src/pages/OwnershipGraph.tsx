@@ -44,6 +44,7 @@ import {
   type GraphStats,
 } from '../api';
 import { useMemberCompanies } from '../hooks/useMemberCompanies';
+import { useAuth } from '../context/useAuth';
 import './ownership-graph.css';
 
 type CompanyOption = Pick<Company, 'id' | 'name' | 'status'>;
@@ -190,6 +191,7 @@ function RelationshipList({ title, items, empty, onSelect }: {
 }
 
 export default function OwnershipGraph() {
+  const { isAdmin } = useAuth();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const canvasRef = useRef<HTMLDivElement>(null);
@@ -660,14 +662,18 @@ export default function OwnershipGraph() {
           <button className="og-button is-secondary" type="button" onClick={() => void loadFullGraph()} disabled={loading}>
             <NetworkIcon size={15} /> Tam ağ
           </button>
-          <button className="og-button is-secondary" type="button" onClick={() => void rebuildGraph()} disabled={rebuilding}>
-            <RefreshCw size={15} className={rebuilding ? 'is-spinning' : ''} />
-            {rebuilding ? 'Oluşturuluyor' : 'Ağı oluştur'}
-          </button>
-          <button className="og-button is-primary" type="button" onClick={() => void refreshSelectedCompany()} disabled={!selectedCompany || kapRefreshing}>
-            <RefreshCw size={15} className={kapRefreshing ? 'is-spinning' : ''} />
-            {kapRefreshing ? 'KAP işleniyor' : "KAP'tan yenile"}
-          </button>
+          {isAdmin && (
+            <>
+              <button className="og-button is-secondary" type="button" onClick={() => void rebuildGraph()} disabled={rebuilding}>
+                <RefreshCw size={15} className={rebuilding ? 'is-spinning' : ''} />
+                {rebuilding ? 'Oluşturuluyor' : 'Ağı oluştur'}
+              </button>
+              <button className="og-button is-primary" type="button" onClick={() => void refreshSelectedCompany()} disabled={!selectedCompany || kapRefreshing}>
+                <RefreshCw size={15} className={kapRefreshing ? 'is-spinning' : ''} />
+                {kapRefreshing ? 'KAP işleniyor' : "KAP'tan yenile"}
+              </button>
+            </>
+          )}
         </div>
       </header>
 
@@ -766,9 +772,11 @@ export default function OwnershipGraph() {
             <IconButton title="Şirket detayına git" onClick={() => navigate(`/company?id=${selectedCompany.id}`)}><Building2 size={15} /></IconButton>
             <IconButton title="Rating kayıtlarını aç" onClick={() => navigate(`/ratings?company=${encodeURIComponent(selectedCompany.name)}`)}><ShieldCheck size={15} /></IconButton>
             <IconButton title="Haberleri aç" onClick={() => navigate(`/news?q=${encodeURIComponent(selectedCompany.name)}`)}><Newspaper size={15} /></IconButton>
-            <IconButton title={memberIdSet.has(selectedCompany.id) ? 'Üyelerden çıkar' : 'Üyelere ekle'} onClick={() => memberIdSet.has(selectedCompany.id) ? removeMember(selectedCompany.id) : addMember(selectedCompany.id)}>
-              {memberIdSet.has(selectedCompany.id) ? <Star size={15} fill="currentColor" /> : <Plus size={15} />}
-            </IconButton>
+            {isAdmin && (
+              <IconButton title={memberIdSet.has(selectedCompany.id) ? 'Üyelerden çıkar' : 'Üyelere ekle'} onClick={() => memberIdSet.has(selectedCompany.id) ? removeMember(selectedCompany.id) : addMember(selectedCompany.id)}>
+                {memberIdSet.has(selectedCompany.id) ? <Star size={15} fill="currentColor" /> : <Plus size={15} />}
+              </IconButton>
+            )}
           </div>
         </section>
       )}
@@ -781,7 +789,7 @@ export default function OwnershipGraph() {
         {memberPanelOpen && (
           <div className="og-member-body">
             <div className="og-member-toolbar">
-              <div className="og-member-search">
+              {isAdmin && <div className="og-member-search">
                 <Search size={14} />
                 <input value={memberQuery} onChange={event => setMemberQuery(event.target.value)} placeholder="Üye eklenecek şirketi arayın" />
                 {memberSearchResults.length > 0 && (
@@ -793,7 +801,7 @@ export default function OwnershipGraph() {
                     ))}
                   </div>
                 )}
-              </div>
+              </div>}
               <button className="og-button is-secondary" type="button" onClick={() => void loadMemberGroup(selectedMemberIds, 'Seçili üyeler')} disabled={!selectedMemberIds.length}>
                 <Layers3 size={14} /> Seçilileri göster
               </button>
@@ -820,7 +828,7 @@ export default function OwnershipGraph() {
                     </button>
                     <small className={`is-${member.status}`}>{COMPANY_STATUS[member.status] || member.status}</small>
                     <IconButton title="Bu şirketin grafiğini aç" onClick={() => void loadCompanyGraph(member)} disabled={member.status !== 'done'}><GitBranch size={13} /></IconButton>
-                    <IconButton title="Üyelerden çıkar" onClick={() => removeMember(member.id)}><Trash2 size={13} /></IconButton>
+                    {isAdmin && <IconButton title="Üyelerden çıkar" onClick={() => removeMember(member.id)}><Trash2 size={13} /></IconButton>}
                   </div>
                 );
               })}

@@ -24,6 +24,8 @@ services:
       - APP_VERSION=${APP_VERSION:-local}
       - ADMIN_USER=${ADMIN_USER:-admin}
       - ADMIN_PASS=${ADMIN_PASS:?ADMIN_PASS must be set in .env}
+      - VIEWER_USER=${VIEWER_USER:-}
+      - VIEWER_PASS=${VIEWER_PASS:-}
       - JWT_SECRET=${JWT_SECRET:?JWT_SECRET must be set in .env}
       - JWT_EXPIRES_IN=${JWT_EXPIRES_IN:-8h}
       - LOGIN_MAX_ATTEMPTS=${LOGIN_MAX_ATTEMPTS:-8}

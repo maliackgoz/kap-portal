@@ -4,6 +4,7 @@ import { api, type Company } from '../api';
 import { RefreshCw, Search, ChevronDown, Clock, CheckCircle, XCircle, AlertTriangle, Filter, GitBranch, ShieldCheck, Newspaper, Users, Star, Plus, X, ExternalLink } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { useMemberCompanies } from '../hooks/useMemberCompanies';
+import { useAuth } from '../context/useAuth';
 
 const SECTION_LABELS: Record<string, string> = {
   acc1: 'İletişim Bilgileri',
@@ -361,6 +362,7 @@ function StructuredValue({ value, depth = 0 }: { value: unknown; depth?: number 
 }
 
 export default function CompanyDetail() {
+  const { isAdmin } = useAuth();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [companies, setCompanies] = useState<Company[]>([]);
@@ -560,7 +562,7 @@ export default function CompanyDetail() {
           </div>
 
           {/* Scrape Button */}
-          <button
+          {isAdmin && <button
             onClick={handleScrape}
             disabled={!selectedId || scraping}
             style={{
@@ -575,7 +577,7 @@ export default function CompanyDetail() {
           >
             <RefreshCw size={14} style={scraping ? { animation: 'spin 1s linear infinite' } : {}} />
             {scraping ? 'KAP verisi çekiliyor...' : 'KAP Verisini Yenile'}
-          </button>
+          </button>}
         </div>
 
         {scrapeNotice && (
@@ -632,7 +634,7 @@ export default function CompanyDetail() {
               >
                 Sadece üyeler
               </button>
-              {selectedId && (
+              {isAdmin && selectedId && (
                 <button
                   type="button"
                   onClick={() => selectedIsMember ? removeMember(selectedId) : addMember(selectedId)}
@@ -651,7 +653,7 @@ export default function CompanyDetail() {
             </div>
           </div>
 
-          <div style={{
+          {isAdmin && <div style={{
             display: 'grid', gridTemplateColumns: 'minmax(240px, 1fr) auto', gap: 8, alignItems: 'end',
             padding: 10, border: '1px solid var(--border)', borderRadius: 8, background: 'var(--bg-surface-2)',
           }}>
@@ -723,7 +725,7 @@ export default function CompanyDetail() {
             >
               <Plus size={13} /> Üyelere Ekle
             </button>
-          </div>
+          </div>}
 
           {memberError && (
             <div style={{ padding: '9px 11px', borderRadius: 8, background: 'var(--red-bg)', color: 'var(--red)', fontSize: 12, fontWeight: 700 }}>
@@ -761,7 +763,7 @@ export default function CompanyDetail() {
                 >
                   {member.name}
                 </button>
-                <button
+                {isAdmin && <button
                   type="button"
                   onClick={() => removeMember(member.id)}
                   title="Üyelerden çıkar"
@@ -772,7 +774,7 @@ export default function CompanyDetail() {
                   }}
                 >
                   <X size={13} />
-                </button>
+                </button>}
               </div>
             ))}
           </div>

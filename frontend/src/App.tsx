@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import { AuthProvider } from './context/AuthContext';
 import { useAuth } from './context/useAuth';
@@ -16,7 +16,7 @@ const NewsCenter = lazy(() => import('./pages/NewsCenter'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 function AppRoutes() {
-  const { authenticated } = useAuth();
+  const { authenticated, isAdmin } = useAuth();
 
   if (!authenticated) return <LoginForm />;
 
@@ -24,9 +24,9 @@ function AppRoutes() {
     <Suspense fallback={<div className="page-loader">Sayfa yükleniyor...</div>}>
       <Routes>
         <Route element={<Layout />}>
-          <Route path="/" element={<Dashboard />} />
+          <Route path="/" element={isAdmin ? <Dashboard /> : <Navigate to="/company" replace />} />
           <Route path="/company" element={<CompanyDetail />} />
-          <Route path="/processing" element={<DataProcessing />} />
+          <Route path="/processing" element={isAdmin ? <DataProcessing /> : <Navigate to="/company" replace />} />
           <Route path="/graph" element={<OwnershipGraph />} />
           <Route path="/ratings" element={<RatingCenter />} />
           <Route path="/news" element={<NewsCenter />} />

@@ -196,6 +196,20 @@ export function isAuthenticated() {
   return !!getToken();
 }
 
+export type Role = 'admin' | 'viewer';
+
+// Rol token'in icinden okunur; yetki kontrolu asil backend'de, bu sadece arayuzu sekillendirir
+export function getRole(): Role {
+  const token = getToken();
+  if (!token) return 'viewer';
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
+    return payload?.role === 'viewer' ? 'viewer' : 'admin';
+  } catch {
+    return 'viewer';
+  }
+}
+
 async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
