@@ -378,6 +378,9 @@ export default function CompanyDetail() {
   const [memberAddQuery, setMemberAddQuery] = useState('');
   const [memberAddOpen, setMemberAddOpen] = useState(false);
   const [memberPanelOpen, setMemberPanelOpen] = useState(false);
+  const [companySelectOpen, setCompanySelectOpen] = useState(true);
+  const [companySelectQuery, setCompanySelectQuery] = useState('');
+  const [companyStatusFilter, setCompanyStatusFilter] = useState<'all' | 'done' | 'pending' | 'error' | 'no_data'>('all');
   const [scrapeNotice, setScrapeNotice] = useState<{ tone: 'success' | 'warning' | 'error'; message: string } | null>(null);
   const { memberIds, members, error: memberError, addMember, removeMember } = useMemberCompanies(companies);
 
@@ -392,6 +395,7 @@ export default function CompanyDetail() {
     if (!routeId || !Number.isFinite(routeId) || selectedId === routeId) return;
     setSelectedId(routeId);
     setActiveFilter('all');
+    setCompanySelectOpen(false);
   }, [searchParams, selectedId]);
 
   useEffect(() => {
@@ -419,6 +423,7 @@ export default function CompanyDetail() {
     setExpandedSections({});
     if (id) {
       setSearchParams({ id: String(id) });
+      setCompanySelectOpen(false);
     } else {
       setSearchParams({});
       setCompany(null);
@@ -457,6 +462,23 @@ export default function CompanyDetail() {
 
   const selectorCompanies = useMemo(() => membersOnly ? members : companies, [companies, members, membersOnly]);
   const selectedIsMember = selectedId ? memberIds.includes(selectedId) : false;
+  const selectedCompanyListItem = selectedId ? companies.find(c => c.id === selectedId) || null : null;
+
+  // Tek liste: arama + durum filtresi bir arada. "Çekilmiş şirketler" artik
+  // ayri bir panel degil, bu listede "Çekildi" filtresine tikliyor.
+  const STATUS_FILTERS: { value: typeof companyStatusFilter; label: string }[] = [
+    { value: 'all', label: 'Tümü' },
+    { value: 'done', label: 'Çekildi' },
+    { value: 'pending', label: 'Bekliyor' },
+    { value: 'error', label: 'Hata' },
+    { value: 'no_data', label: 'Veri Yok' },
+  ];
+  const filteredSelectorCompanies = useMemo(() => {
+    const term = normalizedText(companySelectQuery);
+    return selectorCompanies
+      .filter(c => companyStatusFilter === 'all' || c.status === companyStatusFilter)
+      .filter(c => !term || normalizedText(c.name).includes(term) || normalizedText(c.ticker || '').includes(term) || normalizedText(c.oid).includes(term));
+  }, [selectorCompanies, companySelectQuery, companyStatusFilter]);
 
   const memberAddOptions = useMemo(() => {
     const term = normalizedText(memberAddQuery);
@@ -532,52 +554,111 @@ export default function CompanyDetail() {
         background: 'var(--bg-surface)', border: '1px solid var(--border)',
         borderRadius: 'var(--radius)', padding: 20, marginBottom: 20, boxShadow: 'var(--shadow)',
       }}>
-        <div style={{ display: 'flex', gap: 12, alignItems: 'flex-end', flexWrap: 'wrap' }}>
-          {/* Dropdown */}
-          <div style={{ width: 320, flex: '0 1 320px' }}>
-            <label style={{ display: 'block', fontSize: 12, fontWeight: 700, color: 'var(--text-dim)', marginBottom: 6, textTransform: 'uppercase', letterSpacing: 0 }}>
-              Şirket Seç
-            </label>
-            <div style={{ position: 'relative' }}>
-              <ChevronDown size={14} style={{ position: 'absolute', right: 12, top: 11, color: 'var(--text-muted)', pointerEvents: 'none' }} />
-              <select
-                value={selectedId || ''}
-                onChange={e => {
-                  const id = Number(e.target.value);
-                  selectCompany(id || null);
-                }}
+        <div>
+          {/* Şirket Seç — arama + liste */}
+          <>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, marginBottom: 6 }}>
+              <label style={{ fontSize: 12, fontWeight: 700, color: 'var(--text-dim)', textTransform: 'uppercase', letterSpacing: 0 }}>
+                Şirket Seç
+                {selectedCompanyListItem && !companySelectOpen && (
+                  <span style={{ marginLeft: 8, color: 'var(--accent)', fontWeight: 800, textTransform: 'none' }}>
+                    {selectedCompanyListItem.name}
+                  </span>
+                )}
+              </label>
+              <button
+                type="button"
+                onClick={() => setCompanySelectOpen(value => !value)}
+                aria-expanded={companySelectOpen}
                 style={{
-                  width: '100%', padding: '9px 30px 9px 12px', background: 'var(--bg-surface-2)',
-                  border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)',
-                  fontSize: 13, fontFamily: 'var(--font-sans)', outline: 'none',
-                  appearance: 'none', cursor: 'pointer',
+                  display: 'inline-flex', alignItems: 'center', gap: 5, border: 'none', background: 'transparent',
+                  color: 'var(--text-muted)', fontSize: 11, fontWeight: 700, cursor: 'pointer', padding: 0,
                 }}
               >
-                <option value="">Şirket seçin</option>
-                {selectorCompanies.map(c => (
-                  <option key={c.id} value={c.id}>{c.name}</option>
-                ))}
-              </select>
+                {companySelectOpen ? 'Kapat' : 'Şirket değiştir'}
+                <ChevronDown size={13} style={{ transform: companySelectOpen ? 'rotate(180deg)' : undefined, transition: 'transform 0.15s ease' }} />
+              </button>
             </div>
-          </div>
 
-          {/* Scrape Button */}
-          {isAdmin && <button
-            onClick={handleScrape}
-            disabled={!selectedId || scraping}
-            style={{
-              display: 'flex', alignItems: 'center', gap: 6, padding: '9px 18px',
-              background: scraping ? 'var(--bg-surface-3)' : 'var(--accent)',
-              color: scraping ? 'var(--text-dim)' : '#fff',
-              border: 'none', borderRadius: 8, fontSize: 13, fontWeight: 600,
-              cursor: !selectedId || scraping ? 'not-allowed' : 'pointer',
-              opacity: !selectedId ? 0.4 : 1, fontFamily: 'var(--font-sans)', whiteSpace: 'nowrap',
-              flexShrink: 0,
-            }}
-          >
-            <RefreshCw size={14} style={scraping ? { animation: 'spin 1s linear infinite' } : {}} />
-            {scraping ? 'KAP verisi çekiliyor...' : 'KAP Verisini Yenile'}
-          </button>}
+            {companySelectOpen && (
+              <div style={{ display: 'grid', gap: 8 }}>
+                <div style={{ position: 'relative' }}>
+                  <Search size={14} style={{ position: 'absolute', left: 12, top: 11, color: 'var(--text-muted)' }} />
+                  <input
+                    value={companySelectQuery}
+                    onChange={e => setCompanySelectQuery(e.target.value)}
+                    autoFocus
+                    placeholder="Şirket adı, ticker veya KAP kodu ile arayın"
+                    style={{
+                      width: '100%', height: 38, padding: '0 12px 0 34px', borderRadius: 8,
+                      border: '1px solid var(--border)', background: 'var(--bg-surface-2)',
+                      color: 'var(--text)', outline: 'none', fontSize: 13, fontFamily: 'inherit',
+                    }}
+                  />
+                </div>
+
+                <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+                  {STATUS_FILTERS.map(filter => (
+                    <button
+                      key={filter.value}
+                      type="button"
+                      onClick={() => setCompanyStatusFilter(filter.value)}
+                      style={{
+                        padding: '5px 11px', borderRadius: 999, border: '1px solid var(--border)',
+                        background: companyStatusFilter === filter.value ? 'var(--accent-bg)' : 'var(--bg-surface)',
+                        color: companyStatusFilter === filter.value ? 'var(--accent)' : 'var(--text-dim)',
+                        fontSize: 11, fontWeight: 800, cursor: 'pointer',
+                      }}
+                    >
+                      {filter.label}
+                    </button>
+                  ))}
+                  <span style={{ alignSelf: 'center', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)', fontSize: 11, marginLeft: 4 }}>
+                    {filteredSelectorCompanies.length.toLocaleString('tr-TR')} şirket
+                  </span>
+                </div>
+
+                <div style={{
+                  maxHeight: 340, overflowY: 'auto', border: '1px solid var(--border)', borderRadius: 8,
+                  background: 'var(--bg-surface-2)',
+                }}>
+                  {filteredSelectorCompanies.length === 0 ? (
+                    <div style={{ padding: 14, color: 'var(--text-muted)', fontSize: 12, textAlign: 'center' }}>
+                      Eşleşen şirket yok.
+                    </div>
+                  ) : filteredSelectorCompanies.slice(0, 200).map(item => (
+                    <button
+                      key={item.id}
+                      type="button"
+                      onClick={() => selectCompany(item.id)}
+                      style={{
+                        width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                        gap: 12, padding: '9px 12px', border: 'none', borderBottom: '1px solid var(--border)',
+                        background: selectedId === item.id ? 'var(--accent-bg)' : 'transparent',
+                        color: selectedId === item.id ? 'var(--accent)' : 'var(--text)',
+                        cursor: 'pointer', fontSize: 12, fontFamily: 'inherit', textAlign: 'left',
+                      }}
+                    >
+                      <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontWeight: 700, minWidth: 0 }}>
+                        {item.name}{item.ticker ? ` (${item.ticker})` : ''}
+                      </span>
+                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
+                        <span style={{ color: 'var(--text-muted)', fontFamily: 'var(--font-mono)', fontSize: 11 }}>
+                          {item.last_processed_at ? new Date(item.last_processed_at).toLocaleDateString('tr-TR') : '-'}
+                        </span>
+                        <StatusBadge status={item.status} />
+                      </span>
+                    </button>
+                  ))}
+                  {filteredSelectorCompanies.length > 200 && (
+                    <div style={{ padding: '8px 12px', color: 'var(--text-muted)', fontSize: 11, textAlign: 'center' }}>
+                      İlk 200 sonuç gösteriliyor, daraltmak için arayın.
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+          </>
         </div>
 
         {scrapeNotice && (
@@ -800,6 +881,22 @@ export default function CompanyDetail() {
               </div>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+              {isAdmin && (
+                <button
+                  onClick={handleScrape}
+                  disabled={scraping}
+                  style={{
+                    display: 'inline-flex', alignItems: 'center', gap: 6, padding: '8px 14px',
+                    background: scraping ? 'var(--bg-surface-3)' : 'var(--accent)',
+                    color: scraping ? 'var(--text-dim)' : '#fff',
+                    border: 'none', borderRadius: 8, fontSize: 12, fontWeight: 700,
+                    cursor: scraping ? 'not-allowed' : 'pointer', fontFamily: 'var(--font-sans)', whiteSpace: 'nowrap',
+                  }}
+                >
+                  <RefreshCw size={14} style={scraping ? { animation: 'spin 1s linear infinite' } : {}} />
+                  {scraping ? 'KAP verisi çekiliyor...' : 'KAP Verisini Yenile'}
+                </button>
+              )}
               <a
                 href={`https://www.kap.org.tr/tr/sirket-bilgileri/genel/${company.slug}`}
                 target="_blank"
