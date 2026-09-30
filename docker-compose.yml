@@ -56,9 +56,18 @@ services:
       - HTTP_PROXY=${HTTP_PROXY:-}
       - HTTPS_PROXY=${HTTPS_PROXY:-}
       - NO_PROXY=${NO_PROXY:-127.0.0.1,localhost}
+      # Proxy trafigi TLS inceleme icin kendi sertifikasiyla yeniden
+      # imzaliyorsa (UNABLE_TO_GET_ISSUER_CERT_LOCALLY hatasi), o kurum CA
+      # sertifikasini CERTS_DIR ile gosterdiginiz klasore koyup buraya container-ici yolunu
+      # yazin. Node icin ekler (mevcut guvenilen listeye), Python/httpx icin
+      # tek gecerli dosya olur - bkz. .env.example.
+      - NODE_EXTRA_CA_CERTS=${NODE_EXTRA_CA_CERTS:-}
+      - SSL_CERT_FILE=${SSL_CERT_FILE:-}
+      - REQUESTS_CA_BUNDLE=${SSL_CERT_FILE:-}
     volumes:
       - kapportal_backend_data:/app/backend/data
       - kapportal_rating_data:/app/rating-service/data
+      - ${CERTS_DIR:-./certs}:/app/certs:ro
     tmpfs:
       - /tmp:size=64m,mode=1777
     security_opt:
