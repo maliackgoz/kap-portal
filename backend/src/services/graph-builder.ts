@@ -86,6 +86,13 @@ const COMPANY_INDICATORS = [
   'LIMITED', 'LİMİTED', 'LTD', 'LLC', 'LLP', 'PLC', 'INC', 'CORP', 'COMPANY',
   'GMBH', 'AKTIENGESELLSCHAFT', 'B.V.', 'N.V.', 'S.A.', 'FZCO', 'FZE',
   ' SA ', ' NV ', ' BV ', ' AG ',
+  // Gercek kisi olmayan ama yukaridaki sirket ibarelerini tasimayan tuzel
+  // yapilar (yatirim/emeklilik fonlari, vakiflar, sandiklar, dernekler,
+  // kooperatifler) — bunlar olmadan orn. "... BORSA YATIRIM FONU" gibi isimler
+  // "person" kovasina dusuyordu (bkz. graf sayfasinda "kisi" olarak gorunen
+  // fonlar).
+  'FONU', 'VAKFI', 'VAKIF', 'SANDIĞI', 'SANDIGI', 'KOOPERATİF', 'KOOPERATIF',
+  'DERNEĞİ', 'DERNEGI',
 ];
 
 function isCompanyName(name: string): boolean {

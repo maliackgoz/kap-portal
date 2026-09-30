@@ -47,7 +47,8 @@ import { useMemberCompanies } from '../hooks/useMemberCompanies';
 import { useAuth } from '../context/useAuth';
 import './ownership-graph.css';
 
-type CompanyOption = Pick<Company, 'id' | 'name' | 'status'>;
+type CompanyOption = Pick<Company, 'id' | 'name' | 'status' | 'ticker' | 'oid' | 'last_processed_at'>;
+type CompanyStatusFilter = 'all' | 'done' | 'pending' | 'error' | 'no_data';
 type GraphMode = 'focus' | 'network';
 type Notice = { tone: 'info' | 'success' | 'error'; text: string };
 
@@ -64,6 +65,14 @@ const COMPANY_STATUS: Record<string, string> = {
   error: 'Son çekim hatalı',
   no_data: 'KAP verisi yok',
 };
+
+const STATUS_FILTERS: { value: CompanyStatusFilter; label: string }[] = [
+  { value: 'all', label: 'Tümü' },
+  { value: 'done', label: 'Çekildi' },
+  { value: 'pending', label: 'Bekliyor' },
+  { value: 'error', label: 'Hata' },
+  { value: 'no_data', label: 'Veri Yok' },
+];
 
 function normalize(value: string) {
   return value
@@ -120,6 +129,15 @@ function buildLevels(graph: GraphData, rootId: string) {
         queue.push(edge.target);
       }
     }
+  }
+  // vis-network'un hiyerarsik layout'u "ya hic node'da level olmali ya da hepsinde"
+  // seklinde katı bir kural uyguluyor. rootId'den BFS ile erisilemeyen (kopuk bilesen)
+  // node'lar olursa level'sız kalip bu kurali bozuyor ve Network olusturma aninda
+  // "levels have to be defined for all nodes" hatasiyla tum sayfayi cokertiyordu.
+  // Erisilemeyen node'lari da 0. seviyeye sabitleyerek her node'un bir level'i olmasini
+  // garantiliyoruz.
+  for (const node of graph.nodes) {
+    if (!levels.has(node.id)) levels.set(node.id, 0);
   }
   const min = Math.min(0, ...levels.values());
   return new Map(Array.from(levels, ([id, level]) => [id, level - min]));
@@ -214,6 +232,9 @@ export default function OwnershipGraph() {
   const [query, setQuery] = useState('');
   const [searchOpen, setSearchOpen] = useState(false);
   const [membersOnly, setMembersOnly] = useState(false);
+  const [companyListOpen, setCompanyListOpen] = useState(true);
+  const [companyListQuery, setCompanyListQuery] = useState('');
+  const [companyListStatusFilter, setCompanyListStatusFilter] = useState<CompanyStatusFilter>('all');
   const [memberPanelOpen, setMemberPanelOpen] = useState(false);
   const [memberQuery, setMemberQuery] = useState('');
   const [selectedMemberIds, setSelectedMemberIds] = useState<number[]>([]);
@@ -252,6 +273,19 @@ export default function OwnershipGraph() {
       })
       .slice(0, 18);
   }, [companyPool, query, selectedCompany]);
+
+  const companyListResults = useMemo(() => {
+    const term = normalize(companyListQuery);
+    return companyPool
+      .filter(company => companyListStatusFilter === 'all' || company.status === companyListStatusFilter)
+      .filter(company => (
+        !term
+        || normalize(company.name).includes(term)
+        || normalize(company.ticker || '').includes(term)
+        || normalize(company.oid || '').includes(term)
+      ))
+      .sort((a, b) => a.name.localeCompare(b.name, 'tr'));
+  }, [companyPool, companyListQuery, companyListStatusFilter]);
 
   const memberSearchResults = useMemo(() => {
     const key = normalize(memberQuery);
@@ -347,12 +381,24 @@ export default function OwnershipGraph() {
     return () => { active = false; };
   }, []);
 
+  // URL'deki company_id'yi tek seferlik "senkronize edildi" olarak isaretliyoruz.
+  // Onceden bu karsilastirma dogrudan `selectedCompanyId` state'ine bakiyordu; ama
+  // Tam ag/Uye grubu/Yol bulma gibi akislar `setSelectedCompanyId(null)` ile
+  // `setSearchParams({})`'i AYNI ANDA cagirdiginda (router'in kendi state guncellemesi
+  // ayri bir render turunda isleniyor), bu effect araya girip searchParams'taki ESKI
+  // company_id'yi hala goruyor + selectedCompanyId'nin null oldugunu goruyor ve
+  // tekrar loadCompanyGraph tetikliyordu — bu da mode'u "focus"a geri dondurup
+  // artik cok daha buyuk/kopuk bir graph uzerinde hiyerarsik layout'u zorlayarak
+  // sayfayi cokertiyordu (bkz. buildLevels). lastSyncedIdRef, ayni id'yi zaten
+  // isledigimizi bildigi icin bu yarisa girmiyor.
+  const lastSyncedIdRef = useRef<number | null>(null);
   useEffect(() => {
     const raw = Number(searchParams.get('company_id') || searchParams.get('id'));
-    if (!raw || selectedCompanyId === raw || allCompanies.length === 0) return;
+    if (!raw || allCompanies.length === 0 || lastSyncedIdRef.current === raw) return;
+    lastSyncedIdRef.current = raw;
     const company = allCompanies.find(item => item.id === raw);
     if (company) void loadCompanyGraph(company);
-  }, [allCompanies, loadCompanyGraph, searchParams, selectedCompanyId]);
+  }, [allCompanies, loadCompanyGraph, searchParams]);
 
   useEffect(() => {
     if (!fullscreen) return;
@@ -429,15 +475,29 @@ export default function OwnershipGraph() {
       };
     }));
 
+    // Bir dugume cok sayida kenar baglaniyorsa (ör. 16 bagli ortakligi olan bir
+    // banka), her kenarin ustundeki oran etiketi ayni dar alanda ust uste
+    // biniyor ve okunmuyordu. Bu "kalabalik" dugumlere bagli kenarlarda sabit
+    // etiketi gizliyoruz; oran bilgisi hover tooltip'inde (title) ve sag
+    // paneldeki iliski listesinde zaten eksiksiz duruyor.
+    const CROWDED_DEGREE_THRESHOLD = 8;
+    const edgeDegree = new Map<string, number>();
+    for (const edge of filteredGraph.edges) {
+      edgeDegree.set(edge.source, (edgeDegree.get(edge.source) || 0) + 1);
+      edgeDegree.set(edge.target, (edgeDegree.get(edge.target) || 0) + 1);
+    }
+
     const visEdges = new DataSet(filteredGraph.edges.map((edge, index) => {
       const meta = EDGE_META[edge.type];
       const ratio = parseRatio(edge.oran_pct);
+      const isCrowded = (edgeDegree.get(edge.source) || 0) > CROWDED_DEGREE_THRESHOLD
+        || (edgeDegree.get(edge.target) || 0) > CROWDED_DEGREE_THRESHOLD;
       return {
         id: `edge-${index}`,
         from: edge.source,
         to: edge.target,
         arrows: { to: { enabled: true, scaleFactor: 0.68 } },
-        label: edge.oran_pct ? ratioLabel(edge.oran_pct) : undefined,
+        label: !isCrowded && edge.oran_pct ? ratioLabel(edge.oran_pct) : undefined,
         title: `${meta.label}${edgeDetail(edge) ? `\n${edgeDetail(edge)}` : ''}`,
         color: { color: meta.color, highlight: meta.color, hover: meta.color, opacity: 0.78 },
         width: ratio === null ? 1.5 : Math.max(1.5, Math.min(5, ratio / 22)),
@@ -508,7 +568,11 @@ export default function OwnershipGraph() {
       const company = node?.company_id
         ? allCompanies.find(item => item.id === node.company_id)
         : allCompanies.find(item => normalize(item.name) === normalize(node?.label || ''));
-      if (company) navigate(`/company?id=${company.id}`);
+      // Cift tiklama artik sayfadan ayrilip Sirket Detayi'na gitmek yerine, o
+      // sirketin grafina dogrudan gecis yapiyor — kullanicinin "grafta
+      // gezinirken baska bir sirketin grafina dogrudan gidebilmek" talebi.
+      // Detay sayfasina gitmek icin inceleme panelindeki "Detay" butonu duruyor.
+      if (company && company.id !== selectedCompanyId) void loadCompanyGraph(company);
     });
     network.once('afterDrawing', () => {
       window.setTimeout(() => {
@@ -521,7 +585,12 @@ export default function OwnershipGraph() {
       network.destroy();
       if (networkRef.current === network) networkRef.current = null;
     };
-  }, [allCompanies, filteredGraph, mode, navigate, selectedCompanyId, summary]);
+  }, [allCompanies, filteredGraph, loadCompanyGraph, mode, selectedCompanyId, summary]);
+
+  const selectFromCompanyList = useCallback((company: CompanyOption) => {
+    void loadCompanyGraph(company);
+    setCompanyListOpen(false);
+  }, [loadCompanyGraph]);
 
   const focusNode = useCallback((node: GraphNode) => {
     setSelectedNode(node);
@@ -742,6 +811,62 @@ export default function OwnershipGraph() {
         </button>
       </section>
 
+      <section className="og-collapsible">
+        <button type="button" className="og-collapsible-head" onClick={() => setCompanyListOpen(value => !value)} aria-expanded={companyListOpen}>
+          <span><Building2 size={15} /> Şirket Listesi <small>{companyPool.length.toLocaleString('tr-TR')}</small></span>
+          <ChevronDown size={15} className={companyListOpen ? 'is-open' : ''} />
+        </button>
+        {companyListOpen && (
+          <div className="og-company-list-body">
+            <div className="og-member-search">
+              <Search size={14} />
+              <input
+                value={companyListQuery}
+                onChange={event => setCompanyListQuery(event.target.value)}
+                autoFocus
+                placeholder="Şirket adı, ticker veya KAP kodu ile arayın"
+              />
+            </div>
+
+            <div className="og-status-filters">
+              {STATUS_FILTERS.map(filter => (
+                <button
+                  key={filter.value}
+                  type="button"
+                  className={companyListStatusFilter === filter.value ? 'is-active' : ''}
+                  onClick={() => setCompanyListStatusFilter(filter.value)}
+                >
+                  {filter.label}
+                </button>
+              ))}
+              <span className="og-status-filters-count">{companyListResults.length.toLocaleString('tr-TR')} şirket</span>
+            </div>
+
+            <div className="og-select-list">
+              {companyListResults.length === 0 ? (
+                <div className="og-empty-inline">Eşleşen şirket yok.</div>
+              ) : companyListResults.slice(0, 200).map(item => (
+                <button
+                  key={item.id}
+                  type="button"
+                  className={`og-select-row ${selectedCompanyId === item.id ? 'is-active' : ''}`}
+                  onClick={() => selectFromCompanyList(item)}
+                >
+                  <span className="og-select-row-name">{item.name}{item.ticker ? ` (${item.ticker})` : ''}</span>
+                  <span className="og-select-row-meta">
+                    <span>{item.last_processed_at ? new Date(item.last_processed_at).toLocaleDateString('tr-TR') : '-'}</span>
+                    <small className={`is-${item.status}`}>{COMPANY_STATUS[item.status] || item.status}</small>
+                  </span>
+                </button>
+              ))}
+              {companyListResults.length > 200 && (
+                <div className="og-select-list-notice">İlk 200 sonuç gösteriliyor, daraltmak için arayın.</div>
+              )}
+            </div>
+          </div>
+        )}
+      </section>
+
       {notice && (
         <div className={`og-notice is-${notice.tone}`}>
           <CircleDot size={14} />
@@ -844,6 +969,7 @@ export default function OwnershipGraph() {
               <span><i className="is-owner" /> Ortak</span>
               <span><i className="is-company" /> KAP şirketi</span>
               <span><i className="is-subsidiary" /> Bağlı ortaklık</span>
+              <span><i className="is-shareholder" /> Kuruluş</span>
               <span><i className="is-person" /> Kişi</span>
             </div>
             <div className="og-canvas-status">

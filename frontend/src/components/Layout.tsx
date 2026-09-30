@@ -8,9 +8,9 @@ const navItems = [
   { to: '/', icon: LayoutDashboard, label: 'Ana Panel', adminOnly: true },
   { to: '/processing', icon: Database, label: 'Veri İşleme', adminOnly: true },
   { to: '/company', icon: Building2, label: 'Şirket Detayı' },
+  { to: '/graph', icon: GitBranch, label: 'Ortaklık Ağı' },
   { to: '/ratings', icon: ShieldCheck, label: 'Kredi Rating' },
   { to: '/news', icon: Newspaper, label: 'Haberler' },
-  { to: '/graph', icon: GitBranch, label: 'Ortaklık Ağı' },
 ];
 
 export default function Layout() {
