@@ -108,6 +108,8 @@ docker compose up -d --build
 ```
 `backend/src/start-all.ts` production'da ucunu de tek process manager olarak baslatiyor (portal, mcp-http, rating uvicorn — child process olarak spawn).
 
+**Baska bir makinede, repo'yu klonlamadan, Docker Hub'a push edilmis image'i cekerek calistirmak icin** `docker-compose.deploy.yml` var — `docker-compose.yml`'den farki `build:`/`pull_policy: build` yok, bu yuzden her zaman image'i CEKER, yeniden build ETMEZ. Volume'lar (`kapportal_backend_data`, `kapportal_rating_data`) ayni isimde ama o makinede ilk kez calistigi icin bombos baslar — KAP verisi/rating/haber kayitlari bilincli olarak tasinmiyor (o makinenin kendi ag/proxy kosullarinda gercek bir ilk-calistirma testi icin). Kullanim: `cp .env.example .env && docker compose -f docker-compose.deploy.yml up -d` (`KAP_PORTAL_IMAGE` .env'de ayarlanmazsa varsayilan `maliackgoz/kapportal-mcp:latest`).
+
 ### Login
 - Dev: `admin` / `kap2024` (config.ts fallback, sadece `NODE_ENV=production` degilken)
 - Prod: `.env` icindeki `ADMIN_USER` / `ADMIN_PASS` — **production'da bu env var'lar yoksa app crash olur** (config.ts kasitli fail-fast)
