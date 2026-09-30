@@ -131,6 +131,9 @@ export default function DataProcessing() {
   const [memberPanelOpen, setMemberPanelOpen] = useState(false);
   const [processingMessage, setProcessingMessage] = useState('');
   const [processingError, setProcessingError] = useState<string | null>(null);
+  const [directoryRefreshing, setDirectoryRefreshing] = useState(false);
+  const [directoryResult, setDirectoryResult] = useState<string | null>(null);
+  const [directoryError, setDirectoryError] = useState<string | null>(null);
   const { memberIds, members } = useMemberCompanies(companies);
   const logsRef = useRef<HTMLDivElement>(null);
 
@@ -297,6 +300,25 @@ export default function DataProcessing() {
     }
   };
 
+  const handleRefreshDirectory = async () => {
+    setDirectoryRefreshing(true);
+    setDirectoryError(null);
+    setDirectoryResult(null);
+    try {
+      const result = await api.refreshCompanyDirectory();
+      const parts = [`${result.total} şirket bulundu`];
+      if (result.added) parts.push(`${result.added} yeni`);
+      if (result.removed) parts.push(`${result.removed} KAP dizininden kalktı (silinmedi)`);
+      if (result.renamed) parts.push(`${result.renamed} yeniden adlandırıldı`);
+      setDirectoryResult(parts.join(', ') + '.');
+      await loadCompanies();
+    } catch (err) {
+      setDirectoryError(err instanceof Error ? err.message : 'Şirket dizini yenilenemedi');
+    } finally {
+      setDirectoryRefreshing(false);
+    }
+  };
+
   const handleScrapeCompany = async (company: Company) => {
     setScrapingId(company.id);
     updateCompanyStatus(company.id, 'processing');
@@ -340,9 +362,33 @@ export default function DataProcessing() {
 
   return (
     <div>
-      <div style={{ marginBottom: 22 }}>
-        <h1 style={{ fontSize: 24, fontWeight: 800, letterSpacing: 0, marginBottom: 6 }}>Veri İşleme</h1>
-        <div style={{ fontSize: 13, color: 'var(--text-muted)' }}>KAP şirket verilerini toplu güncelleyin ve canlı işlem durumunu takip edin.</div>
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 16, marginBottom: 22, flexWrap: 'wrap' }}>
+        <div>
+          <h1 style={{ fontSize: 24, fontWeight: 800, letterSpacing: 0, marginBottom: 6 }}>Veri İşleme</h1>
+          <div style={{ fontSize: 13, color: 'var(--text-muted)' }}>KAP şirket verilerini toplu güncelleyin ve canlı işlem durumunu takip edin.</div>
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 6 }}>
+          <button
+            onClick={() => void handleRefreshDirectory()}
+            disabled={directoryRefreshing || running}
+            title="kap.org.tr'nin canlı şirket dizininden yeni/kaldırılan/yeniden adlandırılan şirketleri kontrol eder"
+            style={{
+              display: 'flex', alignItems: 'center', gap: 8, padding: '10px 18px',
+              background: 'var(--bg-surface-2)', color: 'var(--text)', border: '1px solid var(--border)', borderRadius: 8,
+              fontSize: 13, fontWeight: 700, cursor: directoryRefreshing || running ? 'not-allowed' : 'pointer',
+              fontFamily: 'var(--font-sans)', opacity: directoryRefreshing || running ? 0.6 : 1,
+            }}
+          >
+            <RefreshCw size={14} style={directoryRefreshing ? { animation: 'spin 1s linear infinite' } : {}} />
+            {directoryRefreshing ? 'Şirket listesi kontrol ediliyor...' : 'Şirket Listesini KAP\'tan Güncelle'}
+          </button>
+          {directoryResult && (
+            <div style={{ fontSize: 12, color: 'var(--green)', maxWidth: 360, textAlign: 'right' }}>{directoryResult}</div>
+          )}
+          {directoryError && (
+            <div style={{ fontSize: 12, color: 'var(--red)', maxWidth: 360, textAlign: 'right' }}>{directoryError}</div>
+          )}
+        </div>
       </div>
 
       {/* Controls */}

@@ -116,7 +116,8 @@ async function start() {
   let count = (db.prepare('SELECT COUNT(*) as c FROM companies').get() as any).c;
   if (count === 0) {
     console.log('Veritabani bos, seed yapiliyor...');
-    await import('./seed.js');
+    const { runSeed } = await import('./seed.js');
+    runSeed();
     count = (db.prepare('SELECT COUNT(*) as c FROM companies').get() as any).c;
     console.log('Seed tamamlandı');
   }

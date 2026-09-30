@@ -260,6 +260,17 @@ export const api = {
     graphInvalidated?: boolean;
   }>(`/companies/${id}/scrape`, { method: 'POST' }),
   getAllCompanies: () => request<Company[]>('/companies/all/list'),
+  refreshCompanyDirectory: () => request<{
+    total: number;
+    added: number;
+    removed: number;
+    renamed: number;
+    addedCompanies: { oid: string; name: string }[];
+    removedCompanies: { oid: string; name: string }[];
+    renamedCompanies: { oid: string; before: string; after: string }[];
+    dbCompanyCount: number;
+    seedSourceCount: number;
+  }>('/companies/directory/refresh', { method: 'POST' }),
 
   getMembers: () => request<{ members: Company[] }>('/members'),
   setMembers: (companyIds: number[]) =>

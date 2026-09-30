@@ -3,6 +3,8 @@ import db from '../db.js';
 import { KapScrapeError, scrapeCompany, type KapFetchDetails } from '../services/scraper.js';
 import { getState } from '../services/processor.js';
 import { replaceCompanyData } from '../services/company-data.js';
+import { refreshCompanyDirectory } from '../refresh-companies.js';
+import { runSeed } from '../seed.js';
 
 const router = Router();
 const activeScrapes = new Set<number>();
@@ -120,6 +122,40 @@ router.get('/all/list', (_req, res) => {
     `${COMPANY_SELECT} ORDER BY c.name`
   ).all();
   res.json(companies);
+});
+
+// Şirket dizinini kap.org.tr'den yeniden çek (companies.json + DB) - MUST be before /:id routes
+let directoryRefreshing = false;
+router.post('/directory/refresh', async (_req, res) => {
+  if (getState().running) {
+    res.status(409).json({ error: 'Toplu KAP işlemi devam ederken şirket dizini yenilenemez' });
+    return;
+  }
+  if (directoryRefreshing) {
+    res.status(409).json({ error: 'Şirket dizini zaten yenileniyor' });
+    return;
+  }
+
+  directoryRefreshing = true;
+  try {
+    const report = await refreshCompanyDirectory();
+    const { after, sourceCount } = runSeed();
+    res.json({
+      total: report.total,
+      added: report.added.length,
+      removed: report.removed.length,
+      renamed: report.renamed.length,
+      addedCompanies: report.added.map(c => ({ oid: c.oid, name: c.name })),
+      removedCompanies: report.removed.map(c => ({ oid: c.oid, name: c.name })),
+      renamedCompanies: report.renamed.map(r => ({ oid: r.after.oid, before: r.before.name, after: r.after.name })),
+      dbCompanyCount: after,
+      seedSourceCount: sourceCount,
+    });
+  } catch (err: any) {
+    res.status(502).json({ error: err.message || 'Şirket dizini yenilenemedi' });
+  } finally {
+    directoryRefreshing = false;
+  }
 });
 
 router.get('/:id/data', (req, res) => {
