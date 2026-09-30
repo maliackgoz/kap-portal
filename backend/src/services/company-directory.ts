@@ -3,6 +3,8 @@
 // hedef: itemKey/value degil, companyPermaLinks dizisi. Dogrudan kap.org.tr'den,
 // canli veriyle calisir.
 
+import { kapProxyInit } from './http-proxy.js';
+
 const KAP_DIRECTORY_URL = process.env.KAP_DIRECTORY_URL || 'https://www.kap.org.tr/tr/bist-sirketler';
 
 const HEADERS = {
@@ -39,6 +41,7 @@ export async function fetchCompanyDirectory(): Promise<CompanyDirectoryEntry[]> 
     headers: HEADERS,
     redirect: 'follow',
     signal: AbortSignal.timeout(30_000),
+    ...kapProxyInit(),
   });
 
   if (!res.ok) {

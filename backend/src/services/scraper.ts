@@ -1,3 +1,5 @@
+import { kapProxyInit } from './http-proxy.js';
+
 const KAP_BASE = 'https://www.kap.org.tr/tr/sirket-bilgileri/genel';
 
 const CONFIG = {
@@ -142,6 +144,7 @@ async function fetchWithRetry(url: string): Promise<{ html: string; details: Kap
         headers: KAP_HEADERS,
         redirect: 'follow',
         signal: AbortSignal.timeout(Math.max(1, Math.min(CONFIG.timeoutMs, remainingMs))),
+        ...kapProxyInit(),
       });
       const html = await res.text();
       const details: KapFetchDetails = {

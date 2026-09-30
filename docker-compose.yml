@@ -50,6 +50,12 @@ services:
       - RATING_SERVICE_API_KEY=${RATING_MCP_API_KEY:-}
       - RATING_MCP_DATA_DIR=/app/rating-service/data
       - RATING_MCP_API_KEY=${RATING_MCP_API_KEY:-}
+      # KAP'a (ve rating-service'in kendi disaridaki kaynaklarina) internete
+      # ancak bir proxy uzerinden cikilan ortamlarda doldurun. Ic servisler
+      # (127.0.0.1) etkilenmez - bkz. backend/src/services/http-proxy.ts.
+      - HTTP_PROXY=${HTTP_PROXY:-}
+      - HTTPS_PROXY=${HTTPS_PROXY:-}
+      - NO_PROXY=${NO_PROXY:-127.0.0.1,localhost}
     volumes:
       - kapportal_backend_data:/app/backend/data
       - kapportal_rating_data:/app/rating-service/data
