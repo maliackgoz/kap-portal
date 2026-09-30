@@ -14,7 +14,7 @@
 ## koşullarında gerçek bir ilk-çalıştırma testi yapılmak isteniyor.
 ##
 ## Kullanım:
-##   cp .env.example .env   # ADMIN_PASS, JWT_SECRET, MCP_ALLOWED_HOSTS doldur
+##   cp .env.example .env   # sadece ADMIN_PASS ve JWT_SECRET doldurman yeterli
 ##   docker compose -f docker-compose.deploy.yml up -d
 ##
 ## KAP_PORTAL_IMAGE .env'de ayarlanmazsa varsayılan maliackgoz/kapportal-mcp:latest kullanılır.
@@ -49,7 +49,7 @@ services:
       - LOGIN_WINDOW_MS=${LOGIN_WINDOW_MS:-900000}
       - PORTAL_ALLOWED_ORIGINS=${PORTAL_ALLOWED_ORIGINS:-}
       - TRUST_PROXY=${TRUST_PROXY:-}
-      - MCP_ALLOWED_HOSTS=${MCP_ALLOWED_HOSTS:?MCP_ALLOWED_HOSTS must be set in .env}
+      - MCP_ALLOWED_HOSTS=${MCP_ALLOWED_HOSTS:-localhost,127.0.0.1,::1,0.0.0.0}
       - MCP_ALLOWED_ORIGINS=${MCP_ALLOWED_ORIGINS:-}
       - MCP_API_KEY=${MCP_API_KEY:-}
       - KAP_PORTAL_URL=http://127.0.0.1:8063
