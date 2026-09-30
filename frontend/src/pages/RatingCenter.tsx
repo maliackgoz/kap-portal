@@ -43,12 +43,6 @@ const DATE_FILTERS = [
   { value: 'custom', label: 'Özel aralık' },
 ] as const;
 
-const GLOBAL_RATING_AGENCIES = new Set([
-  'Fitch Ratings',
-  'S&P Global Ratings',
-  "Moody's Ratings",
-]);
-
 type DateFilterValue = typeof DATE_FILTERS[number]['value'];
 
 function isDateFilterValue(value: string | null): value is DateFilterValue {
@@ -179,27 +173,56 @@ function MetricCard({ label, value, icon: Icon, color, bg }: {
   );
 }
 
-function SourceChip({ source, active, busy, onClick }: {
+// Filtre amaçlı — hem admin hem viewer görür, tıklama sadece listeyi filtreler, veri çekmez.
+function SourceChip({ source, active, syncing, onClick }: {
   source: RatingSource;
   active: boolean;
-  busy: boolean;
+  syncing: boolean;
   onClick: () => void;
 }) {
   const style = statusStyle(source.status_class);
   return (
     <button
       onClick={onClick}
-      disabled={busy}
-      title={`${source.name} kaynağını şimdi yenile`}
+      title={`${source.name} ile filtrele`}
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 8, padding: '8px 10px',
         borderRadius: 8, border: active ? '1px solid var(--accent)' : '1px solid var(--border)',
         background: active ? 'var(--accent-bg)' : 'var(--bg-surface)',
-        color: active ? 'var(--accent)' : 'var(--text)', cursor: busy ? 'wait' : 'pointer',
+        color: active ? 'var(--accent)' : 'var(--text)', cursor: 'pointer',
         fontWeight: 800, fontSize: 12, whiteSpace: 'nowrap', boxShadow: 'var(--shadow)',
       }}
     >
-      {busy ? <RefreshCw size={13} style={{ animation: 'spin 1s linear infinite' }} /> : <span style={{ width: 8, height: 8, borderRadius: 999, background: style.color }} />}
+      {syncing ? <RefreshCw size={13} style={{ animation: 'spin 1s linear infinite' }} /> : <span style={{ width: 8, height: 8, borderRadius: 999, background: style.color }} />}
+      {source.name}
+      <span style={{ color: style.color, background: style.bg, padding: '2px 6px', borderRadius: 6, fontSize: 10, fontWeight: 850 }}>
+        {style.label}
+      </span>
+    </button>
+  );
+}
+
+// Sadece admin panelinde — tıklama bu kaynağı KAP/kaynak sitesinden yeniden çeker.
+function SourceRefreshButton({ source, busy, disabled, onClick }: {
+  source: RatingSource;
+  busy: boolean;
+  disabled: boolean;
+  onClick: () => void;
+}) {
+  const style = statusStyle(source.status_class);
+  return (
+    <button
+      onClick={onClick}
+      disabled={busy || disabled}
+      title={`${source.name} kaynağını şimdi yenile`}
+      style={{
+        display: 'inline-flex', alignItems: 'center', gap: 8, padding: '8px 10px',
+        borderRadius: 8, border: '1px solid var(--border)', background: 'var(--bg-surface-2)',
+        color: 'var(--text)', cursor: busy || disabled ? 'wait' : 'pointer',
+        fontWeight: 800, fontSize: 12, whiteSpace: 'nowrap', opacity: disabled && !busy ? 0.5 : 1,
+      }}
+    >
+      {busy ? <RefreshCw size={13} style={{ animation: 'spin 1s linear infinite' }} /> : <RefreshCw size={13} style={{ color: style.color }} />}
       {source.name}
       <span style={{ color: style.color, background: style.bg, padding: '2px 6px', borderRadius: 6, fontSize: 10, fontWeight: 850 }}>
         {style.label}
@@ -237,7 +260,11 @@ export default function RatingCenter() {
   const [ratings, setRatings] = useState<RatingRow[]>([]);
   const [sources, setSources] = useState<RatingSource[]>([]);
   const [company, setCompany] = useState(() => searchParams.get('company') || '');
-  const [agency, setAgency] = useState(() => searchParams.get('agency') || '');
+  // Coklu secim: birden fazla rating kaynagi ayni anda filtre olarak secilebilir.
+  const [agencies, setAgencies] = useState<string[]>(() => {
+    const raw = searchParams.get('agency');
+    return raw ? raw.split(',').map(a => a.trim()).filter(Boolean) : [];
+  });
   const [dateRange, setDateRange] = useState<DateFilterValue>(() => {
     const raw = searchParams.get('date_range');
     if (isDateFilterValue(raw)) return raw;
@@ -258,7 +285,6 @@ export default function RatingCenter() {
   const sourceIssues = useMemo(() => ratingSources.filter(s => ['error', 'partial'].includes(s.status_class)), [ratingSources]);
 
   const loadData = async (overrides?: {
-    agency?: string;
     latestOnly?: boolean;
     dateRange?: DateFilterValue;
     minDate?: string;
@@ -266,7 +292,6 @@ export default function RatingCenter() {
   }) => {
     setLoading(true);
     setError(null);
-    const selectedAgency = overrides?.agency ?? agency;
     const selectedLatest = overrides?.latestOnly ?? latestOnly;
     const selectedDateRange = overrides?.dateRange ?? dateRange;
     const selectedMinDate = overrides?.minDate ?? minDate;
@@ -274,8 +299,8 @@ export default function RatingCenter() {
     const dateParams = resolveDateFilter(selectedDateRange, selectedMinDate, selectedMaxDate);
 
     try {
+      // agency artik burada gonderilmiyor: coklu secim client-side filtreleniyor (asagida filteredRatings).
       const ratingParams: Record<string, string> = { latest_only: String(selectedLatest), ...dateParams };
-      if (selectedAgency) ratingParams.agency = selectedAgency;
 
       const [sourceRes, ratingRes] = await Promise.all([
         api.getRatingSources(),
@@ -291,20 +316,21 @@ export default function RatingCenter() {
   };
 
   useEffect(() => {
-    void loadData({ agency, latestOnly, dateRange, minDate, maxDate });
+    void loadData({ latestOnly, dateRange, minDate, maxDate });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [agency, latestOnly, dateRange, minDate, maxDate]);
+  }, [latestOnly, dateRange, minDate, maxDate]);
 
-  const refreshSources = async (selectedSources: RatingSource[], message: string, nextAgency?: string) => {
+  const refreshSources = async (selectedSources: RatingSource[], message: string, filterToNames?: string[]) => {
     if (!selectedSources.length) return;
     const key = selectedSources.length === 1 ? selectedSources[0].key : 'bulk';
     setRefreshingKey(key);
     setError(null);
     setNotice(null);
+    if (filterToNames) setAgencies(filterToNames);
     try {
       const result = await api.refreshRatings(selectedSources.map(source => source.key));
       const failed = result.data.filter(item => item.status === 'error' || item.status === 'partial');
-      await loadData(nextAgency !== undefined ? { agency: nextAgency } : undefined);
+      await loadData();
       if (failed.length > 0) {
         const details = failed
           .map(item => `${item.source}: ${item.errors[0] || item.status}`)
@@ -315,7 +341,7 @@ export default function RatingCenter() {
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Kaynak yenilenemedi');
-      await loadData(nextAgency !== undefined ? { agency: nextAgency } : undefined);
+      await loadData();
     } finally {
       setRefreshingKey(null);
     }
@@ -350,16 +376,22 @@ export default function RatingCenter() {
     }
   };
 
-  const handleSourceClick = async (source: RatingSource) => {
-    setAgency(source.name);
-    // Toplu yenileme surerken sadece filtrele, ayni anda ikinci bir cekim baslatma
-    if (!isAdmin || bulkProgress) return;
-    await refreshSources([source], `${source.name} yeniden çekildi.`, source.name);
+  // Filtre chip'i artik sadece listeyi filtreler (coklu secim, toggle); veri
+  // cekme admin'e ozel "Kaynak Yenileme" panelinden yapiliyor (asagida).
+  const handleSourceClick = (source: RatingSource) => {
+    setAgencies(prev => prev.includes(source.name)
+      ? prev.filter(name => name !== source.name)
+      : [...prev, source.name]);
+  };
+
+  const handleSourceRefreshClick = async (source: RatingSource) => {
+    if (bulkProgress) return;
+    await refreshSources([source], `${source.name} yeniden çekildi.`, [source.name]);
   };
 
   const clearFilters = () => {
     setCompany('');
-    setAgency('');
+    setAgencies([]);
     setDateRange('all');
     setMinDate('');
     setMaxDate('');
@@ -371,7 +403,7 @@ export default function RatingCenter() {
     const params: Record<string, string> = {};
     const dateParams = resolveDateFilter(dateRange, minDate, maxDate);
     if (company.trim()) params.company = company.trim();
-    if (agency) params.agency = agency;
+    if (agencies.length) params.agency = agencies.join(',');
     if (dateRange !== 'all') params.date_range = dateRange;
     if (dateParams.min_date) params.min_date = dateParams.min_date;
     if (dateParams.max_date) params.max_date = dateParams.max_date;
@@ -385,37 +417,38 @@ export default function RatingCenter() {
     .filter(Boolean)
     .sort()
     .pop() || null;
-  const selectedSource = agency ? ratingSources.find(source => source.name === agency) || null : null;
-  const globalSummarySources = selectedSource && GLOBAL_RATING_AGENCIES.has(selectedSource.name)
-    ? [selectedSource]
-    : ratingSources.filter(source => GLOBAL_RATING_AGENCIES.has(source.name));
-  const globalSummary = globalSummarySources.reduce((acc, source) => ({
+  // Sadece global ajanslar icin degil, filtreyle daralmis ya da tum kaynaklar
+  // icin genel bir ozet — her kaynagin kayit/link/arama sayilari yan yana.
+  const summarySources = agencies.length
+    ? ratingSources.filter(source => agencies.includes(source.name))
+    : ratingSources;
+  const summaryTotals = summarySources.reduce((acc, source) => ({
+    records: acc.records + (source.record_count || 0),
+    reports: acc.reports + (source.report_count || 0),
     searched: acc.searched + (source.searched_count || 0),
     found: acc.found + (source.found_count || 0),
-    noMatch: acc.noMatch + (source.no_match_count || 0),
-    access: acc.access + (source.login_required_count || 0) + (source.subscription_required_count || 0),
-    parse: acc.parse + (source.parse_error_count || 0),
-    blocked: acc.blocked + (source.blocked_count || 0),
+    issues: acc.issues + (['error', 'partial'].includes(source.status_class) ? 1 : 0),
     lastRefresh: [acc.lastRefresh, source.last_refresh].filter(Boolean).sort().pop() || null,
   }), {
+    records: 0,
+    reports: 0,
     searched: 0,
     found: 0,
-    noMatch: 0,
-    access: 0,
-    parse: 0,
-    blocked: 0,
+    issues: 0,
     lastRefresh: null as string | null,
   });
   const filteredRatings = useMemo(() => {
+    const byAgency = agencies.length ? ratings.filter(row => agencies.includes(row.agency)) : ratings;
+
     const keys = normalizeSearch(company)
       .split(/[/,;|]+/)
       .map(item => item.trim())
       .filter(Boolean);
-    if (!keys.length) return ratings;
+    if (!keys.length) return byAgency;
 
     const prefixMatches: RatingRow[] = [];
     const otherMatches: RatingRow[] = [];
-    for (const row of ratings) {
+    for (const row of byAgency) {
       const companyKey = normalizeSearch(row.company);
       if (keys.some(key => companyKey.startsWith(key))) {
         prefixMatches.push(row);
@@ -424,7 +457,7 @@ export default function RatingCenter() {
       }
     }
     return [...prefixMatches, ...otherMatches];
-  }, [company, ratings]);
+  }, [company, agencies, ratings]);
   const visibleRatings = filteredRatings.slice(0, 160);
 
   return (
@@ -436,18 +469,6 @@ export default function RatingCenter() {
             Rating kaynağını seçin; son notları ve raporları inceleyin.
           </div>
         </div>
-        {isAdmin && <button
-          onClick={() => void refreshAllSources()}
-          disabled={refreshingKey !== null}
-          style={{
-            display: 'inline-flex', alignItems: 'center', gap: 8, height: 38, padding: '0 14px',
-            borderRadius: 8, border: 'none', background: 'var(--accent)',
-            color: '#fff', cursor: refreshingKey ? 'wait' : 'pointer', fontWeight: 850,
-          }}
-        >
-          <RefreshCw size={15} style={bulkProgress ? { animation: 'spin 1s linear infinite' } : {}} />
-          {bulkProgress ? `${bulkProgress.name} yenileniyor (${bulkProgress.current}/${bulkProgress.total})` : 'Ratingleri yenile'}
-        </button>}
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', gap: 12, marginBottom: 14 }}>
@@ -456,6 +477,106 @@ export default function RatingCenter() {
         <MetricCard label="Link" value={reportCount.toLocaleString('tr-TR')} icon={FileText} color="var(--amber)" bg="var(--amber-bg)" />
         <MetricCard label="Son Çekim" value={latestSourceTime ? formatDateTime(latestSourceTime) : '-'} icon={CheckCircle2} color="var(--text-dim)" bg="var(--bg-surface-2)" />
       </div>
+
+      {isAdmin && (
+        <section style={{
+          background: 'var(--bg-surface)', border: '1px solid var(--border)',
+          borderRadius: 'var(--radius)', boxShadow: 'var(--shadow)', overflow: 'hidden',
+          marginBottom: 14,
+        }}>
+          <SectionHeader
+            icon={RefreshCw}
+            title="Kaynak Yenileme"
+            meta=""
+            action={
+              <button
+                onClick={() => void refreshAllSources()}
+                disabled={refreshingKey !== null}
+                style={{
+                  display: 'inline-flex', alignItems: 'center', gap: 8, height: 32, padding: '0 12px',
+                  borderRadius: 8, border: 'none', background: 'var(--accent)',
+                  color: '#fff', cursor: refreshingKey ? 'wait' : 'pointer', fontWeight: 850, fontSize: 12,
+                }}
+              >
+                <RefreshCw size={13} style={bulkProgress ? { animation: 'spin 1s linear infinite' } : {}} />
+                {bulkProgress ? `${bulkProgress.name} (${bulkProgress.current}/${bulkProgress.total})` : 'Tümünü Yenile'}
+              </button>
+            }
+          />
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', padding: 12 }}>
+            {ratingSources.map(source => (
+              <SourceRefreshButton
+                key={source.key}
+                source={source}
+                busy={refreshingKey === source.key}
+                disabled={refreshingKey !== null && refreshingKey !== source.key}
+                onClick={() => void handleSourceRefreshClick(source)}
+              />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {summarySources.length > 0 && (
+        <section style={{
+          background: 'var(--bg-surface)', border: '1px solid var(--border)',
+          borderRadius: 'var(--radius)', boxShadow: 'var(--shadow)', overflow: 'hidden',
+          marginBottom: 14,
+        }}>
+          <SectionHeader
+            icon={Database}
+            title="Kaynak Özeti"
+            meta={`${summarySources.length} kaynak`}
+          />
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 10, padding: 12, borderBottom: '1px solid var(--border)' }}>
+            {[
+              ['Toplam Kayıt', summaryTotals.records.toLocaleString('tr-TR'), 'var(--blue)', 'var(--blue-bg)'],
+              ['Toplam Link', summaryTotals.reports.toLocaleString('tr-TR'), 'var(--accent)', 'var(--accent-bg)'],
+              ['Aranan Şirket', summaryTotals.searched.toLocaleString('tr-TR'), 'var(--amber)', 'var(--amber-bg)'],
+              ['Bulunan Kayıt', summaryTotals.found.toLocaleString('tr-TR'), 'var(--green)', 'var(--green-bg)'],
+              ['Sorunlu Kaynak', summaryTotals.issues.toLocaleString('tr-TR'), summaryTotals.issues ? 'var(--red)' : 'var(--text-dim)', summaryTotals.issues ? 'var(--red-bg)' : 'var(--bg-surface-2)'],
+              ['Son Çekim', summaryTotals.lastRefresh ? formatDateTime(summaryTotals.lastRefresh) : '-', 'var(--text-dim)', 'var(--bg-surface-2)'],
+            ].map(([label, value, color, bg]) => (
+              <div key={label} style={{ border: '1px solid var(--border)', borderRadius: 8, background: bg, padding: '10px 11px', minWidth: 0 }}>
+                <div style={{ color: 'var(--text-muted)', fontSize: 10, fontWeight: 850, textTransform: 'uppercase', marginBottom: 5 }}>{label}</div>
+                <div style={{ color, fontFamily: 'var(--font-mono)', fontWeight: 850, fontSize: 15, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{value}</div>
+              </div>
+            ))}
+          </div>
+
+          <div style={{ overflowX: 'auto' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
+              <thead>
+                <tr style={{ background: 'var(--bg-surface-2)' }}>
+                  {['Kaynak', 'Durum', 'Kayıt', 'Link', 'Aranan', 'Bulunan', 'Son Çekim'].map(head => (
+                    <th key={head} style={{ textAlign: 'left', padding: '8px 12px', fontSize: 10, color: 'var(--text-muted)', fontWeight: 850, textTransform: 'uppercase', whiteSpace: 'nowrap' }}>{head}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {summarySources.map(source => {
+                  const style = statusStyle(source.status_class);
+                  const hasSearchStats = source.searched_count !== undefined;
+                  return (
+                    <tr key={source.key} style={{ borderBottom: '1px solid var(--border)' }}>
+                      <td style={{ padding: '9px 12px', fontWeight: 800, whiteSpace: 'nowrap' }}>{source.name}</td>
+                      <td style={{ padding: '9px 12px', whiteSpace: 'nowrap' }}>
+                        <span style={{ color: style.color, background: style.bg, padding: '2px 7px', borderRadius: 6, fontSize: 10, fontWeight: 850 }}>{style.label}</span>
+                      </td>
+                      <td style={{ padding: '9px 12px', fontFamily: 'var(--font-mono)', color: 'var(--text-dim)' }}>{(source.record_count || 0).toLocaleString('tr-TR')}</td>
+                      <td style={{ padding: '9px 12px', fontFamily: 'var(--font-mono)', color: 'var(--text-dim)' }}>{(source.report_count || 0).toLocaleString('tr-TR')}</td>
+                      <td style={{ padding: '9px 12px', fontFamily: 'var(--font-mono)', color: 'var(--text-dim)' }}>{hasSearchStats ? (source.searched_count || 0).toLocaleString('tr-TR') : '-'}</td>
+                      <td style={{ padding: '9px 12px', fontFamily: 'var(--font-mono)', color: 'var(--text-dim)' }}>{hasSearchStats ? (source.found_count || 0).toLocaleString('tr-TR') : '-'}</td>
+                      <td style={{ padding: '9px 12px', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>{source.last_refresh ? formatDateTime(source.last_refresh) : '-'}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )}
 
       <div style={{
         background: 'var(--bg-surface)', border: '1px solid var(--border)',
@@ -491,14 +612,28 @@ export default function RatingCenter() {
           </div>
           <div>
             <label style={{ display: 'block', color: 'var(--text-muted)', fontSize: 11, fontWeight: 850, textTransform: 'uppercase', letterSpacing: 0, marginBottom: 6 }}>Rating kaynağı</label>
-            <select
-              value={agency}
-              onChange={e => setAgency(e.target.value)}
-              style={{ width: '100%', height: 38, padding: '0 10px', borderRadius: 8, border: '1px solid var(--border)', background: 'var(--bg-surface-2)', color: 'var(--text)', outline: 'none' }}
+            <div
+              title="Aşağıdaki kaynak etiketlerine tıklayarak birden fazla kaynak seçebilirsiniz"
+              style={{
+                height: 38, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8,
+                padding: '0 12px', borderRadius: 8, border: '1px solid var(--border)',
+                background: 'var(--bg-surface-2)', color: agencies.length ? 'var(--text)' : 'var(--text-muted)', fontWeight: 800,
+              }}
             >
-              <option value="">Tüm ratingler</option>
-              {ratingSources.map(source => <option key={source.key} value={source.name}>{source.name}</option>)}
-            </select>
+              <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                {agencies.length === 0 ? 'Tüm kaynaklar' : agencies.length === 1 ? agencies[0] : `${agencies.length} kaynak seçili`}
+              </span>
+              {agencies.length > 0 && (
+                <button
+                  type="button"
+                  onClick={() => setAgencies([])}
+                  title="Kaynak seçimini temizle"
+                  style={{ border: 'none', background: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: 2, display: 'inline-flex' }}
+                >
+                  ✕
+                </button>
+              )}
+            </div>
           </div>
           <div>
             <label style={{ display: 'block', color: 'var(--text-muted)', fontSize: 11, fontWeight: 850, textTransform: 'uppercase', letterSpacing: 0, marginBottom: 6 }}>Tarih</label>
@@ -570,9 +705,9 @@ export default function RatingCenter() {
               <SourceChip
                 key={source.key}
                 source={source}
-                active={agency === source.name}
-                busy={refreshingKey === source.key}
-                onClick={() => void handleSourceClick(source)}
+                active={agencies.includes(source.name)}
+                syncing={refreshingKey === source.key}
+                onClick={() => handleSourceClick(source)}
               />
             ))}
           </div>
@@ -642,35 +777,6 @@ export default function RatingCenter() {
             </div>
           )}
         </div>
-      )}
-
-      {globalSummarySources.length > 0 && (
-        <section style={{
-          background: 'var(--bg-surface)', border: '1px solid var(--border)',
-          borderRadius: 'var(--radius)', boxShadow: 'var(--shadow)', overflow: 'hidden',
-          marginBottom: 14,
-        }}>
-          <SectionHeader
-            icon={Database}
-            title={selectedSource && GLOBAL_RATING_AGENCIES.has(selectedSource.name) ? `${selectedSource.name} Özeti` : 'Global Ajans Özeti'}
-            meta={`${globalSummarySources.length} kaynak`}
-          />
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 10, padding: 12 }}>
-            {[
-              ['Aranan Şirket', globalSummary.searched.toLocaleString('tr-TR'), 'var(--blue)', 'var(--blue-bg)'],
-              ['Bulunan Kayıt', globalSummary.found.toLocaleString('tr-TR'), 'var(--green)', 'var(--green-bg)'],
-              ['Eşleşmeyen', globalSummary.noMatch.toLocaleString('tr-TR'), 'var(--text-dim)', 'var(--bg-surface-2)'],
-              ['Giriş/Abonelik', globalSummary.access.toLocaleString('tr-TR'), 'var(--amber)', 'var(--amber-bg)'],
-              ['Erişim/Okuma Hatası', (globalSummary.blocked + globalSummary.parse).toLocaleString('tr-TR'), 'var(--red)', 'var(--red-bg)'],
-              ['Son Çekim', globalSummary.lastRefresh ? formatDateTime(globalSummary.lastRefresh) : '-', 'var(--text-dim)', 'var(--bg-surface-2)'],
-            ].map(([label, value, color, bg]) => (
-              <div key={label} style={{ border: '1px solid var(--border)', borderRadius: 8, background: bg, padding: '10px 11px', minWidth: 0 }}>
-                <div style={{ color: 'var(--text-muted)', fontSize: 10, fontWeight: 850, textTransform: 'uppercase', marginBottom: 5 }}>{label}</div>
-                <div style={{ color, fontFamily: 'var(--font-mono)', fontWeight: 850, fontSize: 15, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{value}</div>
-              </div>
-            ))}
-          </div>
-        </section>
       )}
 
       <section style={{ background: 'var(--bg-surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius)', boxShadow: 'var(--shadow)', overflow: 'hidden' }}>
