@@ -27,27 +27,6 @@ rating_sources:
     priority: 4
     urls:
       - https://www.kobirate.com.tr/Kredi-Derecelendirme-Raporlari/
-  fitch:
-    name: Fitch Ratings
-    enabled: true
-    priority: 5
-    urls:
-      - https://www.fitchratings.com
-    manual_import_glob: "fitch*.csv"
-  spglobal:
-    name: S&P Global Ratings
-    enabled: true
-    priority: 6
-    urls:
-      - https://www.spglobal.com/ratings/en
-    manual_import_glob: "spglobal*.csv"
-  moodys:
-    name: Moody's Ratings
-    enabled: true
-    priority: 7
-    urls:
-      - https://www.moodys.com
-    manual_import_glob: "moodys*.csv"
 
 news_sources:
   aa:
@@ -59,8 +38,6 @@ news_sources:
     rss:
       - https://www.aa.com.tr/tr/rss/default?cat=ekonomi
       - https://www.aa.com.tr/tr/teyithatti/rss/news?cat=ekonomi
-    pages:
-      - https://www.aa.com.tr/tr/ekonomi
   borsagundem:
     name: BorsaGündem
     enabled: false
@@ -68,8 +45,6 @@ news_sources:
       - https://www.borsagundem.com/arama?key={q}
     rss:
       - https://www.borsagundem.com/rss
-    pages:
-      - https://www.borsagundem.com/haberler
   bloomberg:
     name: BloombergHT
     enabled: true
@@ -78,8 +53,6 @@ news_sources:
       - https://www.bloomberght.com/arama?q={q}
     rss:
       - https://www.bloomberght.com/rss
-    pages:
-      - https://www.bloomberght.com/tumhaberler
     manual_import_glob: "bloomberg*.csv"
   trthaber:
     name: TRT Haber
@@ -111,3 +84,33 @@ news_sources:
       - https://www.yenisafak.com/arama?q={q}
     rss:
       - https://www.yenisafak.com/rss?xml=ekonomi
+  haberturk:
+    name: Habertürk
+    enabled: true
+    rss:
+      - https://www.haberturk.com/rss/ekonomi.xml
+  ntv:
+    name: NTV
+    enabled: true
+    rss:
+      - https://www.ntv.com.tr/ekonomi.rss
+  cnnturk:
+    name: CNN Türk
+    enabled: true
+    rss:
+      - https://www.cnnturk.com/feed/rss/ekonomi/news
+  dunya:
+    name: Dünya Gazetesi
+    enabled: true
+    rss:
+      - https://www.dunya.com/rss
+  cumhuriyet:
+    name: Cumhuriyet
+    enabled: true
+    rss:
+      - https://www.cumhuriyet.com.tr/rss/ekonomi.xml
+  star:
+    name: Star
+    enabled: true
+    rss:
+      - https://www.star.com.tr/rss/ekonomi.xml

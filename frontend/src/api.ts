@@ -132,9 +132,6 @@ export interface RatingNewsRow {
   url: string | null;
   published_at: string | null;
   summary: string | null;
-  event_type: string | null;
-  risk_level: string | null;
-  matched_keywords: string[];
   extracted_at: string;
 }
 

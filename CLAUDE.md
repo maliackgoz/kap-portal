@@ -47,17 +47,16 @@ Bu proje vibe coding ile gelistiriliyor ve oyle devam edecek — asiri muhendisl
 
 ### Rating & Haber Servisi
 - Ayri bir Python uygulamasi, DB kullanmiyor — hersey `rating-service/data/*.jsonl` (append-only) + `data/exports/*` (CSV/MD)
-- Kaynak bazinda scraper'lar: `app/scrapers/{fitch,spglobal,moodys,jcr,kobirate,turkrating,saha,news}.py`
+- Kaynak bazinda scraper'lar: `app/scrapers/{jcr,kobirate,turkrating,saha,news}.py`
 - Kendi FastAPI REST API'si + kendi MCP sunucusu (`app/mcp_server.py`, `/mcp` path)
 - Backend, `routes/rating.ts` uzerinden bu servise duz proxy yapiyor (kendi DB'sine yazmiyor)
-- Manuel CSV fallback importlari icin `data/imports/` var (Fitch/S&P/Moody's/Bloomberg gibi kaynaklar icin)
+- Manuel CSV fallback importlari icin `data/imports/` var (Bloomberg gibi kaynaklar icin)
+- **Global ajanslar (Fitch/S&P/Moody's) kaldirildi** (2026-09-29) — resmi API erisimi olmadan public arama sayfalari ya `NO_MATCH` ya da bot korumasindan `BLOCKED` donuyordu (bkz. gecmis run_log kayitlari), gercek veri cekilemiyordu. `app/scrapers/{fitch,spglobal,moodys,global_providers}.py`, `app/global_priority.yaml`, `global_provider_*` ayarlari (config.py, docker-compose.yml) ve `/api/refresh/{fitch,spglobal,moodys}` uc noktalari silindi. Aktif rating kaynaklari artik sadece TurkRating/JCR/SAHA/KobiRate — dordu de kendi yayinladiklari listeleme sayfasini kaziyor, KAP sirketine ozel arama yapmiyor
 - **Sirket adi eslestirme (`normalizer.py`)**: portal ile rating-service arasinda foreign key YOK, her istekte `company.name` duz metin olarak gonderiliyor, rating-service `company_match_key()` + `rapidfuzz.fuzz.WRatio` (cutoff 88/92) ile eslestiriyor. Guvenilirlik `companies.yaml`'daki alias tablosuna bagli
-- **`companies.yaml` artik portal'dan otomatik uretiliyor** (`rating-service/sync_companies.py`) — eskiden elle yazilmis 8 sirketlik bir listeydi ve bu HEM alias tablosu HEM DE Fitch/S&P/Moody's gibi global ajanslarda hangi sirketlerin aranacagini (`global_providers.py:_known_company_names()`) belirliyordu; yani o ajanslarda pratikte sadece 8/1553 sirket taraniyordu. Sync script `backend/data/companies.json` (tum KAP dizini) + `backend/data/company-aliases.json`'i (KAP'ta tespit edilen yeniden adlandirmalar, bkz. yukarida) okuyup `data/config/companies.yaml`'i yeniden uretir
+- **`companies.yaml` artik portal'dan otomatik uretiliyor** (`rating-service/sync_companies.py`) — eskiden elle yazilmis 8 sirketlik bir listeydi. Global ajanslar kaldirildiktan sonra bu dosyanin tek islevi TurkRating/JCR/SAHA/KobiRate'in kendi listeledigi sirket isimlerini KAP adlarina eslestiren alias tablosu. Sync script `backend/data/companies.json` (tum KAP dizini) + `backend/data/company-aliases.json`'i (KAP'ta tespit edilen yeniden adlandirmalar, bkz. yukarida) okuyup `data/config/companies.yaml`'i yeniden uretir
   - Elle girilmis kayitlar (KAP uyesi olmayan ama rating alan sirketler, orn. varlik yonetim/faktoring) OLDUGU GIBI korunur
   - Portal kaydi elle girilmis bir ALIAS ile cakisirsa (ayni sirket, farkli yazim) ayri satir acilmaz, mevcut kayda alias olarak eklenir — cakisma tespiti icin `app.normalizer.company_match_key()` KULLANILIYOR (kendi basit normalize fonksiyonunu yazma, runtime'daki gercek eslestirmeyle ayni olmali yoksa iki kayit ayni anahtara dusup biri digerini sessizce ezer — bu hatayi yaparak bulduk)
   - Kullanim: `npm run companies:sync-rating` (repo kokunden) / `python sync_companies.py [--dry-run]` (rating-service icinden)
-  - `global_provider_max_companies` (varsayilan 80, `.env`) hala global ajans taramasini sayica sinirliyor — bu ayri, kasitli bir rate-limit korumasi, sync script'in cozdugu sorun degil
-  - Bu 80'lik kota once `rating-service/app/global_priority.yaml`'daki (uluslararasi notu olan bankalar/holdingler, KAP adlariyla birebir) sirketlere, kalani companies.yaml sirasina (alfabetik) gider. Dosya kasitli olarak data volume'unda degil paket icinde — `data/config/*.yaml` Docker volume'unda kaldigi icin rebuild ile guncellenmez
 
 ### Uye Sirketler (Members / Watchlist)
 - `member_companies` tablosu: kullanicinin takip listesine ekledigi sirketler (company_id -> created_at)
@@ -168,7 +167,7 @@ rating-service/
     config.py         — Settings (env prefix RATING_MCP_), data_dir altinda ratings/news/run_log/raw/pdfs/exports/imports/config
     cli.py            — `rating-mcp` CLI entry point
     normalizer.py, dedupe.py — Rating/haber kaydi normalize etme ve tekillestirme
-    scrapers/         — Kaynak basina bir dosya: fitch, spglobal, moodys, jcr, kobirate, turkrating, saha, news, global_providers
+    scrapers/         — Kaynak basina bir dosya: jcr, kobirate, turkrating, saha, news
     services/         — ratings.py, news.py, reports.py (is mantigi, scraper'lari cagirir)
     default_config/, data/config/ — companies.yaml, sources.yaml (izlenen sirket/kaynak listeleri)
   data/               — JSONL depolama (DB yok): ratings.jsonl, news.jsonl, run_log.jsonl + exports/raw/pdfs/imports alt klasorleri

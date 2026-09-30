@@ -52,18 +52,14 @@ def filter_news(
     company: str | None = None,
     source: str | None = None,
     days: int | None = None,
-    risk_level: str | None = None,
 ) -> list[NewsRecord]:
     records = load_news_records()
     source_key = normalize_text_key(source)
-    risk_key = normalize_text_key(risk_level)
     cutoff = datetime.now(UTC) - timedelta(days=days or 36500)
 
     filtered = []
     for record in records:
         if source and normalize_text_key(record.source_name) != source_key:
-            continue
-        if risk_level and normalize_text_key(record.risk_level) != risk_key:
             continue
         effective_date = record.published_at or record.extracted_at
         if days and effective_date < cutoff:
@@ -129,9 +125,8 @@ def search_live_news(
 def get_recent_company_news(
     company_name: str,
     days: int = 30,
-    risk_level: str | None = None,
 ) -> dict[str, Any]:
-    records = filter_news(company=company_name, days=days, risk_level=risk_level)
+    records = filter_news(company=company_name, days=days)
     return {
         "summary": (
             f"{company_name} için son {days} günde {len(records)} haber bulundu."
@@ -154,9 +149,6 @@ def news_rows(records: list[NewsRecord]) -> list[dict[str, Any]]:
             "url": record.url,
             "published_at": record.published_at.isoformat() if record.published_at else None,
             "summary": record.summary,
-            "event_type": record.event_type,
-            "risk_level": record.risk_level,
-            "matched_keywords": record.matched_keywords,
             "extracted_at": record.extracted_at.isoformat(),
         }
         for record in records
@@ -231,8 +223,6 @@ def _news_record_matches_query(record: NewsRecord, query_key: str) -> bool:
                 record.summary or "",
                 record.company_name_normalized or "",
                 record.source_name,
-                record.event_type or "",
-                " ".join(record.matched_keywords),
             ]
         )
     )

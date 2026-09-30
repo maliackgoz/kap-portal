@@ -19,62 +19,6 @@ from ..dedupe import dedupe_records, with_news_id
 from ..models import NewsRecord, RunLog
 from ..normalizer import normalize_company_name, normalize_text_key
 
-RISK_KEYWORDS = [
-    "not düşürümü",
-    "downgrade",
-    "negatif görünüm",
-    "temerrüt",
-    "dava",
-    "icra",
-    "takip",
-    "yaptırım",
-    "sermaye artırımı",
-    "birleşme",
-    "satın alma",
-    "borçlanma aracı",
-    "ödeme güçlüğü",
-    "konkordato",
-    "iflas",
-    "yönetim değişikliği",
-]
-
-HIGH_RISK = {
-    "downgrade",
-    "not dusurumu",
-    "default",
-    "temerrut",
-    "konkordato",
-    "iflas",
-    "odeme guclugu",
-    "regulator yaptirimi",
-    "yaptirim",
-}
-
-MEDIUM_RISK = {
-    "negatif gorunum",
-    "dava",
-    "icra",
-    "onemli borclanma",
-    "borclanma araci",
-    "ortaklik degisimi",
-}
-
-CONTEXTUAL_RISK_PATTERNS = {
-    "icra": [
-        r"\bicra takib",
-        r"\bicra daires",
-        r"\bicralik",
-        r"\bhaciz",
-    ],
-    "takip": [
-        r"\bkanuni takip",
-        r"\byasal takip",
-        r"\btakipteki alacak",
-        r"\btakibe dus",
-        r"\btakibe al",
-    ],
-}
-
 TURKEY_TZ = timezone(timedelta(hours=3))
 SOURCE_LOCAL_TIME_FEEDS = {"yeni safak"}
 
@@ -240,10 +184,6 @@ class NewsScraper:
         published: Any,
         company: str | None = None,
     ) -> NewsRecord:
-        text = f"{title} {summary or ''}"
-        matched = match_risk_keywords(text)
-        level = classify_risk(matched)
-        event_type = ", ".join(matched) if matched else "nötr haber"
         normalized_company = normalize_company_name(company, fuzzy=True) if company else None
         return NewsRecord(
             company_name_raw=company,
@@ -253,35 +193,7 @@ class NewsScraper:
             url=url.strip(),
             published_at=parse_datetime(published, source_name=source_name),
             summary=(summary or "").strip() or None,
-            event_type=event_type,
-            risk_level=level,
-            matched_keywords=matched,
         )
-
-
-def match_risk_keywords(text: str) -> list[str]:
-    text_key = normalize_text_key(text)
-    matched: list[str] = []
-    contextual_keys = set(CONTEXTUAL_RISK_PATTERNS)
-    for keyword in RISK_KEYWORDS:
-        keyword_key = normalize_text_key(keyword)
-        if keyword_key in contextual_keys:
-            continue
-        if keyword_key in text_key:
-            matched.append(keyword)
-    for keyword_key, patterns in CONTEXTUAL_RISK_PATTERNS.items():
-        if any(re.search(pattern, text_key) for pattern in patterns):
-            matched.append(keyword_key)
-    return matched
-
-
-def classify_risk(keywords: list[str]) -> str:
-    normalized = {normalize_text_key(keyword) for keyword in keywords}
-    if normalized & HIGH_RISK:
-        return "high"
-    if normalized & MEDIUM_RISK:
-        return "medium"
-    return "low"
 
 
 def parse_datetime(value: Any, *, source_name: str | None = None) -> datetime | None:

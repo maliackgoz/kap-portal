@@ -83,16 +83,6 @@ function statusStyle(status: string) {
   return map[status] || map.pending;
 }
 
-function riskStyle(level: string | null) {
-  const key = normalize(level);
-  const map: Record<string, { color: string; bg: string; label: string }> = {
-    high: { color: 'var(--red)', bg: 'var(--red-bg)', label: 'Yüksek' },
-    medium: { color: 'var(--amber)', bg: 'var(--amber-bg)', label: 'Orta' },
-    low: { color: 'var(--green)', bg: 'var(--green-bg)', label: 'Düşük' },
-  };
-  return map[key] || { color: 'var(--text-muted)', bg: 'var(--bg-surface-2)', label: 'Belirsiz' };
-}
-
 function MetricCard({ label, value, icon: Icon, color, bg }: {
   label: string;
   value: string | number;
@@ -199,19 +189,6 @@ function SectionHeader({ icon: Icon, title, meta, action }: {
   );
 }
 
-function RiskBadge({ level }: { level: string | null }) {
-  const style = riskStyle(level);
-  return (
-    <span style={{
-      display: 'inline-flex', alignItems: 'center', padding: '3px 8px',
-      borderRadius: 6, color: style.color, background: style.bg,
-      fontSize: 11, fontWeight: 850, whiteSpace: 'nowrap',
-    }}>
-      {style.label}
-    </span>
-  );
-}
-
 export default function NewsCenter() {
   const { isAdmin } = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -219,7 +196,6 @@ export default function NewsCenter() {
   const [news, setNews] = useState<RatingNewsRow[]>([]);
   const [query, setQuery] = useState(() => searchParams.get('q') || searchParams.get('company') || '');
   const [source, setSource] = useState(() => searchParams.get('source') || '');
-  const [risk, setRisk] = useState(() => searchParams.get('risk') || '');
   const [days, setDays] = useState(() => searchParams.get('days') || '60');
   const [loading, setLoading] = useState(true);
   const [refreshingKey, setRefreshingKey] = useState<string | null>(null);
@@ -255,8 +231,6 @@ export default function NewsCenter() {
         row.summary,
         row.company,
         row.source,
-        row.event_type,
-        ...(row.matched_keywords || []),
       ].join(' '));
       return matchesQuery(haystack, key);
     });
@@ -264,20 +238,17 @@ export default function NewsCenter() {
 
   const loadNews = async (overrides?: {
     source?: string;
-    risk?: string;
     days?: string;
   }) => {
     setLoading(true);
     setError(null);
     setLiveMode(false);
     const selectedSource = overrides?.source ?? source;
-    const selectedRisk = overrides?.risk ?? risk;
     const selectedDays = overrides?.days ?? days;
 
     try {
       const params: Record<string, string> = {};
       if (selectedSource) params.source = selectedSource;
-      if (selectedRisk) params.risk_level = selectedRisk;
       if (selectedDays) params.days = selectedDays;
 
       const [sourceRes, newsRes] = await Promise.all([
@@ -294,9 +265,9 @@ export default function NewsCenter() {
   };
 
   useEffect(() => {
-    void loadNews({ source, risk, days });
+    void loadNews({ source, days });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [source, risk, days]);
+  }, [source, days]);
 
   const refreshSources = async (selectedSources: RatingSource[], message: string, nextSource?: string) => {
     if (!selectedSources.length) return;
@@ -418,13 +389,12 @@ export default function NewsCenter() {
 
   const returnToSavedFeed = async () => {
     setLiveMode(false);
-    await loadNews({ source, risk, days });
+    await loadNews({ source, days });
   };
 
   const clearFilters = () => {
     setQuery('');
     setSource('');
-    setRisk('');
     setDays('60');
     setLiveMode(false);
     setSelectedLiveSources(newsSources.map(item => item.key));
@@ -436,10 +406,9 @@ export default function NewsCenter() {
     const params: Record<string, string> = {};
     if (query.trim()) params.q = query.trim();
     if (source) params.source = source;
-    if (risk) params.risk = risk;
     if (days) params.days = days;
     setSearchParams(params);
-    if (liveMode) await loadNews({ source, risk, days });
+    if (liveMode) await loadNews({ source, days });
   };
 
   const latestSourceTime = newsSources
@@ -447,7 +416,6 @@ export default function NewsCenter() {
     .filter(Boolean)
     .sort()
     .pop() || null;
-  const riskyCount = filteredNews.filter(row => ['high', 'medium'].includes(normalize(row.risk_level))).length;
   const visibleNews = filteredNews.slice(0, 240);
   const periodLabel = liveMode ? 'Canlı arama' : (days ? `${days} gün` : 'Tüm arşiv');
 
@@ -477,7 +445,6 @@ export default function NewsCenter() {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', gap: 12, marginBottom: 14 }}>
         <MetricCard label="Haber" value={filteredNews.length.toLocaleString('tr-TR')} icon={Newspaper} color="var(--blue)" bg="var(--blue-bg)" />
         <MetricCard label="Canlı Kaynak" value={newsSources.length.toLocaleString('tr-TR')} icon={Database} color="var(--accent)" bg="var(--accent-bg)" />
-        <MetricCard label="Riskli Haber" value={riskyCount.toLocaleString('tr-TR')} icon={AlertTriangle} color="var(--amber)" bg="var(--amber-bg)" />
         <MetricCard label="Son Çekim" value={latestSourceTime ? formatDateTime(latestSourceTime) : '-'} icon={CalendarDays} color="var(--text-dim)" bg="var(--bg-surface-2)" />
       </div>
 
@@ -485,7 +452,7 @@ export default function NewsCenter() {
         background: 'var(--bg-surface)', border: '1px solid var(--border)',
         borderRadius: 'var(--radius)', padding: 14, marginBottom: 14, boxShadow: 'var(--shadow)',
       }}>
-        <div className="news-filter-grid" style={{ display: 'grid', gridTemplateColumns: 'minmax(260px, 1fr) 190px 150px 130px auto auto auto', gap: 10, alignItems: 'end' }}>
+        <div className="news-filter-grid" style={{ display: 'grid', gridTemplateColumns: 'minmax(260px, 1fr) 190px 130px auto auto auto', gap: 10, alignItems: 'end' }}>
           <div>
             <label style={{ display: 'block', color: 'var(--text-muted)', fontSize: 11, fontWeight: 850, textTransform: 'uppercase', letterSpacing: 0, marginBottom: 6 }}>Arama</label>
             <div style={{ position: 'relative' }}>
@@ -512,19 +479,6 @@ export default function NewsCenter() {
             >
               <option value="">Tüm kaynaklar</option>
               {newsSources.map(item => <option key={item.key} value={item.name}>{item.name}</option>)}
-            </select>
-          </div>
-          <div>
-            <label style={{ display: 'block', color: 'var(--text-muted)', fontSize: 11, fontWeight: 850, textTransform: 'uppercase', letterSpacing: 0, marginBottom: 6 }}>Risk</label>
-            <select
-              value={risk}
-              onChange={event => setRisk(event.target.value)}
-              style={{ width: '100%', height: 38, padding: '0 10px', borderRadius: 8, border: '1px solid var(--border)', background: 'var(--bg-surface-2)', color: 'var(--text)', outline: 'none' }}
-            >
-              <option value="">Tüm riskler</option>
-              <option value="low">Düşük</option>
-              <option value="medium">Orta</option>
-              <option value="high">Yüksek</option>
             </select>
           </div>
           <div>
@@ -698,7 +652,6 @@ export default function NewsCenter() {
                         <span style={{ color: 'var(--blue)', background: 'var(--blue-bg)', padding: '3px 8px', borderRadius: 6, fontSize: 11, fontWeight: 850 }}>
                           {row.source}
                         </span>
-                        <RiskBadge level={row.risk_level} />
                         <span style={{ color: 'var(--text-muted)', fontSize: 11, fontFamily: 'var(--font-mono)' }}>
                           {formatNewsDateTime(row.published_at || row.extracted_at, row.source)}
                         </span>
@@ -723,26 +676,10 @@ export default function NewsCenter() {
                     )}
                   </div>
 
-                  {(row.summary || row.event_type || row.matched_keywords?.length > 0) && (
-                    <div style={{ marginTop: 9, display: 'grid', gap: 8 }}>
-                      {row.summary && (
-                        <p style={{ margin: 0, color: 'var(--text-dim)', fontSize: 12.5, lineHeight: 1.55 }}>
-                          {row.summary}
-                        </p>
-                      )}
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
-                        {row.event_type && (
-                          <span style={{ color: 'var(--text-muted)', background: 'var(--bg-surface-2)', border: '1px solid var(--border)', padding: '3px 7px', borderRadius: 6, fontSize: 11, fontWeight: 800 }}>
-                            {row.event_type}
-                          </span>
-                        )}
-                        {(row.matched_keywords || []).slice(0, 5).map(keyword => (
-                          <span key={keyword} style={{ color: 'var(--text-muted)', background: 'var(--bg-surface-2)', border: '1px solid var(--border)', padding: '3px 7px', borderRadius: 6, fontSize: 11 }}>
-                            {keyword}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
+                  {row.summary && (
+                    <p style={{ margin: '9px 0 0', color: 'var(--text-dim)', fontSize: 12.5, lineHeight: 1.55 }}>
+                      {row.summary}
+                    </p>
                   )}
                 </article>
               ))}

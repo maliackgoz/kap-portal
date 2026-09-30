@@ -3,42 +3,12 @@ from __future__ import annotations
 from datetime import UTC, datetime
 
 from app.models import NewsRecord
-from app.scrapers.news import (
-    _looks_like_news_link,
-    classify_risk,
-    match_risk_keywords,
-    parse_datetime,
-)
+from app.scrapers.news import _looks_like_news_link, parse_datetime
 from app.services.news import (
     _build_live_search_config,
     _news_record_matches_query,
     _select_news_sources,
 )
-
-
-def test_news_risk_matching_ignores_neutral_icra_committee_context() -> None:
-    matched = match_risk_keywords("THY Yönetim Kurulu ve İcra Komitesi Başkanı açıklama yaptı")
-
-    assert "icra" not in matched
-
-
-def test_news_risk_matching_ignores_device_tracking_context() -> None:
-    matched = match_risk_keywords("Balıkçı gemilerindeki takip cihazları yenileniyor")
-
-    assert "takip" not in matched
-
-
-def test_news_risk_matching_keeps_legal_collection_context() -> None:
-    matched = match_risk_keywords("Şirket hakkında icra takibi başlatıldı")
-
-    assert "icra" in matched
-    assert classify_risk(matched) == "medium"
-
-
-def test_news_risk_matching_keeps_yasal_takip_context() -> None:
-    matched = match_risk_keywords("Kredilerde yasal takip oranı yükseldi")
-
-    assert "takip" in matched
 
 
 def test_bloomberght_numeric_slug_is_treated_as_news_link() -> None:

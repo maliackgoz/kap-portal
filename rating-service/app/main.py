@@ -103,21 +103,6 @@ def api_refresh(payload: RefreshRequest) -> dict:
     return refresh_sources(sources=payload.sources, force=payload.force)
 
 
-@app.post("/api/refresh/fitch")
-def api_refresh_fitch() -> dict:
-    return refresh_sources(sources=["fitch"], force=True)
-
-
-@app.post("/api/refresh/spglobal")
-def api_refresh_spglobal() -> dict:
-    return refresh_sources(sources=["spglobal"], force=True)
-
-
-@app.post("/api/refresh/moodys")
-def api_refresh_moodys() -> dict:
-    return refresh_sources(sources=["moodys"], force=True)
-
-
 @app.get("/api/ratings")
 def api_ratings(
     company: str | None = None,
@@ -165,9 +150,8 @@ def api_news(
     company: str | None = None,
     source: str | None = None,
     days: int | None = Query(default=None, ge=1, le=3650),
-    risk_level: str | None = None,
 ) -> dict:
-    records = filter_news(company=company, source=source, days=days, risk_level=risk_level)
+    records = filter_news(company=company, source=source, days=days)
     return {"summary": f"{len(records)} haber kaydı döndü.", "data": news_rows(records)}
 
 

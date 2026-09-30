@@ -15,12 +15,9 @@ from ..normalizer import (
     normalize_text_key,
 )
 from ..scrapers import (
-    FitchScraper,
     JCRScraper,
     KobiRateScraper,
-    MoodysScraper,
     SAHAScraper,
-    SPGlobalScraper,
     TurkRatingScraper,
 )
 from ..storage import (
@@ -37,9 +34,6 @@ SCRAPER_CLASSES = {
     "jcr": JCRScraper,
     "saha": SAHAScraper,
     "kobirate": KobiRateScraper,
-    "fitch": FitchScraper,
-    "moodys": MoodysScraper,
-    "spglobal": SPGlobalScraper,
 }
 
 OLD_RATING_DAYS = 730

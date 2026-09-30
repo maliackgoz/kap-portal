@@ -61,9 +61,6 @@ class NewsRecord(BaseModel):
     url: str
     published_at: datetime | None = None
     summary: str | None = None
-    event_type: str | None = None
-    risk_level: Literal["high", "medium", "low"] | None = None
-    matched_keywords: list[str] = Field(default_factory=list)
     extracted_at: datetime = Field(default_factory=utc_now)
 
 

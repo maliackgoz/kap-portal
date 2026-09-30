@@ -50,9 +50,6 @@ services:
       - RATING_SERVICE_API_KEY=${RATING_MCP_API_KEY:-}
       - RATING_MCP_DATA_DIR=/app/rating-service/data
       - RATING_MCP_API_KEY=${RATING_MCP_API_KEY:-}
-      - RATING_MCP_GLOBAL_PROVIDER_TIMEOUT_SECONDS=12
-      - RATING_MCP_GLOBAL_PROVIDER_RATE_LIMIT_SECONDS=1
-      - RATING_MCP_GLOBAL_PROVIDER_MAX_COMPANIES=80
     volumes:
       - kapportal_backend_data:/app/backend/data
       - kapportal_rating_data:/app/rating-service/data

@@ -95,9 +95,6 @@ type RatingNewsRow = {
   url: string | null;
   published_at: string | null;
   summary: string | null;
-  event_type: string | null;
-  risk_level: string | null;
-  matched_keywords: string[];
   extracted_at: string;
 };
 
@@ -356,14 +353,12 @@ async function getCompanyNews(client: PortalClient, input: {
   company: string;
   source?: string;
   days?: number;
-  riskLevel?: string;
   limit?: number;
 }) {
   const params = new URLSearchParams();
   params.set('company', input.company);
   if (input.source) params.set('source', input.source);
   if (input.days) params.set('days', String(input.days));
-  if (input.riskLevel) params.set('risk_level', input.riskLevel);
 
   const response = await client.request<PortalDataResponse<RatingNewsRow>>(`/api/rating/news?${params.toString()}`);
   const limit = input.limit ?? 30;
@@ -371,7 +366,7 @@ async function getCompanyNews(client: PortalClient, input: {
   return {
     summary: response.summary,
     company: input.company,
-    filters: { source: input.source, days: input.days, riskLevel: input.riskLevel },
+    filters: { source: input.source, days: input.days },
     news,
     totalReturned: news.length,
     totalMatched: response.data.length,
@@ -632,12 +627,11 @@ export function createPortalMcpServer(client: PortalClient) {
     'kap_get_company_news',
     {
       title: 'Get Company News',
-      description: 'Return KAP Portal news records for a company, including source, title, date, risk level, event type, matched keywords, and URLs.',
+      description: 'Return KAP Portal news records for a company, including source, title, date, and URL.',
       inputSchema: {
         company: z.string().min(1),
         source: z.string().optional(),
         days: z.number().int().min(1).max(3650).default(90),
-        riskLevel: z.string().optional(),
         limit: z.number().int().min(1).max(200).default(30),
       },
       annotations: { readOnlyHint: true, openWorldHint: false },

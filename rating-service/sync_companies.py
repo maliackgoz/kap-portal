@@ -2,10 +2,12 @@
 """Portal'in canli sirket dizininden (backend/data/companies.json +
 company-aliases.json) rating-service'in companies.yaml'ini yeniden uretir.
 
-Onceki durum: companies.yaml elle yazilmis 8 sirketlik bir listeydi. Bu dosya
-hem isim eslestirme (alias_map) hem de Fitch/S&P/Moody's gibi global
-ajanslarda HANGI sirketlerin aranacagini (_known_company_names) belirliyordu
--- yani pratikte rating aramasi sadece o 8 sirkete yapiliyordu.
+Onceki durum: companies.yaml elle yazilmis 8 sirketlik bir listeydi ve hem
+isim eslestirme (alias_map) icin hem de global ajanslarda (Fitch/S&P/Moody's,
+kaldirildi -- bkz. CLAUDE.md) hangi sirketlerin aranacagini belirlemek icin
+kullaniliyordu. Global ajanslar kaldirildigi icin bu dosyanin tek islevi artik
+TurkRating/JCR/SAHA/KobiRate'in kendi listeledigi sirket isimlerini KAP
+adlarina eslestiren alias tablosu.
 
 Bu script bunun yerine portal'in 1500+ sirketlik canli dizinini kullanir.
 Var olan elle eklenmis kayitlar (KAP uyesi olmayan ama rating alan sirketler

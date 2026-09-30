@@ -21,9 +21,6 @@ class Settings(BaseSettings):
     user_agent: str = "RatingMCP/0.1 (+local financial analysis team)"
     timeout_seconds: float = 15.0
     rate_limit_seconds: float = 1.0
-    global_provider_timeout_seconds: float = 20.0
-    global_provider_rate_limit_seconds: float = 1.0
-    global_provider_max_companies: int = 80
     max_pdf_downloads_per_page: int = 5
 
     @property

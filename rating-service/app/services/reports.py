@@ -34,9 +34,7 @@ def search_rating_documents(
             text = normalize_text_key(f"{record.title} {record.summary or ''}")
             if normalize_text_key(company_name) not in text:
                 continue
-        text = normalize_text_key(
-            f"{record.title} {record.summary or ''} {record.event_type or ''}"
-        )
+        text = normalize_text_key(f"{record.title} {record.summary or ''}")
         if query_key in text:
             news_matches.append(record)
 

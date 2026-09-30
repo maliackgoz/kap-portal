@@ -10,7 +10,7 @@ Kalıcı veri yalnızca `data/` altında tutulur:
 - `data/raw/`: ham HTML/XML/text dosyaları
 - `data/pdfs/`: indirilebilen public PDF raporlar ve çıkarılan text
 - `data/exports/`: CSV/Markdown çıktılar
-- `data/imports/`: Fitch, S&P, Moody's, Bloomberg gibi manuel CSV fallback dosyaları
+- `data/imports/`: Bloomberg gibi manuel CSV fallback dosyaları
 
 ## Yerelde Çalıştırma
 
@@ -125,7 +125,7 @@ Kurallar:
 - Gelecek Varlık rating geçmişi nedir?
 - UVD notu en yüksek varlık yönetim şirketleri hangileri?
 - Son 30 günde riskli haber var mı?
-- Fitch/S&P/Moody's/JCR/SAHA/KobiRate/TurkRating kaynaklarında bu şirketi karşılaştır.
+- JCR/SAHA/KobiRate/TurkRating kaynaklarında bu şirketi karşılaştır.
 
 ## MCP Tool'ları
 
@@ -161,9 +161,6 @@ MCP tool çağrılarında argümanları sade JSON alanları olarak üret; XML/HT
 
 `data/imports/` altına CSV bırak:
 
-- `fitch*.csv`
-- `spglobal*.csv`
-- `moodys*.csv`
 - `bloomberg*.csv`
 
 Rating CSV kolonları model alanlarıyla aynı olabilir veya şu pratik isimleri kullanabilir:

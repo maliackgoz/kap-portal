@@ -94,13 +94,10 @@ def get_rating_history(company_name: str, agency: str | None = None) -> dict[str
 def get_recent_company_news(
     company_name: str,
     days: int = 30,
-    risk_level: str | None = None,
 ) -> dict[str, Any]:
-    """Return recent company news with keyword risk classification."""
+    """Return recent company news."""
 
-    return service_get_recent_company_news(
-        company_name=company_name, days=days, risk_level=risk_level
-    )
+    return service_get_recent_company_news(company_name=company_name, days=days)
 
 
 @mcp.tool
