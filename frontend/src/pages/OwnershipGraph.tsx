@@ -224,7 +224,6 @@ export default function OwnershipGraph() {
   const [mode, setMode] = useState<GraphMode>('focus');
   const [depth, setDepth] = useState(2);
   const [loading, setLoading] = useState(false);
-  const [kapRefreshing, setKapRefreshing] = useState(false);
   const [rebuilding, setRebuilding] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
   const [notice, setNotice] = useState<Notice | null>(null);
@@ -601,27 +600,6 @@ export default function OwnershipGraph() {
     });
   }, []);
 
-  async function refreshSelectedCompany() {
-    if (!selectedCompany) return;
-    setKapRefreshing(true);
-    setNotice({ tone: 'info', text: 'KAP verisi alınıyor ve ortaklık ağı güncelleniyor…' });
-    try {
-      const result = await api.scrapeCompany(selectedCompany.id);
-      await api.rebuildGraph();
-      const companies = await api.getAllCompanies();
-      setAllCompanies(companies);
-      const latest = companies.find(company => company.id === selectedCompany.id) || selectedCompany;
-      await loadCompanyGraph(latest);
-      setNotice(result.status === 'no_data'
-        ? { tone: 'info', text: 'KAP yeni profil verisi döndürmedi; mevcut ortaklık ağı korunuyor.' }
-        : { tone: 'success', text: `${result.keys || 0} KAP alanı ve ortaklık ağı güncellendi.` });
-    } catch (error) {
-      setNotice({ tone: 'error', text: error instanceof Error ? error.message : 'KAP verisi yenilenemedi.' });
-    } finally {
-      setKapRefreshing(false);
-    }
-  }
-
   async function rebuildGraph() {
     setRebuilding(true);
     setNotice({ tone: 'info', text: 'Ortaklık ağı veritabanından yeniden oluşturuluyor…' });
@@ -732,16 +710,10 @@ export default function OwnershipGraph() {
             <NetworkIcon size={15} /> Tam ağ
           </button>
           {isAdmin && (
-            <>
-              <button className="og-button is-secondary" type="button" onClick={() => void rebuildGraph()} disabled={rebuilding}>
-                <RefreshCw size={15} className={rebuilding ? 'is-spinning' : ''} />
-                {rebuilding ? 'Oluşturuluyor' : 'Ağı oluştur'}
-              </button>
-              <button className="og-button is-primary" type="button" onClick={() => void refreshSelectedCompany()} disabled={!selectedCompany || kapRefreshing}>
-                <RefreshCw size={15} className={kapRefreshing ? 'is-spinning' : ''} />
-                {kapRefreshing ? 'KAP işleniyor' : "KAP'tan yenile"}
-              </button>
-            </>
+            <button className="og-button is-secondary" type="button" onClick={() => void rebuildGraph()} disabled={rebuilding}>
+              <RefreshCw size={15} className={rebuilding ? 'is-spinning' : ''} />
+              {rebuilding ? 'Oluşturuluyor' : 'Ağı oluştur'}
+            </button>
           )}
         </div>
       </header>
