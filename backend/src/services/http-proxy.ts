@@ -1,3 +1,4 @@
+import { createLogger } from '../logger.js';
 // KAP'a giden istekler bazı ortamlarda internete ancak bir kurumsal proxy
 // üzerinden çıkabiliyor. Node'un yerleşik fetch()'i (undici tabanlı)
 // HTTP_PROXY/HTTPS_PROXY ortam değişkenlerini kendiliğinden OKUMUYOR — bu,
@@ -24,7 +25,7 @@ let dispatcher: Dispatcher | undefined;
 if (proxyUrl) {
   dispatcher = new ProxyAgent(proxyUrl);
   const redacted = proxyUrl.replace(/\/\/[^@]*@/, '//<redacted>@');
-  console.log(`KAP istekleri proxy üzerinden gidecek: ${redacted}`);
+  createLogger('proxy').info('KAP istekleri proxy uzerinden gidecek', { proxy: redacted });
 }
 
 // fetch()'in ikinci parametresine ekleyin: { ...KAP_HEADERS, ...kapProxyInit() }

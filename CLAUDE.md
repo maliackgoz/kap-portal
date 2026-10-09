@@ -196,6 +196,13 @@ member_companies:   company_id (PK, FK->companies, CASCADE), created_at
 
 Backend MCP, portal API'sine kendi JWT login'ini yaparak erisir (`start-all.ts` icinde `KAP_PORTAL_USERNAME`/`KAP_PORTAL_PASSWORD` env, varsayilan olarak `ADMIN_USER`/`ADMIN_PASS`'i kullanir).
 
+## Loglama ve Denetim
+- `backend/src/logger.ts`: bagimliliksiz yapisal logger (`createLogger('bilesen')`). `LOG_LEVEL` (info), `LOG_FORMAT` (prod'da json, dev'de text). stdout/stderr'e yazar, rotasyonu Docker json-file yapar. Yeni kodda `console.*` KULLANMA (stdio MCP olan `mcp.ts` haric — orada stdout protokol kanali)
+- `request-log.ts`: her `/api` istegine `X-Request-Id` verir, erisim logu yazar (health/ready haric)
+- `audit.ts` + `audit_log` tablosu: kalici denetim kaydi. Login basarili/basarisiz/engellendi (`auth.*`, detail.provider) ve kimlikli tum veri degistiren istekler (`http.POST|PUT|DELETE`) otomatik yazilir; sifre/token/govde yazilmaz. Admin icin `GET /api/audit?limit=&action=&username=`. `AUDIT_RETENTION_DAYS` (180) kadar eski kayit acilista silinir
+- LDAP gelince: `auth.ts` `matchUser` yerine saglayici eklenecek; audit'te `provider: 'local'` zaten ayrik tutuluyor, LDAP icin `'ldap'` yaz
+- Rating-service (Python) kendi uvicorn loglarini yazar, bu mekanizmaya dahil degil
+
 ## Onemli Notlar
 
 - Graph cache bellekte tutuluyor, `/api/graph/rebuild` veya `company-data.ts` uzerinden veri yazildiginda otomatik invalidate edilir

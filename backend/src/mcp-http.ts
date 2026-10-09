@@ -3,6 +3,9 @@ import { createMcpExpressApp } from '@modelcontextprotocol/sdk/server/express.js
 import crypto from 'crypto';
 import { createPortalMcpServer, PortalClient } from './portal-mcp.js';
 
+import { createLogger } from './logger.js';
+const logger = createLogger('mcp');
+
 const MCP_PORT = Number(process.env.MCP_PORT || 8060);
 const MCP_PATH = process.env.MCP_PATH || '/mcp';
 const PORTAL_URL = process.env.KAP_PORTAL_URL || 'http://127.0.0.1:8063';
@@ -97,7 +100,7 @@ app.post(MCP_PATH, async (req, res) => {
       void server.close();
     });
   } catch (error) {
-    console.error('MCP request failed:', error);
+    logger.error('MCP istegi basarisiz', { error });
     if (!res.headersSent) {
       res.status(500).json({
         jsonrpc: '2.0',
@@ -129,10 +132,8 @@ app.delete(MCP_PATH, (_req, res) => {
 
 app.listen(MCP_PORT, error => {
   if (error) {
-    console.error('Failed to start KAP Portal MCP HTTP server:', error);
+    logger.error('MCP sunucusu baslatilamadi', { error });
     process.exit(1);
   }
-  console.log(`KAP Portal MCP HTTP server: http://0.0.0.0:${MCP_PORT}${MCP_PATH}`);
-  console.log(`Remote KAP Portal API: ${portal.baseUrl}`);
-  console.log(`Allowed MCP hosts: ${MCP_ALLOWED_HOSTS.join(', ')}`);
+  logger.info('MCP sunucusu basladi', { port: MCP_PORT, path: MCP_PATH, portalApi: portal.baseUrl, allowedHosts: MCP_ALLOWED_HOSTS });
 });

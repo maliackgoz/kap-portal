@@ -48,6 +48,19 @@ db.exec(`
     company_id INTEGER PRIMARY KEY REFERENCES companies(id) ON DELETE CASCADE,
     created_at TEXT DEFAULT (datetime('now'))
   );
+
+  CREATE TABLE IF NOT EXISTS audit_log (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    created_at TEXT DEFAULT (datetime('now')),
+    username TEXT,
+    action TEXT NOT NULL,
+    outcome TEXT NOT NULL,
+    target TEXT,
+    detail TEXT,
+    ip TEXT,
+    request_id TEXT
+  );
+  CREATE INDEX IF NOT EXISTS idx_audit_log_created ON audit_log(created_at);
 `);
 
 // Add ticker column if not exists

@@ -2,6 +2,10 @@ import { Router, Request, Response, NextFunction } from 'express';
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 import { config } from './config.js';
+import { auditFromRequest } from './audit.js';
+import { createLogger } from './logger.js';
+
+const log = createLogger('auth');
 
 const router = Router();
 
@@ -57,6 +61,8 @@ router.post('/login', (req: Request, res: Response) => {
   if (attempt && attempt.failures >= config.loginMaxAttempts) {
     const retryAfter = Math.max(1, Math.ceil((attempt.resetAt - Date.now()) / 1000));
     res.setHeader('Retry-After', String(retryAfter));
+    log.warn('giris engellendi (cok fazla deneme)', { username, ip: req.ip });
+    auditFromRequest(req, { action: 'auth.login_blocked', outcome: 'denied', username, detail: { retryAfter } });
     res.status(429).json({ error: 'Çok fazla başarısız deneme. Lütfen daha sonra tekrar deneyin.' });
     return;
   }
@@ -67,6 +73,8 @@ router.post('/login', (req: Request, res: Response) => {
       failures: (attempt?.failures || 0) + 1,
       resetAt: attempt?.resetAt || Date.now() + config.loginWindowMs,
     });
+    log.warn('basarisiz giris', { username, ip: req.ip, failures: (attempt?.failures || 0) + 1 });
+    auditFromRequest(req, { action: 'auth.login_failed', outcome: 'failure', username, detail: { provider: 'local' } });
     res.status(401).json({ error: 'Geçersiz kullanıcı adı veya şifre' });
     return;
   }
@@ -77,6 +85,8 @@ router.post('/login', (req: Request, res: Response) => {
     config.jwtSecret,
     { expiresIn: config.jwtExpiresIn as jwt.SignOptions['expiresIn'], issuer: 'finansal-portal' },
   );
+  log.info('giris basarili', { username, role, ip: req.ip });
+  auditFromRequest(req, { action: 'auth.login', outcome: 'success', username, detail: { role, provider: 'local' } });
   res.json({ token, username, role });
 });
 
@@ -95,6 +105,7 @@ export function authMiddleware(req: Request, res: Response, next: NextFunction) 
   }
   // Viewer salt okunur: veri degistiren/tetikleyen hicbir istegi yapamaz
   if (!isAdmin(req) && req.method !== 'GET') {
+    log.warn('viewer yazma denemesi', { username: (req as any).user?.username, method: req.method, path: req.originalUrl.split('?')[0] });
     res.status(403).json({ error: 'Bu işlem için yetkiniz yok' });
     return;
   }

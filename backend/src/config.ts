@@ -39,5 +39,6 @@ export const config = Object.freeze({
     process.env.PORTAL_ALLOWED_ORIGINS,
     production ? [] : ['http://localhost:5173', 'http://127.0.0.1:5173'],
   ),
+  auditRetentionDays: parsePositiveInt(process.env.AUDIT_RETENTION_DAYS, 180),
   trustProxy: process.env.TRUST_PROXY?.trim() || '',
 });

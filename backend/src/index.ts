@@ -9,12 +9,17 @@ import ratingRouter from './routes/rating.js';
 import membersRouter from './routes/members.js';
 import { config } from './config.js';
 import { cors, securityHeaders } from './security.js';
+import auditRouter from './routes/audit.js';
+import { pruneAudit } from './audit.js';
+import { requestLog } from './request-log.js';
+import { logger } from './logger.js';
 
 const app = express();
 const startedAt = new Date().toISOString();
 
 app.disable('x-powered-by');
 if (config.trustProxy) app.set('trust proxy', config.trustProxy);
+app.use(requestLog);
 app.use(securityHeaders);
 app.use(cors);
 app.use(express.json({ limit: '1mb', strict: true }));
@@ -75,6 +80,7 @@ app.use('/api/companies', authMiddleware, companiesRouter);
 app.use('/api/members', authMiddleware, membersRouter);
 app.use('/api/graph', authMiddleware, graphRouter);
 app.use('/api/rating', authMiddleware, ratingRouter);
+app.use('/api/audit', authMiddleware, adminOnly, auditRouter);
 
 // Serve frontend static files in production
 import path from 'path';
@@ -105,7 +111,7 @@ app.use((
     return;
   }
 
-  console.error('Beklenmeyen API hatasi:', error);
+  logger.error('Beklenmeyen API hatasi', { requestId: (_req as any).id, path: _req.originalUrl.split('?')[0], error });
   if (!res.headersSent) {
     res.status(500).json({ error: 'Beklenmeyen bir sunucu hatası oluştu' });
   }
@@ -115,20 +121,21 @@ async function start() {
   // Auto-seed if companies table is empty
   let count = (db.prepare('SELECT COUNT(*) as c FROM companies').get() as any).c;
   if (count === 0) {
-    console.log('Veritabani bos, seed yapiliyor...');
+    logger.info('Veritabani bos, seed yapiliyor');
     const { runSeed } = await import('./seed.js');
     runSeed();
     count = (db.prepare('SELECT COUNT(*) as c FROM companies').get() as any).c;
-    console.log('Seed tamamlandı');
+    logger.info('Seed tamamlandi');
   }
 
+  pruneAudit(config.auditRetentionDays);
+
   app.listen(config.port, '0.0.0.0', () => {
-    console.log(`\nKAP Portal: http://localhost:${config.port}`);
-    console.log(`Şirket sayısı: ${count}`);
+    logger.info('KAP Portal basladi', { port: config.port, version: config.appVersion, companies: count });
   });
 }
 
 start().catch(error => {
-  console.error('KAP Portal başlatılamadı:', error);
+  logger.error('KAP Portal baslatilamadi', { error });
   process.exit(1);
 });

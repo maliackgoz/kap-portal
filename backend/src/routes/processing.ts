@@ -1,6 +1,9 @@
 import { Router } from 'express';
 import { startProcessing, stopProcessing, getState, addSSEClient, type ProcessingScope } from '../services/processor.js';
 
+import { createLogger } from '../logger.js';
+const logger = createLogger('processing');
+
 const router = Router();
 
 router.post('/start', async (req, res) => {
@@ -17,7 +20,7 @@ router.post('/start', async (req, res) => {
     : [];
 
   // Start async, don't await
-  startProcessing(scope, companyIds).catch(err => console.error('Batch error:', err));
+  startProcessing(scope, companyIds).catch(err => logger.error('Toplu isleme hatasi', { error: err }));
   res.json({ message: 'Başlatıldı', scope, companyIds });
 });
 

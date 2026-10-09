@@ -2,6 +2,9 @@ import { spawn, type ChildProcess } from 'child_process';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+import { createLogger } from './logger.js';
+const log = createLogger('supervisor');
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const portalPort = process.env.PORT || '8063';
@@ -26,7 +29,7 @@ function start(name: string, command: string, args: string[], env: NodeJS.Proces
 
   children.push(child);
   child.on('exit', code => {
-    console.error(`${name} exited with code ${code}`);
+    log.error('alt surec kapandi', { name, code });
     shutdown(code ?? 1);
   });
 }
@@ -42,16 +45,15 @@ process.on('SIGINT', () => shutdown(0));
 process.on('SIGTERM', () => shutdown(0));
 
 if (startRatingService) {
-  console.log(`Starting Rating Service on http://0.0.0.0:${ratingPort}`);
+  log.info('Rating Service baslatiliyor', { port: ratingPort });
   start('rating-service', ratingPython, ['-m', 'uvicorn', 'app.main:app', '--host', '0.0.0.0', '--port', ratingPort], {
     ...process.env,
     RATING_MCP_DATA_DIR: ratingDataDir,
   }, ratingDir);
 }
 
-console.log(`Starting KAP Portal on http://0.0.0.0:${portalPort}`);
-console.log(`Starting KAP Portal MCP on http://0.0.0.0:${mcpPort}${mcpPath}`);
-console.log(`MCP will read portal API from ${portalUrl}`);
+log.info('KAP Portal baslatiliyor', { port: portalPort });
+log.info('KAP Portal MCP baslatiliyor', { port: mcpPort, path: mcpPath, portalUrl });
 
 start('kap-portal', process.execPath, [path.join(__dirname, 'index.js')], {
   ...process.env,

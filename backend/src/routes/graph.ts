@@ -1,6 +1,9 @@
 import { Router } from 'express';
 import { getGraph, getSubgraph, getStats, buildGraph, invalidateCache, findPath, getClusters, getSectors, getRelationshipSummary } from '../services/graph-builder.js';
 
+import { createLogger } from '../logger.js';
+const logger = createLogger('graph');
+
 const router = Router();
 
 // GET /api/graph/data — full graph or subgraph for a specific company
@@ -19,7 +22,7 @@ router.get('/data', (req, res) => {
       res.json(graph);
     }
   } catch (err: any) {
-    console.error('Graph data error:', err);
+    logger.error('Graph data hatasi', { error: err });
     res.status(500).json({ error: err.message });
   }
 });
@@ -40,7 +43,7 @@ router.get('/path', (req, res) => {
       res.json({ path: [], edges: [], message: 'Bağlantı bulunamadı' });
     }
   } catch (err: any) {
-    console.error('Graph path error:', err);
+    logger.error('Graph path hatasi', { error: err });
     res.status(500).json({ error: err.message });
   }
 });
@@ -51,7 +54,7 @@ router.get('/clusters', (_req, res) => {
     const clusters = getClusters();
     res.json(clusters);
   } catch (err: any) {
-    console.error('Graph clusters error:', err);
+    logger.error('Graph clusters hatasi', { error: err });
     res.status(500).json({ error: err.message });
   }
 });
@@ -62,7 +65,7 @@ router.get('/sectors', (_req, res) => {
     const sectors = getSectors();
     res.json(sectors);
   } catch (err: any) {
-    console.error('Graph sectors error:', err);
+    logger.error('Graph sectors hatasi', { error: err });
     res.status(500).json({ error: err.message });
   }
 });
@@ -73,7 +76,7 @@ router.get('/stats', (_req, res) => {
     const stats = getStats();
     res.json(stats);
   } catch (err: any) {
-    console.error('Graph stats error:', err);
+    logger.error('Graph stats hatasi', { error: err });
     res.status(500).json({ error: err.message });
   }
 });
@@ -93,7 +96,7 @@ router.get('/company/:id/summary', (req, res) => {
     }
     res.json(summary);
   } catch (err: any) {
-    console.error('Graph relationship summary error:', err);
+    logger.error('Graph relationship summary hatasi', { error: err });
     res.status(500).json({ error: err.message });
   }
 });
@@ -109,7 +112,7 @@ router.post('/rebuild', (_req, res) => {
       edges: graph.edges.length,
     });
   } catch (err: any) {
-    console.error('Graph rebuild error:', err);
+    logger.error('Graph rebuild hatasi', { error: err });
     res.status(500).json({ error: err.message });
   }
 });
