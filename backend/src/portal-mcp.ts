@@ -806,9 +806,9 @@ export function createPortalMcpServer(client: PortalClient) {
     'kap_start_kap_processing',
     {
       title: 'Start KAP Processing Batch',
-      description: 'Start portal KAP processing for pending/error companies, all companies, or the user member list. Requires confirm=true.',
+      description: 'Start portal KAP processing for pending (never fetched) companies, error (failed) companies, all companies, or the user member list. Requires confirm=true.',
       inputSchema: {
-        scope: z.enum(['pending', 'all', 'members']).default('pending'),
+        scope: z.enum(['pending', 'error', 'all', 'members']).default('pending'),
         companyIds: z.array(z.number().int().positive()).optional().describe('Optional explicit company IDs. Used mainly with scope=members.'),
         confirm: z.boolean().default(false),
       },

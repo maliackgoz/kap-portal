@@ -37,7 +37,7 @@ const state: ProcessingState = {
   lastEventAt: null,
 };
 
-export type ProcessingScope = 'pending' | 'all' | 'members';
+export type ProcessingScope = 'pending' | 'error' | 'all' | 'members';
 
 type ProcessingCompany = { id: number; name: string; slug: string; oid: string };
 
@@ -145,13 +145,15 @@ function cleanIds(ids: unknown) {
 function processingAction(scope: ProcessingScope) {
   if (scope === 'all') return 'refresh_all_kap';
   if (scope === 'members') return 'refresh_member_kap';
+  if (scope === 'error') return 'retry_errors';
   return 'start_batch';
 }
 
 function processingLabel(scope: ProcessingScope) {
   if (scope === 'all') return 'tüm şirket';
   if (scope === 'members') return 'üye şirket';
-  return 'bekleyen/hatalı şirket';
+  if (scope === 'error') return 'hatalı şirket';
+  return 'bekleyen şirket';
 }
 
 function selectProcessingCompanies(scope: ProcessingScope, companyIds?: number[]): ProcessingCompany[] {
@@ -175,8 +177,10 @@ function selectProcessingCompanies(scope: ProcessingScope, companyIds?: number[]
     ).all(...ids) as ProcessingCompany[];
   }
 
+  // 'no_data' (KAP'ta Genel Bilgiler sekmesi yok) kasitli olarak ikisinde de yok: tekrar denemek bir sey degistirmez
+  const statuses = scope === 'error' ? "'error'" : "'pending', 'processing'";
   return db.prepare(
-    `SELECT id, name, slug, oid FROM companies WHERE status IN ('pending', 'error', 'processing', 'no_data') ORDER BY id`,
+    `SELECT id, name, slug, oid FROM companies WHERE status IN (${statuses}) ORDER BY id`,
   ).all() as ProcessingCompany[];
 }
 

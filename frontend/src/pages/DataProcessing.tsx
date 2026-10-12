@@ -19,7 +19,7 @@ interface LogItem {
   time: string;
 }
 
-type ProcessingScope = 'pending' | 'all' | 'members';
+type ProcessingScope = 'pending' | 'error' | 'all' | 'members';
 type CompanyStatusFilter = 'all' | 'not_done' | 'problem' | 'pending' | 'processing' | 'done' | 'error' | 'no_data';
 
 type KapLogDetail = {
@@ -168,7 +168,7 @@ export default function DataProcessing() {
       case 'state':
         setRunning(data.running === true);
         setProcessingMessage(stringValue(data.message));
-        if (data.scope === 'all' || data.scope === 'pending' || data.scope === 'members') setActiveScope(data.scope);
+        if (data.scope === 'all' || data.scope === 'pending' || data.scope === 'error' || data.scope === 'members') setActiveScope(data.scope);
         if (data.running === true) {
           const current = numberValue(data.current);
           const total = numberValue(data.total);
@@ -184,7 +184,7 @@ export default function DataProcessing() {
         setRunning(true);
         setProcessingError(null);
         setProcessingMessage('KAP veri çekimi başlatıldı');
-        if (data.scope === 'all' || data.scope === 'pending' || data.scope === 'members') setActiveScope(data.scope);
+        if (data.scope === 'all' || data.scope === 'pending' || data.scope === 'error' || data.scope === 'members') setActiveScope(data.scope);
         setSummary(null);
         setLogs([]);
         setProgress({ current: 0, total: numberValue(data.total), percent: 0, companyName: '' });
@@ -278,7 +278,7 @@ export default function DataProcessing() {
         ? companies.length
         : scope === 'members'
           ? memberIds.length
-          : companies.filter(company => ['pending', 'error', 'processing', 'no_data'].includes(company.status)).length;
+          : companies.filter(company => (scope === 'error' ? ['error'] : ['pending', 'processing']).includes(company.status)).length;
       if (targetCount > 25 && !window.confirm(
         `${targetCount.toLocaleString('tr-TR')} şirketin KAP verisi yenilenecek. İşlem uzun sürebilir. Devam edilsin mi?`,
       )) {
@@ -339,7 +339,11 @@ export default function DataProcessing() {
     ? 'Tüm KAP verileri yenileniyor'
     : activeScope === 'members'
       ? 'Üye şirketlerin KAP verileri yenileniyor'
-      : 'Eksik ve hatalı kayıtlar işleniyor';
+      : activeScope === 'error'
+        ? 'Hatalı kayıtlar yeniden deneniyor'
+        : 'Eksik (bekleyen) kayıtlar işleniyor';
+  const pendingCount = companies.filter(company => company.status === 'pending' || company.status === 'processing').length;
+  const errorCompanyCount = companies.filter(company => company.status === 'error').length;
   const memberIdSet = useMemo(() => new Set(memberIds), [memberIds]);
   const filteredCompanies = useMemo(() => {
     const query = normalizeSearch(companyQuery);
@@ -404,7 +408,16 @@ export default function DataProcessing() {
                 background: 'var(--accent)', color: '#fff', border: 'none', borderRadius: 8,
                 fontSize: 14, fontWeight: 700, cursor: 'pointer', fontFamily: 'var(--font-sans)',
               }}>
-                <Play size={16} /> Eksik ve Hatalı Kayıtları İşle
+                <Play size={16} /> Eksik Kayıtları İşle ({pendingCount})
+              </button>
+              <button onClick={() => void handleStart('error')} disabled={errorCompanyCount === 0} style={{
+                display: 'flex', alignItems: 'center', gap: 8, padding: '10px 24px',
+                background: errorCompanyCount ? 'var(--red-bg)' : 'var(--bg-surface-2)',
+                color: errorCompanyCount ? 'var(--red)' : 'var(--text-muted)',
+                border: '1px solid var(--border)', borderRadius: 8,
+                fontSize: 14, fontWeight: 800, cursor: errorCompanyCount ? 'pointer' : 'not-allowed', fontFamily: 'var(--font-sans)',
+              }}>
+                <AlertCircle size={16} /> Hatalı Kayıtları İşle ({errorCompanyCount})
               </button>
               <button onClick={() => void handleStart('all')} style={{
                 display: 'flex', alignItems: 'center', gap: 8, padding: '10px 24px',

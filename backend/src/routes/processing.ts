@@ -14,7 +14,7 @@ router.post('/start', async (req, res) => {
   }
 
   const requestedScope = req.body?.scope;
-  const scope: ProcessingScope = requestedScope === 'all' || requestedScope === 'members' ? requestedScope : 'pending';
+  const scope: ProcessingScope = requestedScope === 'all' || requestedScope === 'members' || requestedScope === 'error' ? requestedScope : 'pending';
   const companyIds: number[] = Array.isArray(req.body?.companyIds)
     ? Array.from(new Set((req.body.companyIds as unknown[]).map(Number).filter(id => Number.isFinite(id) && id > 0)))
     : [];

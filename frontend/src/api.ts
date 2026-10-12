@@ -278,8 +278,8 @@ export const api = {
   addMember: (id: number) => request<{ members: Company[] }>(`/members/${id}`, { method: 'POST' }),
   removeMember: (id: number) => request<{ members: Company[] }>(`/members/${id}`, { method: 'DELETE' }),
 
-  startProcessing: (scope: 'pending' | 'all' | 'members' = 'pending', companyIds?: number[]) =>
-    request<{ message: string; scope: 'pending' | 'all' | 'members'; companyIds?: number[] }>('/processing/start', {
+  startProcessing: (scope: 'pending' | 'error' | 'all' | 'members' = 'pending', companyIds?: number[]) =>
+    request<{ message: string; scope: 'pending' | 'error' | 'all' | 'members'; companyIds?: number[] }>('/processing/start', {
       method: 'POST',
       body: JSON.stringify({ scope, companyIds }),
     }),
