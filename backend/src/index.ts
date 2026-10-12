@@ -31,7 +31,7 @@ app.use('/api', (_req, res, next) => {
 app.get('/api/health', (_req, res) => {
   res.json({
     ok: true,
-    service: 'finansal-portal',
+    service: 'spp',
     version: config.appVersion,
     startedAt,
   });
@@ -64,7 +64,7 @@ app.get('/api/processing/events', (req, res) => {
   const token = req.query.token as string;
   if (!token) { res.status(401).json({ error: 'Token gerekli' }); return; }
   try {
-    const payload = jwt.verify(token, config.jwtSecret, { issuer: 'finansal-portal' });
+    const payload = jwt.verify(token, config.jwtSecret, { issuer: 'spp' });
     if (tokenRole(payload) !== 'admin') { res.status(403).json({ error: 'Bu sayfa için yetkiniz yok' }); return; }
   } catch {
     res.status(401).json({ error: 'Geçersiz token' });

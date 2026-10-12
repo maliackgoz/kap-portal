@@ -55,7 +55,7 @@ services:
       - MCP_ALLOWED_HOSTS=${MCP_ALLOWED_HOSTS:-localhost,127.0.0.1,::1,0.0.0.0}
       - MCP_ALLOWED_ORIGINS=${MCP_ALLOWED_ORIGINS:-}
       - MCP_API_KEY=${MCP_API_KEY:-}
-      - KAP_PORTAL_URL=http://127.0.0.1:8063
+      - SPP_PORTAL_URL=http://127.0.0.1:8063
       - KAP_DB_PATH=/app/backend/data/kap.db
       - KAP_CONCURRENCY=1
       - KAP_REQUEST_TIMEOUT_MS=20000

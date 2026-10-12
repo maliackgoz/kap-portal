@@ -8,9 +8,9 @@ const logger = createLogger('mcp');
 
 const MCP_PORT = Number(process.env.MCP_PORT || 8060);
 const MCP_PATH = process.env.MCP_PATH || '/mcp';
-const PORTAL_URL = process.env.KAP_PORTAL_URL || 'http://127.0.0.1:8063';
-const PORTAL_USERNAME = process.env.KAP_PORTAL_USERNAME || process.env.ADMIN_USER || 'admin';
-const PORTAL_PASSWORD = process.env.KAP_PORTAL_PASSWORD || process.env.ADMIN_PASS || '';
+const PORTAL_URL = process.env.SPP_PORTAL_URL || 'http://127.0.0.1:8063';
+const PORTAL_USERNAME = process.env.SPP_PORTAL_USERNAME || process.env.ADMIN_USER || 'admin';
+const PORTAL_PASSWORD = process.env.SPP_PORTAL_PASSWORD || process.env.ADMIN_PASS || '';
 const MCP_API_KEY = process.env.MCP_API_KEY?.trim() || '';
 const DEFAULT_ALLOWED_HOSTS = ['localhost', '127.0.0.1', '::1', '0.0.0.0'];
 const MCP_ALLOWED_HOSTS = (process.env.MCP_ALLOWED_HOSTS || DEFAULT_ALLOWED_HOSTS.join(','))

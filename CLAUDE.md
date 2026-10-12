@@ -4,9 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-> **Adlandirma (2026-10):** Urun adi artik **Sirket Profil Portali (SPP)** — telif nedeniyle "KAP" adi urun adi olarak kullanilmiyor (KAP yalnizca veri kaynagi olarak anilir). Docker image/container `spp-mcp`, MCP sunucu adi `spp-mcp`, MCP tool'lari `spp_` onekli. Bilincli OLARAK DEGISTIRILMEDI: Docker volume adlari (`kapportal_*_data`, mevcut veri kaybolmasin), JWT issuer `finansal-portal`, localStorage anahtarlari `kap_token` vb. (oturumlar acik kalsin), `KAP_*` ortam degiskenleri ve repo/paket adi `kap-portal`. Eski doc metinlerinde gecen "KAP Portal" = bu proje.
+> **Adlandirma (2026-10):** Urun adi artik **Sirket Profil Portali (SPP)** — telif nedeniyle "KAP" adi urun adi olarak kullanilmiyor (KAP yalnizca veri kaynagi olarak anilir). Docker image/container `spp-mcp`, MCP sunucu adi `spp-mcp`, MCP tool'lari `spp_` onekli. Bilincli OLARAK DEGISTIRILMEDI: Docker volume adlari (`kapportal_*_data`, cekilmis veri kaybolmasin), kaynagi anlatan `KAP_*` scraper ayarlari ve GitHub repo adi `kap-portal`. JWT issuer `spp`, localStorage anahtarlari `spp_*`, `SPP_PORTAL_*` env degiskenleri yeni adla degistirildi (o sirada kullanici yoktu). Eski doc metinlerinde gecen "KAP Portal" = bu proje.
 
-**Şirket Profil Portalı (SPP)** (bir donem "Şirket Profil Portalı" adini tasidi; JWT issuer ve health `service` alaninda hala `finansal-portal` gecer, oturumlar bozulmasin diye degistirilmedi) — Turk sermaye piyasasi sirketleri icin kurumsal analiz platformu.
+**Şirket Profil Portalı (SPP)** (eski adlari "KAP Portal" ve "Finansal Portal") — Turk sermaye piyasasi sirketleri icin kurumsal analiz platformu.
 Tek Docker container icinde uc servis birlikte calisir:
 
 1. **Backend** (`backend/`, Express + TypeScript) — KAP verisi, ortaklik grafi, auth, REST API, statik frontend sunumu
@@ -196,7 +196,7 @@ member_companies:   company_id (PK, FK->companies, CASCADE), created_at
 1. **Backend MCP** (`backend/src/mcp.ts` / `mcp-http.ts`, port 8060, path `/mcp`) — portal + graph + rating + haber verisini tek yerden birlestirip Onyx'e sunar. 16 tool: `spp_status`, `spp_search_companies`, `spp_get_member_companies`, `spp_get_company_profile`, `spp_get_rating_sources`, `spp_get_company_ratings`, `spp_get_company_news`, `spp_search_rating_news`, `spp_get_company_financial_overview`, `spp_find_nodes`, `spp_get_company_relationships`, `spp_find_relationship_path`, `spp_top_relationship_clusters`, `spp_rebuild_relationship_graph`, `spp_start_kap_processing`, `spp_refresh_company_from_kap`. Tam liste ve onerilen Onyx sistem promptu: `docs/mcp-server.md`.
 2. **Rating service MCP** (`rating-service/app/mcp_server.py`, port 8787 dev / 8064 prod, path `/mcp`) — sadece rating/haber tool'lari, Onyx'e ayrica direkt de baglanabilir.
 
-Backend MCP, portal API'sine kendi JWT login'ini yaparak erisir (`start-all.ts` icinde `KAP_PORTAL_USERNAME`/`KAP_PORTAL_PASSWORD` env, varsayilan olarak `ADMIN_USER`/`ADMIN_PASS`'i kullanir).
+Backend MCP, portal API'sine kendi JWT login'ini yaparak erisir (`start-all.ts` icinde `SPP_PORTAL_USERNAME`/`SPP_PORTAL_PASSWORD` env, varsayilan olarak `ADMIN_USER`/`ADMIN_PASS`'i kullanir).
 
 ## Loglama ve Denetim
 - `backend/src/logger.ts`: bagimliliksiz yapisal logger (`createLogger('bilesen')`). `LOG_LEVEL` (info), `LOG_FORMAT` (prod'da json, dev'de text). stdout/stderr'e yazar, rotasyonu Docker json-file yapar. Yeni kodda `console.*` KULLANMA (stdio MCP olan `mcp.ts` haric — orada stdout protokol kanali)

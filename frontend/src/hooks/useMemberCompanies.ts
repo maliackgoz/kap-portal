@@ -3,7 +3,7 @@ import { api, type Company } from '../api';
 
 export type MemberCompany = Pick<Company, 'id' | 'name' | 'status'>;
 
-const STORAGE_KEY = 'kap_member_company_ids';
+const STORAGE_KEY = 'spp_member_company_ids';
 const CHANGE_EVENT = 'kap-member-companies-changed';
 
 function storage() {

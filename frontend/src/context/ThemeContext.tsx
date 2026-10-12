@@ -5,7 +5,7 @@ import { ThemeContext } from './theme-context';
 export function ThemeProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', 'light');
-    localStorage.setItem('kap_theme', 'light');
+    localStorage.setItem('spp_theme', 'light');
   }, []);
 
   return (
