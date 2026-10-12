@@ -1,5 +1,5 @@
 {
-  "name": "spp",
+  "name": "kap-portal",
   "private": true,
   "workspaces": [
     "backend",

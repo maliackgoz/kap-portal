@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-> **Adlandirma (2026-10):** Urun adi artik **Sirket Profil Portali (SPP)** — telif nedeniyle "KAP" adi urun adi olarak kullanilmiyor (KAP yalnizca veri kaynagi olarak anilir). Docker image/container `spp-mcp`, MCP sunucu adi `spp-mcp`, MCP tool'lari `spp_` onekli. Bilincli OLARAK DEGISTIRILMEDI: Docker volume adlari (`kapportal_*_data`, cekilmis veri kaybolmasin), kaynagi anlatan `KAP_*` scraper ayarlari ve GitHub repo adi `kap-portal`. JWT issuer `spp`, localStorage anahtarlari `spp_*`, `SPP_PORTAL_*` env degiskenleri yeni adla degistirildi (o sirada kullanici yoktu). Eski doc metinlerinde gecen "KAP Portal" = bu proje.
+> **Adlandirma (2026-10):** Urun adi artik **Sirket Profil Portali (SPP)** — telif nedeniyle "KAP" adi urun adi olarak kullanilmiyor (KAP yalnizca veri kaynagi). SADECE gorunen metinler (arayuz basliklari, log/MCP aciklamalari, README, MCP sunucu adi `spp-mcp`) degisti; teknik adlar bilerek ESKI KALDI ki mevcut kurulum/Onyx ayari bozulmasin: Docker image/container `kapportal-mcp`, `KAP_PORTAL_IMAGE`, MCP tool onekleri `kap_`, `KAP_PORTAL_*` env, JWT issuer `finansal-portal`, localStorage `kap_*`, volume adlari, repo/paket adi `kap-portal`. Eski doc metinlerinde gecen "KAP Portal" = bu proje.
 
 **Şirket Profil Portalı (SPP)** (eski adlari "KAP Portal" ve "Finansal Portal") — Turk sermaye piyasasi sirketleri icin kurumsal analiz platformu.
 Tek Docker container icinde uc servis birlikte calisir:
@@ -110,7 +110,7 @@ docker compose up -d --build
 ```
 `backend/src/start-all.ts` production'da ucunu de tek process manager olarak baslatiyor (portal, mcp-http, rating uvicorn — child process olarak spawn).
 
-**Baska bir makinede, repo'yu klonlamadan, Docker Hub'a push edilmis image'i cekerek calistirmak icin** `docker-compose.deploy.yml` var — `docker-compose.yml`'den farki `build:`/`pull_policy: build` yok, bu yuzden her zaman image'i CEKER, yeniden build ETMEZ. Volume'lar (`kapportal_backend_data`, `kapportal_rating_data`) ayni isimde ama o makinede ilk kez calistigi icin bombos baslar — KAP verisi/rating/haber kayitlari bilincli olarak tasinmiyor (o makinenin kendi ag/proxy kosullarinda gercek bir ilk-calistirma testi icin). Kullanim: `cp .env.example .env && docker compose -f docker-compose.deploy.yml up -d` (`SPP_IMAGE` .env'de ayarlanmazsa varsayilan `maliackgoz/spp-mcp:latest`).
+**Baska bir makinede, repo'yu klonlamadan, Docker Hub'a push edilmis image'i cekerek calistirmak icin** `docker-compose.deploy.yml` var — `docker-compose.yml`'den farki `build:`/`pull_policy: build` yok, bu yuzden her zaman image'i CEKER, yeniden build ETMEZ. Volume'lar (`kapportal_backend_data`, `kapportal_rating_data`) ayni isimde ama o makinede ilk kez calistigi icin bombos baslar — KAP verisi/rating/haber kayitlari bilincli olarak tasinmiyor (o makinenin kendi ag/proxy kosullarinda gercek bir ilk-calistirma testi icin). Kullanim: `cp .env.example .env && docker compose -f docker-compose.deploy.yml up -d` (`KAP_PORTAL_IMAGE` .env'de ayarlanmazsa varsayilan `maliackgoz/kapportal-mcp:latest`).
 
 ### Login
 - Dev: `admin` / `kap2024` (config.ts fallback, sadece `NODE_ENV=production` degilken)
@@ -131,7 +131,7 @@ backend/src/
   start-all.ts      — production'da portal + mcp-http + rating-service'i tek process olarak spawn eder
   mcp.ts            — MCP sunucusu (stdio transport, ~577 satir)
   mcp-http.ts        — MCP sunucusu (HTTP/Streamable transport, Onyx icin)
-  portal-mcp.ts      — MCP tool tanimlari (spp_search_companies, spp_get_company_ratings, spp_find_relationship_path, vb. — tam liste docs/mcp-server.md)
+  portal-mcp.ts      — MCP tool tanimlari (kap_search_companies, kap_get_company_ratings, kap_find_relationship_path, vb. — tam liste docs/mcp-server.md)
   services/
     scraper.ts       — Sure asimi/tekrar denemeli KAP fetch ve RSC parser
     company-directory.ts — kap.org.tr'nin canli sirket arama widget'inden {name,slug,oid} listesi ceker (refresh-companies.ts kullanir)
@@ -193,10 +193,10 @@ member_companies:   company_id (PK, FK->companies, CASCADE), created_at
 
 ## MCP Sunuculari (iki ayri sunucu var, karistirma)
 
-1. **Backend MCP** (`backend/src/mcp.ts` / `mcp-http.ts`, port 8060, path `/mcp`) — portal + graph + rating + haber verisini tek yerden birlestirip Onyx'e sunar. 16 tool: `spp_status`, `spp_search_companies`, `spp_get_member_companies`, `spp_get_company_profile`, `spp_get_rating_sources`, `spp_get_company_ratings`, `spp_get_company_news`, `spp_search_rating_news`, `spp_get_company_financial_overview`, `spp_find_nodes`, `spp_get_company_relationships`, `spp_find_relationship_path`, `spp_top_relationship_clusters`, `spp_rebuild_relationship_graph`, `spp_start_kap_processing`, `spp_refresh_company_from_kap`. Tam liste ve onerilen Onyx sistem promptu: `docs/mcp-server.md`.
+1. **Backend MCP** (`backend/src/mcp.ts` / `mcp-http.ts`, port 8060, path `/mcp`) — portal + graph + rating + haber verisini tek yerden birlestirip Onyx'e sunar. 16 tool: `kap_status`, `kap_search_companies`, `kap_get_member_companies`, `kap_get_company_profile`, `kap_get_rating_sources`, `kap_get_company_ratings`, `kap_get_company_news`, `kap_search_rating_news`, `kap_get_company_financial_overview`, `kap_find_nodes`, `kap_get_company_relationships`, `kap_find_relationship_path`, `kap_top_relationship_clusters`, `kap_rebuild_relationship_graph`, `kap_start_kap_processing`, `kap_refresh_company_from_kap`. Tam liste ve onerilen Onyx sistem promptu: `docs/mcp-server.md`.
 2. **Rating service MCP** (`rating-service/app/mcp_server.py`, port 8787 dev / 8064 prod, path `/mcp`) — sadece rating/haber tool'lari, Onyx'e ayrica direkt de baglanabilir.
 
-Backend MCP, portal API'sine kendi JWT login'ini yaparak erisir (`start-all.ts` icinde `SPP_PORTAL_USERNAME`/`SPP_PORTAL_PASSWORD` env, varsayilan olarak `ADMIN_USER`/`ADMIN_PASS`'i kullanir).
+Backend MCP, portal API'sine kendi JWT login'ini yaparak erisir (`start-all.ts` icinde `KAP_PORTAL_USERNAME`/`KAP_PORTAL_PASSWORD` env, varsayilan olarak `ADMIN_USER`/`ADMIN_PASS`'i kullanir).
 
 ## Loglama ve Denetim
 - `backend/src/logger.ts`: bagimliliksiz yapisal logger (`createLogger('bilesen')`). `LOG_LEVEL` (info), `LOG_FORMAT` (prod'da json, dev'de text). stdout/stderr'e yazar, rotasyonu Docker json-file yapar. Yeni kodda `console.*` KULLANMA (stdio MCP olan `mcp.ts` haric — orada stdout protokol kanali)

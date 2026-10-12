@@ -178,15 +178,15 @@ export interface RatingResponse<T> {
 }
 
 function getToken() {
-  return localStorage.getItem('spp_token');
+  return localStorage.getItem('kap_token');
 }
 
 export function setToken(token: string) {
-  localStorage.setItem('spp_token', token);
+  localStorage.setItem('kap_token', token);
 }
 
 export function clearToken() {
-  localStorage.removeItem('spp_token');
+  localStorage.removeItem('kap_token');
 }
 
 export function isAuthenticated() {

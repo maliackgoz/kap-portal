@@ -10,7 +10,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const portalPort = process.env.PORT || '8063';
 const mcpPort = process.env.MCP_PORT || '8060';
 const mcpPath = process.env.MCP_PATH || '/mcp';
-const portalUrl = process.env.SPP_PORTAL_URL || `http://127.0.0.1:${portalPort}`;
+const portalUrl = process.env.KAP_PORTAL_URL || `http://127.0.0.1:${portalPort}`;
 const ratingPort = process.env.RATING_SERVICE_PORT || '8064';
 const ratingUrl = process.env.RATING_SERVICE_URL || `http://127.0.0.1:${ratingPort}`;
 const ratingDir = process.env.RATING_SERVICE_DIR || path.join(__dirname, '..', '..', 'rating-service');
@@ -55,7 +55,7 @@ if (startRatingService) {
 log.info('SPP baslatiliyor', { port: portalPort });
 log.info('SPP MCP baslatiliyor', { port: mcpPort, path: mcpPath, portalUrl });
 
-start('spp-portal', process.execPath, [path.join(__dirname, 'index.js')], {
+start('kap-portal', process.execPath, [path.join(__dirname, 'index.js')], {
   ...process.env,
   PORT: portalPort,
   RATING_SERVICE_URL: ratingUrl,
@@ -65,7 +65,7 @@ start('kap-mcp', process.execPath, [path.join(__dirname, 'mcp-http.js')], {
   ...process.env,
   MCP_PORT: mcpPort,
   MCP_PATH: mcpPath,
-  SPP_PORTAL_URL: portalUrl,
-  SPP_PORTAL_USERNAME: process.env.SPP_PORTAL_USERNAME || process.env.ADMIN_USER || 'admin',
-  SPP_PORTAL_PASSWORD: process.env.SPP_PORTAL_PASSWORD || process.env.ADMIN_PASS || '',
+  KAP_PORTAL_URL: portalUrl,
+  KAP_PORTAL_USERNAME: process.env.KAP_PORTAL_USERNAME || process.env.ADMIN_USER || 'admin',
+  KAP_PORTAL_PASSWORD: process.env.KAP_PORTAL_PASSWORD || process.env.ADMIN_PASS || '',
 });

@@ -1,12 +1,12 @@
 services:
-  spp-mcp:
-    image: ${SPP_IMAGE:-spp-mcp:local}
+  kapportal-mcp:
+    image: ${KAP_PORTAL_IMAGE:-kapportal-mcp:local}
     pull_policy: build
     build:
       context: .
       args:
         APP_VERSION: ${APP_VERSION:-local}
-    container_name: spp-mcp
+    container_name: kapportal-mcp
     restart: unless-stopped
     init: true
     dns:
@@ -38,7 +38,7 @@ services:
       - MCP_ALLOWED_HOSTS=${MCP_ALLOWED_HOSTS:-localhost,127.0.0.1,::1,0.0.0.0}
       - MCP_ALLOWED_ORIGINS=${MCP_ALLOWED_ORIGINS:-}
       - MCP_API_KEY=${MCP_API_KEY:-}
-      - SPP_PORTAL_URL=http://127.0.0.1:8063
+      - KAP_PORTAL_URL=http://127.0.0.1:8063
       - KAP_DB_PATH=/app/backend/data/kap.db
       - KAP_CONCURRENCY=1
       - KAP_REQUEST_TIMEOUT_MS=20000

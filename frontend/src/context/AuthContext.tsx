@@ -5,7 +5,7 @@ import { AuthContext } from './auth-context';
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [authenticated, setAuthenticated] = useState(isAuthenticated());
-  const [username, setUsername] = useState(localStorage.getItem('spp_user') || '');
+  const [username, setUsername] = useState(localStorage.getItem('kap_user') || '');
   const [error, setError] = useState('');
   const [isAdmin, setIsAdmin] = useState(() => getRole() === 'admin');
 
@@ -14,7 +14,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       const data = await api.login(user, pass);
       setToken(data.token);
-      localStorage.setItem('spp_user', data.username);
+      localStorage.setItem('kap_user', data.username);
       setUsername(data.username);
       setIsAdmin(getRole() === 'admin');
       setAuthenticated(true);
@@ -27,7 +27,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const logout = () => {
     clearToken();
-    localStorage.removeItem('spp_user');
+    localStorage.removeItem('kap_user');
     setAuthenticated(false);
     setUsername('');
     setIsAdmin(false);

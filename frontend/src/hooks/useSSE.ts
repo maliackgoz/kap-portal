@@ -12,7 +12,7 @@ export function useSSE(url: string, onEvent: (event: string, data: unknown) => v
   const connect = useCallback(() => {
     if (esRef.current) esRef.current.close();
 
-    const token = localStorage.getItem('spp_token');
+    const token = localStorage.getItem('kap_token');
     const es = new EventSource(`${url}?token=${token}`);
     esRef.current = es;
 

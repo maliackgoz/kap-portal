@@ -83,7 +83,7 @@ router.post('/login', (req: Request, res: Response) => {
   const token = jwt.sign(
     { username, role },
     config.jwtSecret,
-    { expiresIn: config.jwtExpiresIn as jwt.SignOptions['expiresIn'], issuer: 'spp' },
+    { expiresIn: config.jwtExpiresIn as jwt.SignOptions['expiresIn'], issuer: 'finansal-portal' },
   );
   log.info('giris basarili', { username, role, ip: req.ip });
   auditFromRequest(req, { action: 'auth.login', outcome: 'success', username, detail: { role, provider: 'local' } });
@@ -97,7 +97,7 @@ export function authMiddleware(req: Request, res: Response, next: NextFunction) 
     return;
   }
   try {
-    const payload = jwt.verify(header.slice(7), config.jwtSecret, { issuer: 'spp' });
+    const payload = jwt.verify(header.slice(7), config.jwtSecret, { issuer: 'finansal-portal' });
     (req as any).user = payload;
   } catch {
     res.status(401).json({ error: 'Geçersiz token' });

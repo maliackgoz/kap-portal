@@ -26,7 +26,7 @@ export const config = Object.freeze({
   production,
   port: parsePositiveInt(process.env.PORT, 3001),
   appVersion: process.env.APP_VERSION?.trim() || 'dev',
-  jwtSecret: secret('JWT_SECRET', 'spp-development-secret'),
+  jwtSecret: secret('JWT_SECRET', 'kap-portal-development-secret'),
   jwtExpiresIn: process.env.JWT_EXPIRES_IN?.trim() || '8h',
   adminUsername: process.env.ADMIN_USER?.trim() || 'admin',
   adminPassword: secret('ADMIN_PASS', 'kap2024'),
