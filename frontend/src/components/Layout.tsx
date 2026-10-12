@@ -38,7 +38,7 @@ export default function Layout() {
         <div className="app-header__inner">
           <NavLink to={isAdmin ? '/' : '/company'} className="app-brand">
             <span className="app-brand__mark">KP</span>
-            KAP Portal
+            Şirket Profil Portalı
           </NavLink>
 
           <nav className="app-nav">

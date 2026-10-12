@@ -232,16 +232,16 @@ function hydratePath(pathIds: string[], edges: GraphEdge[]) {
 
 export function createKapMcpServer() {
   const server = new McpServer({
-    name: 'kap-portal-mcp',
+    name: 'spp-mcp',
     version: '0.1.0',
   });
 
   server.registerResource(
-    'kap_system_overview',
+    'spp_system_overview',
     'kap://system/overview',
     {
-      title: 'KAP Portal System Overview',
-      description: 'Backend schema, graph semantics, and MCP tool map for the KAP Portal project.',
+      title: 'SPP System Overview',
+      description: 'Backend schema, graph semantics, and MCP tool map for the Şirket Profil Portalı (SPP) project.',
       mimeType: 'text/markdown',
     },
     uri => ({
@@ -250,9 +250,9 @@ export function createKapMcpServer() {
           uri: uri.href,
           mimeType: 'text/markdown',
           text: [
-            '# KAP Portal MCP Overview',
+            '# SPP MCP Overview',
             '',
-            'KAP Portal reads company profile/shareholding data from kap.org.tr into SQLite.',
+            'SPP reads company profile/shareholding data from kap.org.tr into SQLite.',
             '',
             'Tables:',
             '- companies: KAP company registry, ticker, scrape status, timestamps.',
@@ -264,7 +264,7 @@ export function createKapMcpServer() {
             '- OWNS_INDIRECTLY from indirect shareholder rows to the company.',
             '- HAS_SUBSIDIARY from company to subsidiary rows.',
             '',
-            'Useful tools: kap_search_companies, kap_get_company_profile, kap_get_company_relationships, kap_find_relationship_path.',
+            'Useful tools: spp_search_companies, spp_get_company_profile, spp_get_company_relationships, spp_find_relationship_path.',
           ].join('\n'),
         },
       ],
@@ -272,9 +272,9 @@ export function createKapMcpServer() {
   );
 
   server.registerTool(
-  'kap_status',
+  'spp_status',
   {
-    title: 'KAP Portal Status',
+    title: 'SPP Status',
     description: 'Return database processing counts and relationship graph counts.',
     annotations: { readOnlyHint: true, openWorldHint: false },
   },
@@ -301,7 +301,7 @@ export function createKapMcpServer() {
   );
 
   server.registerTool(
-  'kap_search_companies',
+  'spp_search_companies',
   {
     title: 'Search KAP Companies',
     description: 'Search KAP companies by name, slug, ticker, OID, status, or page through the registry.',
@@ -350,7 +350,7 @@ export function createKapMcpServer() {
   );
 
   server.registerTool(
-  'kap_get_company_profile',
+  'spp_get_company_profile',
   {
     title: 'Get KAP Company Profile',
     description: 'Return one company plus important parsed KAP fields. Use includeRawData or keys for raw item_key values.',
@@ -377,7 +377,7 @@ export function createKapMcpServer() {
   );
 
   server.registerTool(
-  'kap_find_nodes',
+  'spp_find_nodes',
   {
     title: 'Find Graph Nodes',
     description: 'Search company, shareholder, and person nodes in the relationship graph.',
@@ -403,7 +403,7 @@ export function createKapMcpServer() {
   );
 
   server.registerTool(
-  'kap_get_company_relationships',
+  'spp_get_company_relationships',
   {
     title: 'Get Company Relationships',
     description: 'Return a bounded relationship subgraph for a company, including owners, indirect owners, and subsidiaries.',
@@ -441,7 +441,7 @@ export function createKapMcpServer() {
   );
 
   server.registerTool(
-  'kap_find_relationship_path',
+  'spp_find_relationship_path',
   {
     title: 'Find Relationship Path',
     description: 'Find the shortest ownership/subsidiary graph path between two company/node references.',
@@ -466,7 +466,7 @@ export function createKapMcpServer() {
   );
 
   server.registerTool(
-  'kap_top_relationship_clusters',
+  'spp_top_relationship_clusters',
   {
     title: 'Top Relationship Clusters',
     description: 'List the largest connected components in the relationship graph.',
@@ -494,7 +494,7 @@ export function createKapMcpServer() {
   );
 
   server.registerTool(
-  'kap_rebuild_relationship_graph',
+  'spp_rebuild_relationship_graph',
   {
     title: 'Rebuild Relationship Graph',
     description: 'Clear and rebuild the in-memory relationship graph cache from SQLite.',
@@ -512,7 +512,7 @@ export function createKapMcpServer() {
   );
 
   server.registerTool(
-  'kap_refresh_company_from_kap',
+  'spp_refresh_company_from_kap',
   {
     title: 'Refresh Company From KAP',
     description: 'Fetch one company from kap.org.tr and update the local SQLite rows. Requires confirm=true.',
@@ -565,13 +565,13 @@ async function main() {
   const server = createKapMcpServer();
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  console.error('KAP Portal MCP server running on stdio');
+  console.error('SPP MCP server running on stdio');
 }
 
 const isMain = process.argv[1] ? import.meta.url === pathToFileURL(process.argv[1]).href : false;
 if (isMain) {
   main().catch(error => {
-    console.error('KAP Portal MCP server failed:', error);
+    console.error('SPP MCP server failed:', error);
     process.exit(1);
   });
 }

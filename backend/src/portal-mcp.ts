@@ -491,16 +491,16 @@ async function hydratePath(client: PortalClient, pathIds: string[], edges: Graph
 
 export function createPortalMcpServer(client: PortalClient) {
   const server = new McpServer({
-    name: 'kap-portal-remote-mcp',
+    name: 'spp-remote-mcp',
     version: '0.2.0',
   });
 
   server.registerResource(
-    'kap_remote_system_overview',
+    'spp_remote_system_overview',
     'kap://remote/system/overview',
     {
-      title: 'Remote KAP Portal MCP Overview',
-      description: 'MCP tools that read company and relationship graph data from an existing KAP Portal HTTP API.',
+      title: 'Remote SPP MCP Overview',
+      description: 'MCP tools that read company and relationship graph data from an existing SPP HTTP API.',
       mimeType: 'text/markdown',
     },
     uri => ({
@@ -508,22 +508,22 @@ export function createPortalMcpServer(client: PortalClient) {
         uri: uri.href,
         mimeType: 'text/markdown',
         text: [
-          '# Remote KAP Portal MCP',
+          '# Remote SPP MCP',
           '',
           `Portal API: ${client.baseUrl}`,
           '',
           'This MCP server does not start another portal instance. It logs into the existing portal and reads /api/companies and /api/graph endpoints.',
           '',
-          'Use kap_search_companies, kap_get_company_profile, kap_get_company_relationships, and kap_find_relationship_path to answer ownership and company relationship questions.',
+          'Use spp_search_companies, spp_get_company_profile, spp_get_company_relationships, and spp_find_relationship_path to answer ownership and company relationship questions.',
         ].join('\n'),
       }],
     }),
   );
 
   server.registerTool(
-    'kap_status',
+    'spp_status',
     {
-      title: 'KAP Portal Status',
+      title: 'SPP Status',
       description: 'Return remote portal processing counts and relationship graph counts.',
       annotations: { readOnlyHint: true, openWorldHint: false },
     },
@@ -539,7 +539,7 @@ export function createPortalMcpServer(client: PortalClient) {
   );
 
   server.registerTool(
-    'kap_search_companies',
+    'spp_search_companies',
     {
       title: 'Search KAP Companies',
       description: 'Search KAP companies on the remote portal by name, slug, ticker, OID, status, or page.',
@@ -555,7 +555,7 @@ export function createPortalMcpServer(client: PortalClient) {
   );
 
   server.registerTool(
-    'kap_get_member_companies',
+    'spp_get_member_companies',
     {
       title: 'Get Member Companies',
       description: 'Return the portal member company list selected by the user. Use this when the user asks for only their members.',
@@ -565,7 +565,7 @@ export function createPortalMcpServer(client: PortalClient) {
   );
 
   server.registerTool(
-    'kap_get_company_profile',
+    'spp_get_company_profile',
     {
       title: 'Get KAP Company Profile',
       description: 'Return one remote portal company plus important parsed KAP fields.',
@@ -595,10 +595,10 @@ export function createPortalMcpServer(client: PortalClient) {
   );
 
   server.registerTool(
-    'kap_get_rating_sources',
+    'spp_get_rating_sources',
     {
       title: 'Get Rating and News Sources',
-      description: 'Return KAP Portal rating/news source status, record counts, refresh status, and source errors.',
+      description: 'Return SPP rating/news source status, record counts, refresh status, and source errors.',
       inputSchema: {
         type: z.enum(['rating', 'news']).optional(),
       },
@@ -608,7 +608,7 @@ export function createPortalMcpServer(client: PortalClient) {
   );
 
   server.registerTool(
-    'kap_get_company_ratings',
+    'spp_get_company_ratings',
     {
       title: 'Get Company Ratings',
       description: 'Return all credit rating fields for a company, including UVD/long_term_rating, KVD/short_term_rating, outlook, action, sector, dates, age, and report links.',
@@ -624,10 +624,10 @@ export function createPortalMcpServer(client: PortalClient) {
   );
 
   server.registerTool(
-    'kap_get_company_news',
+    'spp_get_company_news',
     {
       title: 'Get Company News',
-      description: 'Return KAP Portal news records for a company, including source, title, date, and URL.',
+      description: 'Return SPP news records for a company, including source, title, date, and URL.',
       inputSchema: {
         company: z.string().min(1),
         source: z.string().optional(),
@@ -640,10 +640,10 @@ export function createPortalMcpServer(client: PortalClient) {
   );
 
   server.registerTool(
-    'kap_search_rating_news',
+    'spp_search_rating_news',
     {
       title: 'Search Rating News',
-      description: 'Search live/configured KAP Portal news sources for rating, credit, debt, risk, company, or market news.',
+      description: 'Search live/configured SPP news sources for rating, credit, debt, risk, company, or market news.',
       inputSchema: {
         query: z.string().min(1),
         sources: z.array(z.string()).optional(),
@@ -655,7 +655,7 @@ export function createPortalMcpServer(client: PortalClient) {
   );
 
   server.registerTool(
-    'kap_get_company_financial_overview',
+    'spp_get_company_financial_overview',
     {
       title: 'Get Company Financial Overview',
       description: 'Return one company overview combining KAP profile fields, all rating fields, recent news, and a small relationship graph summary.',
@@ -672,7 +672,7 @@ export function createPortalMcpServer(client: PortalClient) {
   );
 
   server.registerTool(
-    'kap_find_nodes',
+    'spp_find_nodes',
     {
       title: 'Find Graph Nodes',
       description: 'Search company, shareholder, and person nodes in the remote portal relationship graph.',
@@ -694,7 +694,7 @@ export function createPortalMcpServer(client: PortalClient) {
   );
 
   server.registerTool(
-    'kap_get_company_relationships',
+    'spp_get_company_relationships',
     {
       title: 'Get Company Relationships',
       description: 'Return a bounded remote portal relationship subgraph for a company.',
@@ -733,7 +733,7 @@ export function createPortalMcpServer(client: PortalClient) {
   );
 
   server.registerTool(
-    'kap_find_relationship_path',
+    'spp_find_relationship_path',
     {
       title: 'Find Relationship Path',
       description: 'Find the shortest ownership/subsidiary graph path between two company/node references.',
@@ -760,7 +760,7 @@ export function createPortalMcpServer(client: PortalClient) {
   );
 
   server.registerTool(
-    'kap_top_relationship_clusters',
+    'spp_top_relationship_clusters',
     {
       title: 'Top Relationship Clusters',
       description: 'List the largest connected components in the remote portal relationship graph.',
@@ -790,7 +790,7 @@ export function createPortalMcpServer(client: PortalClient) {
   );
 
   server.registerTool(
-    'kap_rebuild_relationship_graph',
+    'spp_rebuild_relationship_graph',
     {
       title: 'Rebuild Relationship Graph',
       description: 'Ask the remote portal to rebuild its in-memory relationship graph cache.',
@@ -803,7 +803,7 @@ export function createPortalMcpServer(client: PortalClient) {
   );
 
   server.registerTool(
-    'kap_start_kap_processing',
+    'spp_start_kap_processing',
     {
       title: 'Start KAP Processing Batch',
       description: 'Start portal KAP processing for pending (never fetched) companies, error (failed) companies, all companies, or the user member list. Requires confirm=true.',
@@ -834,13 +834,13 @@ export function createPortalMcpServer(client: PortalClient) {
 
       return jsonResult({
         ...result,
-        note: 'İşlem arka planda çalışır. İlerlemeyi kap_status ile izleyin; başarılı KAP yazımlarından sonra ortaklık ağı otomatik güncellenir.',
+        note: 'İşlem arka planda çalışır. İlerlemeyi spp_status ile izleyin; başarılı KAP yazımlarından sonra ortaklık ağı otomatik güncellenir.',
       });
     },
   );
 
   server.registerTool(
-    'kap_refresh_company_from_kap',
+    'spp_refresh_company_from_kap',
     {
       title: 'Refresh Company From KAP',
       description: 'Ask the remote portal to fetch one company from kap.org.tr. Requires confirm=true.',

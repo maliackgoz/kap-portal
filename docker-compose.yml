@@ -1,12 +1,12 @@
 services:
-  kapportal-mcp:
-    image: ${KAP_PORTAL_IMAGE:-kapportal-mcp:local}
+  spp-mcp:
+    image: ${SPP_IMAGE:-spp-mcp:local}
     pull_policy: build
     build:
       context: .
       args:
         APP_VERSION: ${APP_VERSION:-local}
-    container_name: kapportal-mcp
+    container_name: spp-mcp
     restart: unless-stopped
     init: true
     dns:

@@ -17,13 +17,13 @@
 ##   cp .env.example .env   # sadece ADMIN_PASS ve JWT_SECRET doldurman yeterli
 ##   docker compose -f docker-compose.deploy.yml up -d
 ##
-## KAP_PORTAL_IMAGE .env'de ayarlanmazsa varsayılan maliackgoz/kapportal-mcp:latest kullanılır.
+## SPP_IMAGE .env'de ayarlanmazsa varsayılan maliackgoz/spp-mcp:latest kullanılır.
 
 services:
-  kapportal-mcp:
-    image: ${KAP_PORTAL_IMAGE:-maliackgoz/kapportal-mcp:latest}
+  spp-mcp:
+    image: ${SPP_IMAGE:-maliackgoz/spp-mcp:latest}
     pull_policy: always
-    container_name: kapportal-mcp
+    container_name: spp-mcp
     restart: unless-stopped
     init: true
     dns:

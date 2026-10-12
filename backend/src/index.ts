@@ -131,11 +131,11 @@ async function start() {
   pruneAudit(config.auditRetentionDays);
 
   app.listen(config.port, '0.0.0.0', () => {
-    logger.info('KAP Portal basladi', { port: config.port, version: config.appVersion, companies: count });
+    logger.info('SPP basladi', { port: config.port, version: config.appVersion, companies: count });
   });
 }
 
 start().catch(error => {
-  logger.error('KAP Portal baslatilamadi', { error });
+  logger.error('SPP baslatilamadi', { error });
   process.exit(1);
 });

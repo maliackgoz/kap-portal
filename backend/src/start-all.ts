@@ -52,8 +52,8 @@ if (startRatingService) {
   }, ratingDir);
 }
 
-log.info('KAP Portal baslatiliyor', { port: portalPort });
-log.info('KAP Portal MCP baslatiliyor', { port: mcpPort, path: mcpPath, portalUrl });
+log.info('SPP baslatiliyor', { port: portalPort });
+log.info('SPP MCP baslatiliyor', { port: mcpPort, path: mcpPath, portalUrl });
 
 start('kap-portal', process.execPath, [path.join(__dirname, 'index.js')], {
   ...process.env,
